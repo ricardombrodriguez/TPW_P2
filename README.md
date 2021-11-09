@@ -23,4 +23,4 @@ No entanto, não será necessário ter uma conta de utilizador para ler. Só ser
 
 ### Notas:
 
-Para este projeto utilizamos um template gratuito chamado [Admin LTE][https://adminlte.io/] na versão 3.1.0. Este template encontra-se na pasta static.
+Para este projeto utilizamos um template gratuito chamado [Admin LTE](https://adminlte.io/) na versão 3.1.0. Este template encontra-se na pasta static.
