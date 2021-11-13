@@ -1,0 +1,38 @@
+Tabelas:
+
+- Groups: Grupos de utilizadores (gestor, autor e leitor)
+    id
+    description
+
+- Users: Tabela de users
+    id
+    first_name
+    last_name
+    password
+    group
+
+- Publication_status: Estados das publicações (por aprovar ou aprovadas)
+    id
+    description
+
+- Publication_topics: Temas (política, entretenimento, cultura, etc)
+    id
+    description
+
+- Publications: Tabela com as publicações
+    id
+    title
+    content
+    created_on
+    author
+    status
+
+- Comments: Comentários
+    id
+    comment
+    author
+    publication
+
+- Favorites: Publicações favoritas do utilizadores
+    publication
+    user
