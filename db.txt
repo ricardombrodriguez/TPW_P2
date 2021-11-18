@@ -8,7 +8,7 @@ Tabelas:
     id (chave primária)
     first_name
     last_name
-    password
+    password (pode sair, é tratada pelo django admin)
     group (chave secundária de Groups 1:n)
 
 - Publication_status: Estados das publicações (por aprovar ou aprovadas)
