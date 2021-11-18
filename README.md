@@ -13,6 +13,18 @@ O blog estará dividido em 3 tipos de utilizador:
 
 No entanto, não será necessário ter uma conta de utilizador para ler. Só será necessário um utilizador criar uma conta se quiser comentar as publicações que lê.
 
+As publicações estão associadas a um tópico e têm um estado. O tópico poderá ser variado, por exemplo: política ou desporto.
+Os estados das publicações são mais restritos:
+
+- Por Aprovar: à espera da aprovação de um gestor para ficar visível
+- Aprovada: disponível para toda a gente ver
+- Arquivada: já não está visível
+
+Os estados poderão ser alterados ou poderão ser adicionados mais, do lado do django os valores dos id's dos estados estão guardados em constantes, para podermos utilizar o id do estado diretamente.
+
+O template do projeto foi pensado em grupo e fizemos um esboço à mão do qe pretendíamos que acontecesse. Este esboço pode ser consultado [aqui](./Template_TPW.pdf)
+
+
 ## Autores:
 
 | NMec | Name | Email |

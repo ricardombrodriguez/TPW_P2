@@ -6,6 +6,7 @@ Tabelas:
 
 - Users: Tabela de users
     id (chave primária)
+    username
     first_name
     last_name
     password (pode sair, é tratada pelo django admin)
