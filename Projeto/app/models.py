@@ -28,7 +28,7 @@ class Publication_topics(models.Model):
 
 
 class Users(models.Model):
-    username= models.CharField(max_length=70,default="")
+    username = models.CharField(max_length=70,default="")
     first_name = models.CharField(max_length=70)
     last_name = models.CharField(max_length=70)
     group = models.ForeignKey(Groups, on_delete=models.CASCADE)

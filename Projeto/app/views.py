@@ -28,3 +28,12 @@ def insert_pub(request):
             p.save()
 
     return render(request, 'insert.html')
+
+
+def publications(request):
+    if request.user.is_authenticated:
+        user = Users.objects.get(username__exact=request.user.username)
+        print(user.group)
+        return render(request, 'publications.html', {'user' : user})
+    else:
+        return render(request, 'publications.html')
