@@ -3,6 +3,8 @@ from .forms import RegisterUser
 from django.contrib.auth import login
 from django.contrib import messages
 from app.models import Publications, Publication_status, Users, Publication_topics
+from app.forms import SearchPubForm
+from datetime import *
 
 def register_request(request):
     if request.method == "POST":
@@ -31,9 +33,48 @@ def insert_pub(request):
 
 
 def publications(request):
+
+    if request.method == 'POST':
+        form = SearchPubForm(request.POST)
+        if form.is_valid() and (form.cleaned_data['title']!="" or form.cleaned_data['date'] != None):
+
+            title = form.cleaned_data['title']
+            date = form.cleaned_data['date']
+
+            if title and date:
+                pubs = Publications.objects.filter(title__contains=title).filter(created_on__date=date)
+            elif title:
+                pubs = Publications.objects.filter(title__contains=title)
+            elif date:
+                pubs = Publications.objects.filter(created_on__date=date)
+
+
+            ret_pubs = []
+            for pub in pubs:
+                if pub.status.description == "Aprovado" :
+                    ret_pubs.append(pub)
+        else:
+            form = SearchPubForm()
+            pubs = Publications.objects.all()
+            ret_pubs = []
+            for pub in pubs:
+                if pub.status.description == "Aprovado":
+                    ret_pubs.append(pub)
+
+    else:
+        form = SearchPubForm()
+        pubs = Publications.objects.all()
+        ret_pubs = []
+        for pub in pubs:
+            if pub.status.description == "Aprovado":
+                ret_pubs.append(pub)
+
     if request.user.is_authenticated:
         user = Users.objects.get(username__exact=request.user.username)
         print(user.group)
-        return render(request, 'publications.html', {'user' : user})
+        return render(request, 'publications.html', {'user' : user, 'pubs_aproved': ret_pubs, 'form' : form})
     else:
-        return render(request, 'publications.html')
+        return render(request, 'publications.html', {'pubs_aproved': ret_pubs, 'form' : form})
+
+def publication(request,pub_id):
+    return render(request, 'publication.html')
