@@ -4,6 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Zer0Sense | Publications</title>
+<<<<<<< HEAD
+=======
+    <style>
+        tr {
+            cursor: pointer;
+        }
+    </style>
+>>>>>>> 8ff7f9e990fa6fe93e693ae288796a1dbc82e748
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -17,6 +25,7 @@
     <link rel="stylesheet" href="../static/AdminLTE-3.1.0/plugins/daterangepicker/daterangepicker.css">
 </head>
 <!--
+`body` tag options:
 `body` tag options:
 
   Apply one or more of the following classes to to the body tag
@@ -41,19 +50,22 @@
         <!-- Right navbar links -->
         <!-- AQUI -->
         <!-- Se o utilizador não estiver logado aparece isto, se não aparece logout -->
+
         <ul class="navbar-nav ml-auto">
+            {% if not request.user.is_authenticated %}
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="login.html" class="nav-link">Login</a>
+                <a href="../login/" class="nav-link">Login</a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="regist.html" class="nav-link">Registar</a>
+                <a href="../register/" class="nav-link">Registar</a>
             </li>
-            <!--
+            {% else %}
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="logout.html" class="nav-link">Logout</a>
+                <a href="../logout/" class="nav-link">Logout</a>
             </li>
-            -->
+            {% endif %}
         </ul>
+
     </nav>
     <!-- /.navbar -->
 
@@ -71,7 +83,7 @@
                 <div class="info">
                     <!-- AQUI -->
                     <!-- pôr o nome do user -->
-                    <p>Bem vindo, <br><strong>@username</strong></p>
+                    <p>Bem vindo, <br><strong>{{ request.user.username }}</strong></p>
                 </div>
             </div>            
 
@@ -100,6 +112,7 @@
                     </li>
                     <!-- AQUI -->
                     <!-- Isto só aparece se o utilizador for gestor -->
+                    {% if user.group.description == 'Gestor' %}
                     <li class="nav-item">
                         <a href="pendent_publications.html" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
@@ -116,6 +129,7 @@
                             </p>
                         </a>
                     </li>
+                    {% endif %}
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->
@@ -139,51 +153,59 @@
         <div class="content">
             <div class="container-fluid">
                 <div id="row" style="display: inline;">
-                    <div class="col-8">
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control">
-                            <div class="input-group-append">
-                                <span class="input-group-text"><i class="fas fa-check"></i></span>
+
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div class="col-8">
+                            <div class="input-group mb-3">
+                                {{ form.title.label_tag }}
+                                {{ form.title }}
                             </div>
                         </div>
-                    </div>
-                    <div class="col-2">
-                            <div class="input-group date" data-target-input="nearest">
-                                <input type="date" class="form-control datetimepicker-input">
-                                <div class="input-group-append" data-toggle="datetimepicker">
-                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+
+                        <div class="col-2">
+                                <div class="input-group date" data-target-input="nearest">
+                                    {{ form.date.label_tag }}
+                                    {{ form.date }}
                                 </div>
-                            </div>
-                    </div>
+                        </div>
+                        <button type="submit" class="input-group-text" value><i class="fas fa-check"></i></button>
+                    </form>
                 </div>
 
                 <div class="card card-default mt-3">
                     <div class="card-body">
+                        {% if pub_aproved %}
+                        <p>Found {{ pub_aproved|length }} publication{{ pub_aproved|pluralize }}.</p>
+                        {% endif %}
                         <table class="table table-bordered">
                             <!-- AQUI -->
                             <!-- Listar as publicações -->
-                            <tr>
+
+                            {% for pub in pubs_aproved %}
+                            <tr class="publication_row">
                                 <td>
-                                    <div>
+                                    <div onclick="location.href='../publication/{{ pub.id }}/'">
                                         <div class="row">
                                             <div class="col-10">
-                                                <h2>Título</h2>
+                                                <h3>{{ pub.title }}</h3>
                                             </div>
                                             <div class="ml-auto col-2">
-                                                <h4>Autor</h4>
+                                                <h4>{{ pub.author.first_name }} {{ pub.author.last_name }}</h4>
                                             </div>
                                         </div>
                                         <div class="row mb-0">
                                             <div class="col-10">
-                                                <span class="badge badge-danger">Tópico</span>
+                                                <span class="badge badge-danger">{{  pub.topic.description }}</span>
                                             </div>
                                             <div class="col-2 ml-autor">
-                                                <p>data</p>
+                                                <p>{{ pub.created_on }}</p>
                                             </div>
                                         </div>
                                     </div>
                                 </td>
                             </tr>
+                            {% endfor %}
                         </table>
                     </div>
                 </div>

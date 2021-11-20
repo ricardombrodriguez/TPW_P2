@@ -1,5 +1,3 @@
-{% extends "layout.html" %}
-
 {% block content %}
 
 <h2>{{ title }}</h2>
@@ -11,10 +9,16 @@
                 <h4>Use a local account to log in.</h4>
                 <hr />
                 <div class="form-group">
-                ...
+                    {{ form.username.label_tag }}
+                    <div class="col-md-10">
+                        {{ form.username }}
+                    </div>
                 </div>
                 <div class="form-group">
-                ...
+                    {{ form.password.label_tag }}
+                    <div class="col-md-10">
+                        {{ form.password }}
+                    </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
