@@ -78,3 +78,12 @@ def publications(request):
 
 def publication(request,pub_id):
     return render(request, 'publication.html')
+
+def my_publications(request):
+    return render(request, 'login.html')
+
+def pendent_publications(request):
+    return render(request, 'login.html')
+
+def manage_users(request):
+    return render(request, 'login.html')
