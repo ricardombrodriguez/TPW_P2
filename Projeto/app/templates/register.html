@@ -5,6 +5,7 @@
 	<h1>Register</h1>
 	<form method="POST">
 		{% csrf_token %}
+        <!-- FAZER ATRIBUTO A ATRIBUTO PARA PODER METER CSS NISTO (EX: register_form.username) -->
 		{{ register_form }}
 		<button class="btn btn-primary" type="submit">Register</button>
 	</form>

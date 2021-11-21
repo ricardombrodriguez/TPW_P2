@@ -1,3 +1,4 @@
+from django.db.models.functions import Concat
 from django.shortcuts import render, redirect
 from .forms import RegisterUser
 from django.contrib.auth import login
@@ -35,24 +36,32 @@ def insert_pub(request):
 def publications(request):
 
     if request.method == 'POST':
+
         form = SearchPubForm(request.POST)
-        if form.is_valid() and (form.cleaned_data['title']!="" or form.cleaned_data['date'] != None):
+
+        if form.is_valid():
 
             title = form.cleaned_data['title']
             date = form.cleaned_data['date']
+            author = form.cleaned_data['author']
+            topic = form.cleaned_data['topic']
 
-            if title and date:
-                pubs = Publications.objects.filter(title__contains=title).filter(created_on__date=date)
-            elif title:
-                pubs = Publications.objects.filter(title__contains=title)
-            elif date:
-                pubs = Publications.objects.filter(created_on__date=date)
-
+            pubs = Publications.objects.all()
+            if title:
+                pubs = pubs.filter(title__contains=title)
+            if date:
+                pubs = pubs.filter(created_on__date=date)
+            if author:
+                pubs = pubs.filter(author__full_name__contains=author)
+            if topic:
+                pubs = pubs.filter(topic__exact=topic)
 
             ret_pubs = []
             for pub in pubs:
-                if pub.status.description == "Aprovado" :
+                if pub.status.description == "Aprovado":
                     ret_pubs.append(pub)
+
+
         else:
             form = SearchPubForm()
             pubs = Publications.objects.all()
@@ -60,6 +69,7 @@ def publications(request):
             for pub in pubs:
                 if pub.status.description == "Aprovado":
                     ret_pubs.append(pub)
+
 
     else:
         form = SearchPubForm()

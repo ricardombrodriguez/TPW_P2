@@ -187,10 +187,30 @@
                                     </div>
                                 </div>
                         </div>
+                    </div>
+                    <!-- outra row para as queries -->
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="input-group mb-3">
+                                {{ form.author.label_tag }}
+                                <div class="ml-2" style="width: 95%;">
+                                    {{ form.author }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="input-group mb-3">
+                                {{ form.topic.label_tag }}
+                                <div class="ml-2" style="width: 95%;">
+                                    {{ form.topic }}
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-1">
                             <button type="submit" class="input-group-text" value><i class="fas fa-check"></i></button>
                         </div>
                     </div>
+
                 </form>
 
                 <div class="card card-default mt-3">

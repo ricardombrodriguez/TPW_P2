@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from app.models import Users, Groups
+from app.models import Users, Groups, Publication_topics
 
 
 # Create your forms here.
@@ -27,4 +27,6 @@ class RegisterUser(UserCreationForm):
 
 class SearchPubForm(forms.Form):
     title = forms.CharField(label="Title", max_length=200, required=False)
+    author = forms.CharField(label="Author", max_length=200, required=False)
+    topic = forms.ModelChoiceField(queryset=Publication_topics.objects.all(),label="Topic",required=False)
     date = forms.DateField(label="Date", required=False, widget=forms.widgets.DateInput(attrs={'type': 'date','class': 'datetimepicker-input','data-target': '#datetimepicker1'}))
