@@ -27,5 +27,7 @@ urlpatterns = [
     path("publication/<int:pub_id>/", views.publication, name="publication"),
     path("my_publications/", views.my_publications, name="my_publications"),
     path("pendent_publications/", views.pendent_publications, name="pendent_publications"),
+    path("publicationsArquivadas/", views.publicationsArquivadas, name="publicationsArquivadas"),
     path("manage_users/", views.manage_users, name="manage_users"),
+
 ]

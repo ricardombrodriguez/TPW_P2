@@ -35,6 +35,8 @@ def insert_pub(request):
         if form.is_valid():
             title = form.cleaned_data['title']
             content = form.cleaned_data['content']
+            content=content.strip()
+            content=content[3:-4]
             categoria=form.cleaned_data['categoria']
             if title and content and categoria:
                 if user.group.description == "Gestor":
@@ -123,9 +125,9 @@ def publication(request,pub_id):
 
     if request.method == 'POST' and request.user.is_authenticated:
         form = AddComment(request.POST)
+        user = Users.objects.get(username__exact=request.user.username)
         #adicionar o comentário AQUI E DONE
         if form.is_valid():
-            user = Users.objects.get(username__exact=request.user.username)
             content = form.cleaned_data['content']
             form.cleaned_data['content'] = ""
 
@@ -140,7 +142,7 @@ def publication(request,pub_id):
                         ret_coms.append(comment)
                 user = Users.objects.get(username__exact=request.user.username)
                 if pub.status.description == "Aprovado" or user.group.description == 'Gestor':
-                    return render(request, 'publication.html', {"pub": pub, "comments": ret_coms, "form": form, 'error': error})
+                    return render(request, 'publication.html', {"pub": pub, "comments": ret_coms, "form": form,"user":user, 'error': error})
                 return redirect('/publications')
 
             else:
@@ -154,12 +156,20 @@ def publication(request,pub_id):
                 for comment in comments:
                     if comment.publication.id == pub_id:
                         ret_coms.append(comment)
-                form.cleaned_data['content'] = ""
-                return render(request, 'publication.html', {"pub": pub, "comments": ret_coms, "form": form})
+                form = AddComment()
+                return render(request, 'publication.html', {"pub": pub, "comments": ret_coms, "form": form,"user":user})
+
+        elif  request.POST["comment_id"] != "":
+            id = request.POST["comment_id"]
+            print(id)
+            print(request.POST)
+            com = Comments.objects.get(id__exact=id)
+            com.delete()
+            ret = "/publication/" + str(pub_id)
+            return redirect(ret)
 
     else:
         form = AddComment()
-
         pub = Publications.objects.get(id__exact=pub_id)
         comments = Comments.objects.all()
         ret_coms=[]
@@ -170,7 +180,7 @@ def publication(request,pub_id):
         if request.user.is_authenticated:
             user = Users.objects.get(username__exact=request.user.username)
         if pub.status.description =="Aprovado" or (user is not None and user.group.description == 'Gestor'):
-            return render(request, 'publication.html', {"pub":pub,"comments":ret_coms,"form":form})
+            return render(request, 'publication.html', {"pub":pub,"comments":ret_coms,"form":form,"user":user})
         return redirect('/publications')
 
 def my_publications(request):
@@ -303,3 +313,59 @@ def pendent_publications(request):
 
 def manage_users(request):
     return render(request, 'login.html')
+
+def publicationsArquivadas(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+    user = Users.objects.get(username__exact=request.user.username)
+    if user.group.description != "Gestor":
+        return redirect('/publications')
+    if request.method == 'POST':
+        form = SearchPubForm(request.POST)
+        if form.is_valid():
+
+            title = form.cleaned_data['title']
+            date = form.cleaned_data['date']
+            author = form.cleaned_data['author']
+            topic = form.cleaned_data['topic']
+
+            pubs = Publications.objects.all()
+            if title:
+                pubs = pubs.filter(title__contains=title)
+            if date:
+                pubs = pubs.filter(created_on__date=date)
+            if author:
+                pubs = pubs.annotate(full_name=Concat('author__first_name', V(' '), 'author__last_name')). \
+                    filter(full_name__contains=author)
+            if topic:
+                pubs = pubs.filter(topic__exact=topic)
+
+            ret_pubs = []
+            for pub in pubs:
+                if pub.status.description == "Arquivado":
+                    ret_pubs.append(pub)
+        else:
+            form = SearchPubForm()
+            pubs = Publications.objects.all()
+            ret_pubs = []
+            for pub in pubs:
+                if pub.status.description == "Arquivado":
+                    ret_pubs.append(pub)
+
+    else:
+        form = SearchPubForm()
+        pubs = Publications.objects.all()
+        ret_pubs = []
+        for pub in pubs:
+            if pub.status.description == "Arquivado":
+                ret_pubs.append(pub)
+
+    if request.user.is_authenticated:
+        user = Users.objects.get(username__exact=request.user.username)
+        print(user.group)
+        return render(request, 'pendent_pubs.html', {'user': user, 'pubs_aproved': ret_pubs, 'form': form})
+    else:
+        return render(request, 'pendent_pubs.html', {'pubs_aproved': ret_pubs, 'form': form})
+
+def removeCommment(request):
+    print(request.POST['comment_id'])

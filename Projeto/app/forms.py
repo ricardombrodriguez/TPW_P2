@@ -41,3 +41,14 @@ class AddPublication(forms.Form):
 class AddComment(forms.Form):
     content =forms.CharField(widget=forms.Textarea(attrs={"id":"comment","cols":170,"onkeyup":"required1()",
                 "rows": "5", "placeholder":"Escreva aqui o seu comentário..."}))
+
+
+
+
+#UTILIZAR PUBLICAÇÃO OU SEJA PASSAR o estado para aprovado
+class aceptPub(forms.Form):
+    id = forms.CharField(label="ID", max_length=200, required=False)
+
+#UTILIZAR PUBLICAÇÃO OU SEJA PASSAR o estado para arquivado
+class deletePub(forms.Form):
+    id = forms.CharField(label="ID", max_length=200, required=False)

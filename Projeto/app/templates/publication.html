@@ -131,6 +131,14 @@
                             </p>
                         </a>
                     </li>
+                        <li class="nav-item">
+                        <a href="{% url 'publicationsArquivadas' %}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>
+                                Publicações Arquivadas
+                            </p>
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a href="{% url 'manage_users' %}" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
@@ -197,6 +205,14 @@
                                         {{ comment.comment }}
                                     </div>
                                 </div>
+                                    {%   if user.group.description == "Gestor" %}
+                                    <form action="" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="comment_id" value="{{ comment.id }}">
+                                        <input  type="submit" value="Apagar Comentario" class="btn btn-danger"></input>
+
+                                    </form>
+                                    {%   endif %}
                                 {% endfor %}
                             </div>
                             {% if error %}
