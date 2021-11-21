@@ -28,3 +28,14 @@ class RegisterUser(UserCreationForm):
 class SearchPubForm(forms.Form):
     title = forms.CharField(label="Title", max_length=200, required=False)
     date = forms.DateField(label="Date", required=False, widget=forms.widgets.DateInput(attrs={'type': 'date','class': 'datetimepicker-input','data-target': '#datetimepicker1'}))
+
+
+class AddPublication(forms.Form):
+    title = forms.CharField(label="Title", max_length=200)
+    content = forms.CharField(widget=forms.Textarea(attrs={"id":"summernote"}))
+    categoria =forms.CharField(label="Categoria", max_length=200)
+
+
+class AddComment(forms.Form):
+    content =forms.CharField(widget=forms.Textarea(attrs={"id":"comment","cols":170,"onkeyup":"required1()",
+                "rows": "5", "placeholder":"Escreva aqui o seu comentário..."}))

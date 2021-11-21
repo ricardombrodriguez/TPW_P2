@@ -96,7 +96,7 @@
                     <!-- pôr o nome do user -->
                     <p>Bem vindo, <br><strong>{{ request.user.username }}</strong></p>
                 </div>
-            </div>            
+            </div>
             {% endif %}
 
             <!-- Sidebar Menu -->
@@ -160,9 +160,15 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 col-6">
                         <!--<h1 class="m-0">Título</h1> -->
-                        <input class="m-0" placeholder="Título" name="title1">
+                        {{ form.title.label_tag }}
+                        {{ form.title }}
+                    </div>
+                    <div class="col-sm-6 col-6">
+                        <!--<h1 class="m-0">Título</h1> -->
+                        {{ form.categoria.label_tag }}
+                        {{ form.categoria}}
                     </div>
                 </div>
             </div><!-- /.container-fluid -->
@@ -178,12 +184,12 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-12">
-                                        <textarea id="summernote" name="text"></textarea>
+                                        {{form.content}}
                                     </div>
                                 </div>
                             </div>
                             <div class="card-footer clearfix">
-                                <input type="submit" name="submit" class="btn btn-primary float-right"  id="btn_submit" value="Publicar " style="max-width: 10%;"/>
+                                <button type="submit" class="input-group-text" value><i class="fas fa-check"></i></button>
                             </div>
                         </div>
                     </div>
