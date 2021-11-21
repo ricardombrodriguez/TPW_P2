@@ -31,10 +31,6 @@ class Users(models.Model):
     username = models.CharField(max_length=70,default="")
     first_name = models.CharField(max_length=70)
     last_name = models.CharField(max_length=70)
-    full_name = models.CharField( max_length=128 )
-    def save( self, *args, **kw ):
-        self.full_name = '{0} {1}'.format(self.first_name, self.last_name)
-        super( Users, self ).save( *args, **kw )
     group = models.ForeignKey(Groups, on_delete=models.CASCADE)
     favourites = models.ManyToManyField('Publications',blank=True)
 

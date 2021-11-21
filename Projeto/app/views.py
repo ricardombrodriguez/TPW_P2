@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from .forms import RegisterUser
 from django.contrib.auth import login
 from django.contrib import messages
+from django.db.models import Value as V
 from app.models import Publications, Publication_status, Users, Publication_topics
 from app.forms import SearchPubForm
 from datetime import *
@@ -52,7 +53,8 @@ def publications(request):
             if date:
                 pubs = pubs.filter(created_on__date=date)
             if author:
-                pubs = pubs.filter(author__full_name__contains=author)
+                pubs = pubs.annotate(full_name=Concat('author__first_name', V(' '), 'author__last_name')). \
+                    filter(full_name__contains=author)
             if topic:
                 pubs = pubs.filter(topic__exact=topic)
 
