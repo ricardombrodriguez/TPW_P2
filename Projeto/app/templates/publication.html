@@ -181,7 +181,30 @@
             </div><!-- /.container-fluid -->
         </div>
         <!-- /.content-header -->
+        {%   if user.group.description == "Gestor"  and pub.status.description == "Por Aprovar" %}
+            <form action="" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="publication_aprov_id" value="{{ pub.id }}">
+                <input   type="submit" class="btn btn-success" value="Aceitar Publicação" ></input>
 
+            </form>
+
+
+            <form action="" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="publication_arqu_id" value="{{ pub.id }}">
+                <input  type="submit" value="Arquivar publicação" class="btn btn-danger"></input>
+
+            </form>
+        {%   endif %}
+     {%   if user.group.description == "Gestor"  and pub.status.description == "Aprovado" %}
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="publication_arquivar" value="{{ pub.id }}">
+                    <input   type="submit" class="btn btn-success" value="Arquivar  Publicação" ></input>
+
+                </form>
+    {%  endif %}
         <!-- Main content -->
         <div class="content">
             <div class="container-fluid">
