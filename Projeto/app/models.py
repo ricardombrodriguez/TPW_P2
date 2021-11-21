@@ -32,7 +32,6 @@ class Users(models.Model):
     first_name = models.CharField(max_length=70)
     last_name = models.CharField(max_length=70)
     group = models.ForeignKey(Groups, on_delete=models.CASCADE)
-    favourites = models.ManyToManyField('Publications',blank=True)
 
 
     def __str__(self):
@@ -58,3 +57,7 @@ class Comments(models.Model):
     publication = models.ForeignKey(Publications, on_delete=models.CASCADE)
     def __str__(self):
         return self.comment
+
+class Favorites(models.Model):
+    author = models.ForeignKey(Users, on_delete=models.CASCADE)
+    publication = models.ForeignKey(Publications, on_delete=models.CASCADE)

@@ -122,6 +122,16 @@
                             </p>
                         </a>
                     </li>
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a href="{% url 'favoritos' %}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>
+                                Favoritos
+                            </p>
+                        </a>
+                    </li>
+                {%  endif %}
                     <!-- AQUI -->
                     <!-- Isto só aparece se o utilizador for gestor / ADMIN DEVIA SER GESTOR -->
                     {% if user.group.description == 'Gestor' or request.user.username == 'admin' %}

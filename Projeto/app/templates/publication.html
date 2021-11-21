@@ -120,6 +120,16 @@
                             </p>
                         </a>
                     </li>
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a href="{% url 'favoritos' %}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>
+                                Favoritos
+                            </p>
+                        </a>
+                    </li>
+                {%  endif %}
                     <!-- AQUI -->
                     <!-- Isto só aparece se o utilizador for gestor -->
                     {% if user.group.description == 'Gestor' %}
@@ -188,16 +198,34 @@
                 <input   type="submit" class="btn btn-success" value="Aceitar Publicação" ></input>
 
             </form>
+        {% endif %}
 
-
+    {%  if request.user.is_authenticated and not control and pub.status.description == "Aprovado" %}
             <form action="" method="post">
                 {% csrf_token %}
-                <input type="hidden" name="publication_arqu_id" value="{{ pub.id }}">
-                <input  type="submit" value="Arquivar publicação" class="btn btn-danger"></input>
+                <input type="hidden" name="add_favorito" value="{{ pub.id }}">
+                <input  type="submit" value="Favorito" ><i class="bi bi-star"></i></input>
 
             </form>
         {%   endif %}
-     {%   if user.group.description == "Gestor"  and pub.status.description == "Aprovado" %}
+
+    {%  if request.user.is_authenticated and control and pub.status.description == "Aprovado" %}
+            <form action="" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="tirar_favorito" value="{{ pub.id }}">
+                <input  type="submit" value="Tirar favorito" ><i class="bi bi-star-fill"></i></input>
+
+            </form>
+        {%   endif %}
+     {%   if user.group.description == "Gestor"  and pub.status.description == "Por Aprovar" %}
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="publication_arquivar" value="{{ pub.id }}">
+                    <input   type="submit" class="btn btn-success" value="Arquivar  Publicação" ></input>
+
+                </form>
+    {%  endif %}
+    {%   if user.group.description == "Gestor"  and pub.status.description == "Aprovado" %}
                 <form action="" method="post">
                     {% csrf_token %}
                     <input type="hidden" name="publication_arquivar" value="{{ pub.id }}">

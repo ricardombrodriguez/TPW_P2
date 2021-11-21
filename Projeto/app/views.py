@@ -5,7 +5,7 @@ from .forms import RegisterUser, AddPublication, AddComment
 from django.contrib.auth import login
 from django.contrib import messages
 from django.db.models import Value as V
-from app.models import Publications, Publication_status, Users, Publication_topics, Comments
+from app.models import Publications, Publication_status, Users, Publication_topics, Comments, Favorites
 from app.forms import SearchPubForm
 from datetime import *
 
@@ -142,8 +142,14 @@ def publication(request,pub_id):
                     if comment.publication.id == pub_id:
                         ret_coms.append(comment)
                 user = Users.objects.get(username__exact=request.user.username)
+                control = False
+                favoritos = Favorites.objects.all()
+                for fav in favoritos:
+                    if fav.publication == pub and fav.author == user:
+                        control = True
+                        break
                 if pub.status.description == "Aprovado" or user.group.description == 'Gestor':
-                    return render(request, 'publication.html', {"pub": pub, "comments": ret_coms, "form": form,"user":user, 'error': error})
+                    return render(request, 'publication.html', {"pub": pub, "comments": ret_coms, "form": form,"user":user, 'error': error,"control":control})
                 return redirect('/publications')
 
             else:
@@ -158,7 +164,13 @@ def publication(request,pub_id):
                     if comment.publication.id == pub_id:
                         ret_coms.append(comment)
                 form = AddComment()
-                return render(request, 'publication.html', {"pub": pub, "comments": ret_coms, "form": form,"user":user})
+                control=False
+                favoritos = Favorites.objects.all()
+                for fav in favoritos:
+                    if fav.publication == pub and fav.author == user:
+                        control = True
+                        break
+                return render(request, 'publication.html', {"pub": pub, "comments": ret_coms, "form": form,"user":user,"control":control})
 
         elif "comment_id" in  request.POST.keys() :
             id = request.POST["comment_id"]
@@ -191,6 +203,23 @@ def publication(request,pub_id):
             pub.save()
             ret = "/publication/" + str(pub_id)
             return redirect(ret)
+        elif  "add_favorito" in  request.POST.keys():
+            id = request.POST["add_favorito"]
+            pub = Publications.objects.get(id__exact=id)
+            fav = Favorites()
+            fav.publication=pub
+            fav.author=user
+            fav.save()
+            ret = "/publication/" + str(pub_id)
+            return redirect(ret)
+        elif "tirar_favorito" in  request.POST.keys():
+            id = request.POST["tirar_favorito"]
+            pub = Publications.objects.get(id__exact=id)
+
+            fav = Favorites.objects.get(author__exact=user, publication__exact=pub)
+            fav.delete()
+            ret = "/publication/" + str(pub_id)
+            return redirect(ret)
 
     else:
         form = AddComment()
@@ -201,10 +230,18 @@ def publication(request,pub_id):
             if comment.publication.id == pub_id:
                 ret_coms.append(comment)
         user = None
+        control=False
+
+
         if request.user.is_authenticated:
             user = Users.objects.get(username__exact=request.user.username)
+            favoritos = Favorites.objects.all()
+            for fav in favoritos:
+                if fav.publication == pub and fav.author == user:
+                    control=True
+                    break
         if pub.status.description =="Aprovado" or (user is not None and user.group.description == 'Gestor'):
-            return render(request, 'publication.html', {"pub":pub,"comments":ret_coms,"form":form,"user":user})
+            return render(request, 'publication.html', {"pub":pub,"comments":ret_coms,"form":form,"user":user,"control":control})
         return redirect('/publications')
 
 def my_publications(request):
@@ -391,5 +428,55 @@ def publicationsArquivadas(request):
     else:
         return render(request, 'pendent_pubs.html', {'pubs_aproved': ret_pubs, 'form': form})
 
-def removeCommment(request):
-    print(request.POST['comment_id'])
+def favoritos(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+    user = Users.objects.get(username__exact=request.user.username)
+
+    if request.method == 'POST':
+        form = SearchPubForm(request.POST)
+        if form.is_valid():
+
+            title = form.cleaned_data['title']
+            date = form.cleaned_data['date']
+            author = form.cleaned_data['author']
+            topic = form.cleaned_data['topic']
+
+            pubs = Publications.objects.all()
+            if title:
+                pubs = pubs.filter(title__contains=title)
+            if date:
+                pubs = pubs.filter(created_on__date=date)
+            if author:
+                pubs = pubs.annotate(full_name=Concat('author__first_name', V(' '), 'author__last_name')). \
+                    filter(full_name__contains=author)
+            if topic:
+                pubs = pubs.filter(topic__exact=topic)
+            ret_pubs=[]
+            favoritos = Favorites.objects.all()
+            for favorito in favoritos:
+                if favorito.author.username == user.username  and favorito.publication in pubs:
+                    ret_pubs.append(favorito.publication)
+        else:
+            form = SearchPubForm()
+            pubs = Publications.objects.all()
+            ret_pubs = []
+            favoritos = Favorites.objects.all()
+            for favorito in favoritos:
+                if favorito.author.username == user.username:
+                    ret_pubs.append(favorito.publication)
+    else:
+        form = SearchPubForm()
+        pubs = Publications.objects.all()
+        ret_pubs = []
+        favoritos= Favorites.objects.all()
+        for favorito in favoritos:
+            if favorito.author.username ==user.username :
+                ret_pubs.append(favorito.publication)
+
+    if request.user.is_authenticated:
+        user = Users.objects.get(username__exact=request.user.username)
+        print(user.group)
+        return render(request, 'favoritos.html', {'user': user, 'pubs_aproved': ret_pubs, 'form': form})
+    else:
+        return render(request, 'favoritos.html', {'pubs_aproved': ret_pubs, 'form': form})
