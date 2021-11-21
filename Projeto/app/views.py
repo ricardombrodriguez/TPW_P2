@@ -126,6 +126,7 @@ def publication(request,pub_id):
     if request.method == 'POST' and request.user.is_authenticated:
         form = AddComment(request.POST)
         user = Users.objects.get(username__exact=request.user.username)
+        print(request.POST)
         #adicionar o comentário AQUI E DONE
         if form.is_valid():
             content = form.cleaned_data['content']
@@ -159,12 +160,35 @@ def publication(request,pub_id):
                 form = AddComment()
                 return render(request, 'publication.html', {"pub": pub, "comments": ret_coms, "form": form,"user":user})
 
-        elif  request.POST["comment_id"] != "":
+        elif "comment_id" in  request.POST.keys() :
             id = request.POST["comment_id"]
-            print(id)
-            print(request.POST)
+
             com = Comments.objects.get(id__exact=id)
             com.delete()
+            ret = "/publication/" + str(pub_id)
+            return redirect(ret)
+        elif "publication_aprov_id" in  request.POST.keys() :
+            id = request.POST["publication_aprov_id"]
+            pub = Publications.objects.get(id__exact=id)
+            status = Publication_status.objects.get(description__exact="Aprovado")
+            pub.status = status
+            pub.save()
+            ret = "/publication/" + str(pub_id)
+            return redirect(ret)
+        elif  "publication_arqu_id" in  request.POST.keys():
+            id = request.POST["publication_arqu_id"]
+            pub = Publications.objects.get(id__exact=id)
+            status = Publication_status.objects.get(description__exact="Arquivado")
+            pub.status = status
+            pub.save()
+            ret = "/publication/" + str(pub_id)
+            return redirect(ret)
+        elif  "publication_arquivar" in  request.POST.keys():
+            id = request.POST["publication_arquivar"]
+            pub = Publications.objects.get(id__exact=id)
+            status = Publication_status.objects.get(description__exact="Arquivado")
+            pub.status = status
+            pub.save()
             ret = "/publication/" + str(pub_id)
             return redirect(ret)
 
