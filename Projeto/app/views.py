@@ -19,6 +19,7 @@ def register_request(request):
     return render(request=request, template_name="register.html", context={"register_form" : form})
 
 def insert_pub(request):
+    # só pode ir para esta página se o utilizador estiver logado
     if 'title' and 'content' in request.POST:
         title = request.POST['title']
         content = request.POST['content']
@@ -77,6 +78,9 @@ def publications(request):
         return render(request, 'publications.html', {'pubs_aproved': ret_pubs, 'form' : form})
 
 def publication(request,pub_id):
+    if request.POST:
+        pass
+
     return render(request, 'publication.html')
 
 def my_publications(request):

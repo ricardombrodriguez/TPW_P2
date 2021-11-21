@@ -23,6 +23,8 @@
   <link rel="stylesheet" href="../static/AdminLTE-3.1.0/dist/css/adminlte.min.css">
     <!-- daterange picker -->
     <link rel="stylesheet" href="../static/AdminLTE-3.1.0/plugins/daterangepicker/daterangepicker.css">
+    <!-- summernote -->
+    <link rel="stylesheet" href="../static/AdminLTE-3.1.0/plugins/summernote/summernote-bs4.min.css">
 </head>
 <!--
 `body` tag options:
@@ -157,17 +159,10 @@
         <!-- Content Header (Page header) -->
         <div class="content-header">
             <div class="container-fluid">
-                <div class="mb-2">
-                    <h1 class="m-0">Título da publicação</h1>
-                </div>
-                <div class="mb-2">
-                    <div class="row">
-                        <div class="col-6">
-                            <span class="badge badge-warning">Tópico</span>
-                        </div>
-                        <div class="col-6 ml-auto">
-                            <p>21-11-2021 01:32</p>
-                        </div>
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <!--<h1 class="m-0">Título</h1> -->
+                        <input class="m-0" placeholder="Título" name="title1">
                     </div>
                 </div>
             </div><!-- /.container-fluid -->
@@ -177,40 +172,18 @@
         <!-- Main content -->
         <div class="content">
             <div class="container-fluid">
-                <div class="card card-default mt-3">
-                    <div class="card-body">
-                        <p>conteudo da publicação</p>
-                        <div class="ml-auto">
-                            <p>Nome do autor</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card card-default mt-3">
-                    <div class="card-body">
-                        <div class="timeline">
-                            <div>
-                                <i class='fas fa-comment bg-blue'></i>
-                                <div class='timeline-item'>
-                                    <span class='time'>21-11-2021 01:59</span>
-                                    <h3 class='timeline-header'><b>@goncalo-leal</b> comentou</h3>
-                                    <div class='timeline-body'>
-                                        ahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <textarea id="summernote" name="text"></textarea>
                                     </div>
                                 </div>
                             </div>
-                            <div>
-                                <i class="fas fa-comment bg-blue"></i>
-                                <div class="timeline-item">
-                                    <form method="post">
-                                    <div class="timeline-body">
-                                        <textarea name="comment" id="comment" cols="170" onkeyup="required1()" rows="5" placeholder="Escreva aqui o seu comentário..."></textarea>
-                                        <br>
-                                        <div class="ml-auto" style="right: 0">
-                                            <input type="submit" class="btn btn-primary btn-sm ml-auto" disabled="disabled" id="btn_submit" value="enviar" />
-                                        </div>
-                                    </div>
-                                    </form>
-                                </div>
+                            <div class="card-footer clearfix">
+                                <input type="submit" name="submit" class="btn btn-primary float-right"  id="btn_submit" value="Publicar " style="max-width: 10%;"/>
                             </div>
                         </div>
                     </div>
@@ -253,6 +226,8 @@
 <script src="../static/AdminLTE-3.1.0/dist/js/pages/dashboard3.js"></script>
 <!-- date-range-picker -->
 <script src="../static/AdminLTE-3.1.0/plugins/daterangepicker/daterangepicker.js"></script>
+<!-- Summernote -->
+<script src="../static/AdminLTE-3.1.0/plugins/summernote/summernote-bs4.min.js"></script>
 <script>
     $(function () {
         //Date picker
@@ -261,14 +236,13 @@
         });
     });
 
-    function required1() {
-        var comment = document.getElementById("comment").value;
-        if (comment == "") {
-            document.getElementById("btn_submit").disabled = true;
-        } else {
-            document.getElementById("btn_submit").disabled = false;
-        }
-    }
+    $(function () {
+        // Summernote
+        $('#summernote').summernote({
+            height: 350,
+        });
+        bsCustomFileInput.init();
+    })
 </script>
 </body>
 </html>
