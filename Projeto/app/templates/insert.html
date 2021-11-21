@@ -23,6 +23,8 @@
   <link rel="stylesheet" href="../static/AdminLTE-3.1.0/dist/css/adminlte.min.css">
     <!-- daterange picker -->
     <link rel="stylesheet" href="../static/AdminLTE-3.1.0/plugins/daterangepicker/daterangepicker.css">
+    <!-- summernote -->
+    <link rel="stylesheet" href="../static/AdminLTE-3.1.0/plugins/summernote/summernote-bs4.min.css">
 </head>
 <!--
 `body` tag options:
@@ -94,7 +96,7 @@
                     <!-- pôr o nome do user -->
                     <p>Bem vindo, <br><strong>{{ request.user.username }}</strong></p>
                 </div>
-            </div>            
+            </div>
             {% endif %}
 
             <!-- Sidebar Menu -->
@@ -121,8 +123,8 @@
                         </a>
                     </li>
                     <!-- AQUI -->
-                    <!-- Isto só aparece se o utilizador for gestor -->
-                    {% if user.group.description == 'Gestor' %}
+                    <!-- Isto só aparece se o utilizador for gestor / ADMIN DEVIA SER GESTOR -->
+                    {% if user.group.description == 'Gestor' or request.user.username == 'admin' %}
                     <li class="nav-item">
                         <a href="{% url 'pendent_publications' %}" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
@@ -155,19 +157,20 @@
     <div class="content-wrapper" style="margin-left: 0px;">
     {% endif %}
         <!-- Content Header (Page header) -->
+    <form action="" method="post">
+        {% csrf_token %}
         <div class="content-header">
             <div class="container-fluid">
-                <div class="mb-2">
-                    <h1 class="m-0">{{ pub.title }}</h1>
-                </div>
-                <div class="mb-2">
-                    <div class="row">
-                        <div class="col-6">
-                            <span class="badge badge-warning">{{ pub.topic.description }}</span>
-                        </div>
-                        <div class="col-6 ml-auto">
-                            <p>21-11-2021 01:32</p>
-                        </div>
+                <div class="row mb-2">
+                    <div class="col-sm-6 col-6">
+                        <!--<h1 class="m-0">Título</h1> -->
+                        {{ form.title.label_tag }}
+                        {{ form.title }}
+                    </div>
+                    <div class="col-sm-6 col-6">
+                        <!--<h1 class="m-0">Título</h1> -->
+                        {{ form.categoria.label_tag }}
+                        {{ form.categoria}}
                     </div>
                 </div>
             </div><!-- /.container-fluid -->
@@ -177,48 +180,19 @@
         <!-- Main content -->
         <div class="content">
             <div class="container-fluid">
-                <div class="card card-default mt-3">
-                    <div class="card-body">
-                        <p>{{ pub.content}}</p>
-                        <div class="ml-auto">
-                            <p>{{ pub.author }}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card card-default mt-3">
-                    <div class="card-body">
-                        <div class="timeline">
-                            <div>
-                                {%  for comment in comments %}
-                                <i class='fas fa-comment bg-blue'></i>
-                                <div class='timeline-item'>
-                                    <h3 class='timeline-header'><b>@{{ comment.author.username }}</b> comentou</h3>
-                                    <div class='timeline-body'>
-                                        {{ comment.comment }}
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        {{form.content}}
                                     </div>
                                 </div>
-                                {% endfor %}
                             </div>
-                            {% if error %}
-                                <p style="color: red">O comentário já foi submetido</p>
-                            {% endif %}
-                            {% if request.user.is_authenticated %}
-                            <div>
-                                <i class="fas fa-comment bg-blue"></i>
-                                <div class="timeline-item">
-                                    <form action="" method="post">
-                                        {% csrf_token %}
-                                    <div class="timeline-body">
-                                        {{ form.content }}
-                                        <br>
-                                        <div class="ml-auto" style="right: 0">
-                                            <input type="submit" class="btn btn-primary btn-sm ml-auto" disabled="disabled" id="btn_submit" value="enviar" />
-                                        </div>
-                                    </div>
-                                    </form>
-                                </div>
+                            <div class="card-footer clearfix">
+                                <button type="submit" class="input-group-text" value><i class="fas fa-check"></i></button>
                             </div>
-                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -226,7 +200,7 @@
             <!-- /.container-fluid -->
         </div>
         <!-- /.content -->
-    </div>
+    </form>
     <!-- /.content-wrapper -->
 
   <!-- Main Footer -->
@@ -260,6 +234,8 @@
 <script src="../static/AdminLTE-3.1.0/dist/js/pages/dashboard3.js"></script>
 <!-- date-range-picker -->
 <script src="../static/AdminLTE-3.1.0/plugins/daterangepicker/daterangepicker.js"></script>
+<!-- Summernote -->
+<script src="../static/AdminLTE-3.1.0/plugins/summernote/summernote-bs4.min.js"></script>
 <script>
     $(function () {
         //Date picker
@@ -268,14 +244,13 @@
         });
     });
 
-    function required1() {
-        var comment = document.getElementById("comment").value;
-        if (comment == "") {
-            document.getElementById("btn_submit").disabled = true;
-        } else {
-            document.getElementById("btn_submit").disabled = false;
-        }
-    }
+    $(function () {
+        // Summernote
+        $('#summernote').summernote({
+            height: 350,
+        });
+        bsCustomFileInput.init();
+    })
 </script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Zer0Sense | Título da Publicação</title>
+  <title>Zer0Sense | Publications</title>
     <style>
         tr {
             cursor: pointer;
@@ -94,7 +94,7 @@
                     <!-- pôr o nome do user -->
                     <p>Bem vindo, <br><strong>{{ request.user.username }}</strong></p>
                 </div>
-            </div>            
+            </div>
             {% endif %}
 
             <!-- Sidebar Menu -->
@@ -155,20 +155,19 @@
     <div class="content-wrapper" style="margin-left: 0px;">
     {% endif %}
         <!-- Content Header (Page header) -->
+
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="mb-2" onclick="location.href='../insertPublication/'">
+                    <button style="align-content: center"  class="m-0">+ Adicionar publicação</button>
+                </div>
+            </div><!-- /.container-fluid -->
+        </div>
+
         <div class="content-header">
             <div class="container-fluid">
                 <div class="mb-2">
-                    <h1 class="m-0">{{ pub.title }}</h1>
-                </div>
-                <div class="mb-2">
-                    <div class="row">
-                        <div class="col-6">
-                            <span class="badge badge-warning">{{ pub.topic.description }}</span>
-                        </div>
-                        <div class="col-6 ml-auto">
-                            <p>21-11-2021 01:32</p>
-                        </div>
-                    </div>
+                    <h1 class="m-0">Publicações</h1>
                 </div>
             </div><!-- /.container-fluid -->
         </div>
@@ -177,49 +176,158 @@
         <!-- Main content -->
         <div class="content">
             <div class="container-fluid">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="input-group mb-3">
+                                {{ form.title.label_tag }}
+                                <div class="ml-2" style="width: 95%;">
+                                    {{ form.title }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-3">
+                                <div class="input-group date" data-target-input="nearest">
+                                    {{ form.date.label_tag }}
+                                    <div class="ml-2"  style="width: 85%;">
+                                        {{ form.date }}
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                    <!-- outra row para as queries -->
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="input-group mb-3">
+                                {{ form.topic.label_tag }}
+                                <div class="ml-2" style="width: 95%;">
+                                    {{ form.topic }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <button type="submit" class="input-group-text" value><i class="fas fa-check"></i></button>
+                        </div>
+                    </div>
+                </form>
+
                 <div class="card card-default mt-3">
                     <div class="card-body">
-                        <p>{{ pub.content}}</p>
-                        <div class="ml-auto">
-                            <p>{{ pub.author }}</p>
-                        </div>
+
+                        <h3>Publicações aprovadas</h3><br>
+                        <table class="table table-bordered">
+                            <!-- AQUI -->
+                            <!-- Listar as publicações -->
+
+                            {% for pub in pubs_aproved %}
+                            <tr class="publication_row">
+                                <td>
+                                    <div onclick="location.href='../publication/{{ pub.id }}/'">
+                                        <div class="row">
+                                            <div class="col-10">
+                                                <h3>{{ pub.title }}</h3>
+                                            </div>
+                                            <div class="ml-auto col-2">
+                                                <h4>{{ pub.author.first_name }} {{ pub.author.last_name }}</h4>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-0">
+                                            <div class="col-10">
+                                                <span class="badge badge-danger">{{  pub.topic.description }}</span>
+                                            </div>
+                                            <div class="col-2 ml-autor">
+                                                <p>{{ pub.created_on }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <p>Não existem publicações aprovadas disponíveis</p>
+                            {% endfor %}
+                        </table>
                     </div>
                 </div>
                 <div class="card card-default mt-3">
-                    <div class="card-body">
-                        <div class="timeline">
-                            <div>
-                                {%  for comment in comments %}
-                                <i class='fas fa-comment bg-blue'></i>
-                                <div class='timeline-item'>
-                                    <h3 class='timeline-header'><b>@{{ comment.author.username }}</b> comentou</h3>
-                                    <div class='timeline-body'>
-                                        {{ comment.comment }}
-                                    </div>
-                                </div>
-                                {% endfor %}
-                            </div>
-                            {% if error %}
-                                <p style="color: red">O comentário já foi submetido</p>
-                            {% endif %}
-                            {% if request.user.is_authenticated %}
-                            <div>
-                                <i class="fas fa-comment bg-blue"></i>
-                                <div class="timeline-item">
-                                    <form action="" method="post">
-                                        {% csrf_token %}
-                                    <div class="timeline-body">
-                                        {{ form.content }}
-                                        <br>
-                                        <div class="ml-auto" style="right: 0">
-                                            <input type="submit" class="btn btn-primary btn-sm ml-auto" disabled="disabled" id="btn_submit" value="enviar" />
+                        <div class="card-body">
+
+                        <!-- publicações por aprovar -->
+                        <br>
+                        <h3>Publicações por aprovar</h3>
+                        <br>
+                        <table class="table table-bordered">
+                            <!-- AQUI -->
+                            <!-- Listar as publicações -->
+
+                            {% for pub in pubs_aproval %}
+                            <tr class="publication_row">
+                                <td>
+                                    <div onclick="location.href='../publication/{{ pub.id }}/'">
+                                        <div class="row">
+                                            <div class="col-10">
+                                                <h3>{{ pub.title }}</h3>
+                                            </div>
+                                            <div class="ml-auto col-2">
+                                                <h4>{{ pub.author.first_name }} {{ pub.author.last_name }}</h4>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-0">
+                                            <div class="col-10">
+                                                <span class="badge badge-danger">{{  pub.topic.description }}</span>
+                                            </div>
+                                            <div class="col-2 ml-autor">
+                                                <p>{{ pub.created_on }}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                    </form>
-                                </div>
-                            </div>
-                            {% endif %}
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <p>Não existem publicações por aprovar disponíveis</p>
+                            {% endfor %}
+                        </table>
                         </div>
+                </div>
+                <div class="card card-default mt-3">
+                        <div class="card-body">
+                        <!-- Publicações arquivadas -->
+                        <br>
+                        <h3>Publicações arquivadas</h3>
+                        <br>
+                        <table class="table table-bordered">
+                            <!-- AQUI -->
+                            <!-- Listar as publicações -->
+
+                            {% for pub in pubs_arquivadas %}
+                            <tr class="publication_row">
+                                <td>
+                                    <div onclick="location.href='../publication/{{ pub.id }}/'">
+                                        <div class="row">
+                                            <div class="col-10">
+                                                <h3>{{ pub.title }}</h3>
+                                            </div>
+                                            <div class="ml-auto col-2">
+                                                <h4>{{ pub.author.first_name }} {{ pub.author.last_name }}</h4>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-0">
+                                            <div class="col-10">
+                                                <span class="badge badge-danger">{{  pub.topic.description }}</span>
+                                            </div>
+                                            <div class="col-2 ml-autor">
+                                                <p>{{ pub.created_on }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <p>Não existem publicações arquivadas disponíveis</p>
+                            {% endfor %}
+                        </table>
+
                     </div>
                 </div>
             </div>
@@ -267,15 +375,6 @@
             format: 'L'
         });
     });
-
-    function required1() {
-        var comment = document.getElementById("comment").value;
-        if (comment == "") {
-            document.getElementById("btn_submit").disabled = true;
-        } else {
-            document.getElementById("btn_submit").disabled = false;
-        }
-    }
 </script>
 </body>
 </html>
