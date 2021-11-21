@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Zer0Sense | Manage Users</title>
+    <style>
+
+        input {
+            width: 90%;
+        }
+    </style>
+
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="../static/AdminLTE-3.1.0/plugins/fontawesome-free/css/all.css">
+  <!-- IonIcons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../static/AdminLTE-3.1.0/dist/css/adminlte.min.css">
+    <!-- daterange picker -->
+    <link rel="stylesheet" href="../static/AdminLTE-3.1.0/plugins/daterangepicker/daterangepicker.css">
+</head>
+<!--
+`body` tag options:
+`body` tag options:
+
+  Apply one or more of the following classes to to the body tag
+  to get the desired effect
+
+  * sidebar-collapse
+  * sidebar-mini
+-->
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- Navbar -->
+    {% if request.user.is_authenticated %}
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    {% else %}
+    <nav class="navbar navbar-expand navbar-dark navbar-light">
+    {% endif %}
+        <!-- Left navbar links -->
+        <!-- AQUI -->
+        <!-- Só aparece se o utilizador estiver logado -->
+        {% if request.user.is_authenticated %}
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+            </li>
+        </ul>
+        {% else %}
+        <!-- Brand Logo -->
+        <a href="{% url 'publications' %}" class="brand-link">
+            <span class="brand-text font-weight-bold"><b>Zer0Sense</b></span>
+        </a>
+        {% endif %}
+
+        <!-- Right navbar links -->
+        <!-- AQUI -->
+        <!-- Se o utilizador não estiver logado aparece isto, se não aparece logout -->
+
+        <ul class="navbar-nav ml-auto">
+            {% if not request.user.is_authenticated %}
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="{% url 'login' %}" class="nav-link">Login</a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="{% url 'register' %}" class="nav-link">Registar</a>
+            </li>
+            {% else %}
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+            </li>
+            {% endif %}
+        </ul>
+
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    {% if request.user.is_authenticated %}
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Sidebar user panel (optional) -->
+            {% if request.user.is_authenticated %}
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="info">
+                    <!-- AQUI -->
+                    <!-- pôr o nome do user -->
+                    <p>Bem vindo, <br><strong>{{ request.user.username }}</strong></p>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Sidebar Menu -->
+            <!-- AQUI -->
+            <!-- Isto só aparece se o utilizador for autor ou gestor -->
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+                    with font-awesome or any other icon font library -->
+                    <li class="nav-item">
+                        <a href="{% url 'publications' %}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>
+                                Publicações
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'my_publications' %}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>
+                                Minhas Publicações
+                            </p>
+                        </a>
+                    </li>
+                    <!-- AQUI -->
+                    <!-- Isto só aparece se o utilizador for gestor -->
+                    {% if user.group.description == 'Gestor' %}
+                    <li class="nav-item">
+                        <a href="{% url 'pendent_publications' %}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>
+                                Publicações Pendentes
+                            </p>
+                        </a>
+                    </li>
+                        <li class="nav-item">
+                        <a href="{% url 'publicationsArquivadas' %}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>
+                                Publicações Arquivadas
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'manage_users' %}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>
+                                Gerir utilizadores
+                            </p>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+    </aside>
+    {% endif %}
+
+    <!-- Content Wrapper. Contains page content -->
+    {% if request.user.is_authenticated %}
+    <div class="content-wrapper">
+    {% else %}
+    <div class="content-wrapper" style="margin-left: 0px;">
+    {% endif %}
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="mb-2">
+                    <h1 class="m-0">Manage users</h1>
+                </div>
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="input-group mb-3">
+                                {{ author.username.label_tag }}
+                                <div class="ml-2" style="width: 95%;">
+                                    {{ author.username }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-3">
+                            <div class="input-group date" data-target-input="nearest">
+                                {{ author.fullname.label_tag }}
+                                <div class="ml-2"  style="width: 85%;">
+                                    {{ author.fullname.date }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- outra row para as queries -->
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="input-group mb-3">
+                                {{ author.group.label_tag }}
+                                <div class="ml-2" style="width: 95%;">
+                                    {{ author.group }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <button type="submit" class="input-group-text" value><i class="fas fa-check"></i></button>
+                        </div>
+                    </div>
+
+                </form>
+
+                <div class="card card-default mt-3">
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <!-- AQUI -->
+                            <!-- Listar os users -->
+
+                            {% for user in ret_users %}
+                            <tr class="publication_row">
+                                <td>
+                                    <div class="row">
+                                        <div class="col-10">
+                                            <h3>{{ user.username }}</h3>
+                                        </div>
+                                        <div class="ml-auto col-2">
+                                            <h4>{{  user.group.description }}</h4>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-10">
+                                            <h6> {{ user.first_name }} {{ user.last_name }}</h6>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <p>Não existem users</p>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+  <!-- Main Footer -->
+    {% if request.user.is_authenticated %}
+    <footer class="main-footer">
+    {% else %}
+    <footer class="main-footer" style="margin-left: 0px;">
+    {% endif %}
+    <strong>TPW - 2021 <a href="https://github.com/goncalo-leal/TPW_P1"><i class="fab fa-github"></i></a>.</strong>
+    <div class="float-right d-none d-sm-inline-block">
+      <b>Version</b> 1.0
+    </div>
+  </footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="../static/AdminLTE-3.1.0/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="../static/AdminLTE-3.1.0/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE -->
+<script src="../static/AdminLTE-3.1.0/dist/js/adminlte.js"></script>
+
+<!-- OPTIONAL SCRIPTS -->
+<script src="../static/AdminLTE-3.1.0/plugins/chart.js/Chart.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../static/AdminLTE-3.1.0/dist/js/demo.js"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="../static/AdminLTE-3.1.0/dist/js/pages/dashboard3.js"></script>
+<!-- date-range-picker -->
+<script src="../static/AdminLTE-3.1.0/plugins/daterangepicker/daterangepicker.js"></script>
+<script>
+    $(function () {
+        //Date picker
+        $('#reservationdate').datetimepicker({
+            format: 'L'
+        });
+    });
+</script>
+</body>
+</html>

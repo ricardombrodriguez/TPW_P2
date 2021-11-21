@@ -32,6 +32,12 @@ class SearchPubForm(forms.Form):
     date = forms.DateField(label="Date", required=False, widget=forms.widgets.DateInput(attrs={'type': 'date','class': 'datetimepicker-input','data-target': '#datetimepicker1'}))
 
 
+class SearchUsersForm(forms.Form):
+    username = forms.CharField(label="Username", max_length=200, required=False)
+    fullname = forms.CharField(label="Full name", max_length=200, required=False)
+    group = forms.ModelChoiceField(queryset=Groups.objects.all(), label="Group", required=False)
+
+
 class AddPublication(forms.Form):
     title = forms.CharField(label="Title", max_length=200)
     content = forms.CharField(widget=forms.Textarea(attrs={"id":"summernote"}))

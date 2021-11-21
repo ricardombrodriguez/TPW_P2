@@ -6,7 +6,7 @@ from django.contrib.auth import login
 from django.contrib import messages
 from django.db.models import Value as V
 from app.models import Publications, Publication_status, Users, Publication_topics, Comments
-from app.forms import SearchPubForm
+from app.forms import SearchPubForm, SearchUsersForm
 from datetime import *
 
 def register_request(request):
@@ -335,8 +335,58 @@ def pendent_publications(request):
     else:
         return render(request, 'pendent_pubs.html', {'pubs_aproved': ret_pubs, 'form': form})
 
+
+
 def manage_users(request):
-    return render(request, 'login.html')
+
+    if request.method == 'POST':
+
+        form = SearchUsersForm(request.POST)
+
+        if form.is_valid():
+
+            username = form.cleaned_data['username']
+            fullname = form.cleaned_data['fullname']
+            group = form.cleaned_data['group']
+
+            users = Users.objects.all()
+            if username:
+                users = users.filter(username__contains=username)
+            if group:
+                users = users.filter(group__description__exact=group)
+            if group:
+                users = users.annotate(full_name=Concat('author__first_name', V(' '), 'author__last_name')). \
+                    filter(full_name__contains=fullname)
+
+            ret_users = []
+            for user in users:
+                if user.group.description:
+                    ret_users.append(user)
+
+
+        else:
+            form = SearchUsersForm()
+            users = Users.objects.all()
+            ret_users = []
+            for user in users:
+                if user.group.description:
+                    ret_users.append(user)
+
+    else:
+        form = SearchUsersForm()
+        users = Users.objects.all()
+        ret_users = []
+        for user in users:
+            if user.group.description:
+                ret_users.append(user)
+
+    if request.user.is_authenticated:
+        user = Users.objects.get(username__exact=request.user.username)
+        print(user.group)
+        return render(request, 'manage_users.html', {'user' : user, 'ret_users': ret_users, 'form' : form})
+    else:
+        return render(request, 'manage_users.html', {'ret_users': ret_users, 'form' : form})
+
 
 def publicationsArquivadas(request):
     if not request.user.is_authenticated:
