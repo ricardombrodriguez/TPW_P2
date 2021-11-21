@@ -1,15 +1,93 @@
 {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Zer0Sense | Register</title>
 
-<!--Register--> 
-<div class="container py-5">
-	<h1>Register</h1>
-	<form method="POST">
-		{% csrf_token %}
-        <!-- FAZER ATRIBUTO A ATRIBUTO PARA PODER METER CSS NISTO (EX: register_form.username) -->
-		{{ register_form }}
-		<button class="btn btn-primary" type="submit">Register</button>
-	</form>
-	<p class="text-center">If you already have an account, <a href="{% url 'login' %}">login</a> instead.</p>
-</div>
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../static/AdminLTE-3.1.0/plugins/fontawesome-free/css/all.min.css">
+  <!-- icheck bootstrap -->
+  <link rel="stylesheet" href="../static/AdminLTE-3.1.0/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../static/AdminLTE-3.1.0/dist/css/adminlte.min.css">
 
+  <style>
+      input {
+          width: 90%;
+      }
+
+      .card {
+            width: 50%;
+            margin: auto;
+            text-align: center;
+            display: flex;
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            min-width: 600px;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 0 solid rgba(0,0,0,.125);
+            border-radius: 0.25rem;
+      }
+
+      .card-body {
+            -webkit-flex: 1 1 auto;
+            -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
+            min-height: 600px;
+            min-width: 600px;
+            padding: 1.25rem;
+        }
+
+      .register-page {
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+            background-color: #e9ecef;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            height: 100vh;
+            -webkit-justify-content: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+        }
+
+      .register-box {
+            width: 360px;
+        }
+
+
+  </style>
+
+</head>
+<body class="hold-transition register-page">
+    <div class="register-box">
+      <div class="register-logo">
+        <a href="{% url 'publications' %}"><b>Zer0Sense</b></a>
+      </div>
+      <!-- /.login-logo -->
+      <div class="card">
+          <h1>Register</h1>
+    	    <form method="POST">
+                {% csrf_token %}
+                <div class="card-body login-card-body">
+                    <!-- FAZER ATRIBUTO A ATRIBUTO PARA PODER METER CSS NISTO (EX: register_form.username) -->
+                    {{ register_form }}
+                    <button class="btn btn-primary" type="submit">Register</button>
+                </div>
+	        </form>
+	    <p class="text-center">If you already have an account, <a href="{% url 'login' %}">login</a> instead.</p>
+      </div>
+    </div>
+</body>
 {% endblock %}
