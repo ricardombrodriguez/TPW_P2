@@ -40,7 +40,7 @@ class Users(models.Model):
 
 
 class Publications(models.Model):
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=70)
     content = models.CharField(max_length=20000)
     created_on = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(Users, on_delete=models.CASCADE)

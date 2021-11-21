@@ -21,12 +21,10 @@ class RegisterUser(UserCreationForm):
         if commit:
             user.save()
             group = Groups.objects.get(description__exact="Leitor")
-            u = Users(first_name=self.cleaned_data['first_name'], last_name=self.cleaned_data['last_name'], username=self.cleaned_data['username'], group=group, favourites=blank)
+            u = Users(first_name=self.cleaned_data['first_name'], last_name=self.cleaned_data['last_name'], username=self.cleaned_data['username'], group=group)
             u.save()
         return user
-
 
 class SearchPubForm(forms.Form):
     title = forms.CharField(label="Title", max_length=200, required=False)
     date = forms.DateField(label="Date", required=False, widget=forms.widgets.DateInput(attrs={'type': 'date','class': 'datetimepicker-input','data-target': '#datetimepicker1'}))
-
