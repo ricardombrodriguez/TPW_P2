@@ -228,7 +228,7 @@
                                             </div>
                                             <div class="ml-auto col-2">
                                                 <select id="group" name="group">
-                                                    <option value="" selected="selected">{{  user.group.description }}</option>
+                                                    <option value="{{  user.group.description }}" selected="selected">{{  user.group.description }}</option>
                                                     {% for group in groups %}
                                                         {% if group.description != user.group.description %}
                                                         <option value="{{group.description}}">{{group.description}}</option>

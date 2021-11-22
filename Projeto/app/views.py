@@ -376,6 +376,12 @@ def pendent_publications(request):
 
 def manage_users(request):
 
+    if not request.user.is_authenticated:
+        return redirect('/login')
+    user = Users.objects.get(username__exact=request.user.username)
+    if user.group.description != "Gestor" and request.user.username != "admin":
+        return redirect('/publications')
+
     if request.method == 'POST':
 
         if 'Filtro' in request.POST:
@@ -398,20 +404,24 @@ def manage_users(request):
                         filter(full_name__contains=fullname)
 
                 ret_users = []
-                for user in users:
-                    if user.group.description:
-                        ret_users.append(user)
+                for u in users:
+                    if request.user.username == 'admin':
+                        ret_users.append(u)
+                    elif user.group.description == 'Gestor' and u.group.description != 'Gestor':
+                        ret_users.append(u)
 
 
             else:
                 form = SearchUsersForm()
                 users = Users.objects.all()
                 ret_users = []
-                for user in users:
-                    if user.group.description:
-                        ret_users.append(user)
+                for u in users:
+                    if request.user.username == 'admin':
+                        ret_users.append(u)
+                    elif user.group.description == 'Gestor' and u.group.description != 'Gestor':
+                        ret_users.append(u)
 
-        elif 'user' in request.POST:
+        elif 'group' in request.POST:
 
             username = request.POST.get('user')
             group = request.POST.get('group')
@@ -425,18 +435,24 @@ def manage_users(request):
             form = SearchUsersForm()
             users = Users.objects.all()
             ret_users = []
-            for user in users:
-                if user.group.description:
-                    ret_users.append(user)
+            for u in users:
+                if request.user.username == 'admin':
+                    ret_users.append(u)
+                elif user.group.description == 'Gestor' and u.group.description != 'Gestor':
+                    ret_users.append(u)
+
 
     else:
 
         form = SearchUsersForm()
         users = Users.objects.all()
         ret_users = []
-        for user in users:
-            if user.group.description:
-                ret_users.append(user)
+        for u in users:
+            if request.user.username == 'admin':
+                ret_users.append(u)
+            elif user.group.description == 'Gestor' and u.group.description != 'Gestor':
+                ret_users.append(u)
+
 
     groups = Groups.objects.all()
     if request.user.is_authenticated:
