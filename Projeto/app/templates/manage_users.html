@@ -177,20 +177,19 @@
                 <form action="" method="post">
                     {% csrf_token %}
                     <div class="row">
-                        <div class="col-8">
+                        <div class="col-4">
                             <div class="input-group mb-3">
-                                {{ author.username.label_tag }}
+                                {{ form.username.label_tag }}
                                 <div class="ml-2" style="width: 95%;">
-                                    {{ author.username }}
+                                    {{ form.username }}
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-3">
+                        <div class="col-4">
                             <div class="input-group date" data-target-input="nearest">
-                                {{ author.fullname.label_tag }}
+                                {{ form.fullname.label_tag }}
                                 <div class="ml-2"  style="width: 85%;">
-                                    {{ author.fullname.date }}
+                                    {{ form.fullname }}
                                 </div>
                             </div>
                         </div>
@@ -199,14 +198,14 @@
                     <div class="row">
                         <div class="col-8">
                             <div class="input-group mb-3">
-                                {{ author.group.label_tag }}
+                                {{ form.group.label_tag }}
                                 <div class="ml-2" style="width: 95%;">
-                                    {{ author.group }}
+                                    {{ form.group }}
                                 </div>
                             </div>
                         </div>
                         <div class="col-1">
-                            <button type="submit" class="input-group-text" value><i class="fas fa-check"></i></button>
+                            <button type="submit" class="input-group-text" name="Filtro" value="Filtro"><i class="fas fa-check"></i></button>
                         </div>
                     </div>
 
@@ -219,23 +218,37 @@
                             <!-- Listar os users -->
 
                             {% for user in ret_users %}
-                            <tr class="publication_row">
-                                <td>
-                                    <div class="row">
-                                        <div class="col-10">
-                                            <h3>{{ user.username }}</h3>
+                            <form action="." method="post">
+                                {% csrf_token %}
+                                <tr class="publication_row">
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <h3>{{ user.username }}</h3>
+                                            </div>
+                                            <div class="ml-auto col-2">
+                                                <select id="group" name="group">
+                                                    <option value="" selected="selected">{{  user.group.description }}</option>
+                                                    {% for group in groups %}
+                                                        {% if group.description != user.group.description %}
+                                                        <option value="{{group.description}}">{{group.description}}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="ml-auto col-1" style="padding-right: 10px;">
+                                                <input type="hidden" name="user" value="{{ user.username }}">
+                                                <button type="submit" name=Guardar" value="Guardar">Guardar</button>
+                                            </div>
                                         </div>
-                                        <div class="ml-auto col-2">
-                                            <h4>{{  user.group.description }}</h4>
+                                        <div class="row">
+                                            <div class="col-10">
+                                                <h6> {{ user.first_name }} {{ user.last_name }}</h6>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-10">
-                                            <h6> {{ user.first_name }} {{ user.last_name }}</h6>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
+                            </form>
                             {% empty %}
                             <p>Não existem users</p>
                             {% endfor %}
