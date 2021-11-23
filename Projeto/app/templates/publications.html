@@ -13,7 +13,7 @@
         }
         #id_topic {
             display: block;
-            width: 100%;
+            width: 90%;
             height: calc(2.25rem + 2px);
             padding: .375rem .75rem;
             font-size: 1rem;
@@ -141,9 +141,7 @@
                             {% for pub in pubs_aproved %}
                             <tr class="publication_row">
                                 <td>
-                                    {% with "publication/"|add:pub.id as link %}
-                                    <div onclick="go_to({{ pub.id }})">
-                                   
+                                    <div onclick="go_to({{ pub.id }})">                                   
                                         <div class="row">
                                             <div class="col-10">
                                                 <h3>{{ pub.title }}</h3>
@@ -161,7 +159,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    {% endwith %}
                                 </td>
                             </tr>
                             {% empty %}
