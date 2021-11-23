@@ -41,24 +41,21 @@ def insert_pub(request):
             content=content.strip()
             content=content[3:-4]
             categoria=form.cleaned_data['categoria']
+            categoria=categoria.description
             if title and content and categoria:
                 if user.group.description == "Gestor" or user.group.description == "Admin":
                     status = Publication_status.objects.get(description__exact="Aprovado")
                 else:
                     status = Publication_status.objects.get(description__exact="Por Aprovar")
                 cats= Publication_topics.objects.all()
-                control=False
                 for cat in cats:
                     if categoria == cat.description:
-                        control=True
                         topic = Publication_topics.objects.get(description__exact=categoria)
+                        print("escolhido")
                         break
-                if not control:
-                    topic=Publication_topics.objects.create(description=categoria)
-                    topic.save()
-                    topic=Publication_topics.objects.get(description__exact=categoria)
                 p = Publications.objects.create(title=title, content=content, author=user, status=status, topic=topic)
                 p.save()
+                print(p)
                 return redirect('/publications')
             else:
                 form = AddPublication()

@@ -41,7 +41,7 @@ class SearchUsersForm(forms.Form):
 class AddPublication(forms.Form):
     title = forms.CharField(label="Title", max_length=200)
     content = forms.CharField(widget=forms.Textarea(attrs={"id":"summernote"}))
-    categoria = forms.CharField(label="Categoria", max_length=200)
+    categoria = forms.ModelChoiceField(queryset=Publication_topics.objects.all(), label="Topic")
 
 
 class AddComment(forms.Form):
