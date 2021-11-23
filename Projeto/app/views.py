@@ -16,10 +16,13 @@ def register_request(request):
             user = form.save()
             login(request, user)
             messages.success(request, "Registration successful." )
-            return redirect("login.html")
+            return redirect("../")
         messages.error(request, "Unsuccessful registration. Invalid information.")
     form = RegisterUser()
     return render(request=request, template_name="register.html", context={"register_form" : form})
+
+def index(request):
+    return redirect("publications")
 
 def insert_pub(request):
     # só pode ir para esta página se o utilizador estiver logado
@@ -39,7 +42,7 @@ def insert_pub(request):
             content=content[3:-4]
             categoria=form.cleaned_data['categoria']
             if title and content and categoria:
-                if user.group.description == "Gestor":
+                if user.group.description == "Gestor" or user.group.description == "Admin":
                     status = Publication_status.objects.get(description__exact="Aprovado")
                 else:
                     status = Publication_status.objects.get(description__exact="Por Aprovar")
@@ -121,8 +124,9 @@ def publications(request):
     else:
         return render(request, 'publications.html', {'pubs_aproved': ret_pubs, 'form' : form})
 
-def publication(request,pub_id):
-
+def publication(request, pub_id):
+    #  pub_id = request.GET['pub_id']
+    # pub_id = 1
     if request.method == 'POST' and request.user.is_authenticated:
         form = AddComment(request.POST)
         user = Users.objects.get(username__exact=request.user.username)
@@ -148,7 +152,7 @@ def publication(request,pub_id):
                     if fav.publication == pub and fav.author == user:
                         control = True
                         break
-                if pub.status.description == "Aprovado" or user.group.description == 'Gestor':
+                if pub.status.description == "Aprovado" or user.group.description == "Gestor" or user.group.description == "Admin":
                     return render(request, 'publication.html', {"pub": pub, "comments": ret_coms, "form": form,"user":user, 'error': error,"control":control})
                 return redirect('/publications')
 
@@ -240,7 +244,8 @@ def publication(request,pub_id):
                 if fav.publication == pub and fav.author == user:
                     control=True
                     break
-        if pub.status.description =="Aprovado" or (user is not None and user.group.description == 'Gestor'):
+            
+        if pub.status.description =="Aprovado" or (user is not None and (user.group.description == 'Gestor' or user.group.description == 'Admin')):
             return render(request, 'publication.html', {"pub":pub,"comments":ret_coms,"form":form,"user":user,"control":control})
         return redirect('/publications')
 
@@ -323,7 +328,7 @@ def pendent_publications(request):
     if not request.user.is_authenticated:
         return redirect('/login')
     user = Users.objects.get(username__exact=request.user.username)
-    if user.group.description != "Gestor":
+    if user.group.description != "Gestor" and user.group.description != "Admin":
         return redirect('/publications')
     if request.method == 'POST':
         form = SearchPubForm(request.POST)
@@ -379,7 +384,7 @@ def manage_users(request):
     if not request.user.is_authenticated:
         return redirect('/login')
     user = Users.objects.get(username__exact=request.user.username)
-    if user.group.description != "Gestor" and request.user.username != "admin":
+    if user.group.description != "Gestor" and user.group.description != "Admin":
         return redirect('/publications')
 
     if request.method == 'POST':
@@ -405,9 +410,9 @@ def manage_users(request):
 
                 ret_users = []
                 for u in users:
-                    if request.user.username == 'admin':
+                    if user.group.description == 'Admin':
                         ret_users.append(u)
-                    elif user.group.description == 'Gestor' and u.group.description != 'Gestor':
+                    elif user.group.description == 'Gestor' and u.group.description != 'Gestor' and u.group.description != 'Admin':
                         ret_users.append(u)
 
 
@@ -416,9 +421,9 @@ def manage_users(request):
                 users = Users.objects.all()
                 ret_users = []
                 for u in users:
-                    if request.user.username == 'admin':
+                    if user.group.description == 'Admin':
                         ret_users.append(u)
-                    elif user.group.description == 'Gestor' and u.group.description != 'Gestor':
+                    elif user.group.description == 'Gestor' and u.group.description != 'Gestor' and u.group.description != 'Admin':
                         ret_users.append(u)
 
         elif 'group' in request.POST:
@@ -436,9 +441,9 @@ def manage_users(request):
             users = Users.objects.all()
             ret_users = []
             for u in users:
-                if request.user.username == 'admin':
+                if user.group.description == 'Admin':
                     ret_users.append(u)
-                elif user.group.description == 'Gestor' and u.group.description != 'Gestor':
+                elif user.group.description == 'Gestor' and u.group.description != 'Gestor' and u.group.description != 'Admin':
                     ret_users.append(u)
 
 
@@ -450,7 +455,7 @@ def manage_users(request):
         for u in users:
             if request.user.username == 'admin':
                 ret_users.append(u)
-            elif user.group.description == 'Gestor' and u.group.description != 'Gestor':
+            elif user.group.description == 'Gestor' and u.group.description != 'Gestor' and u.group.description != 'Admin':
                 ret_users.append(u)
 
 
@@ -467,7 +472,7 @@ def publicationsArquivadas(request):
     if not request.user.is_authenticated:
         return redirect('/login')
     user = Users.objects.get(username__exact=request.user.username)
-    if user.group.description != "Gestor":
+    if user.group.description != "Gestor" and user.group.description != "Admin":
         return redirect('/publications')
     if request.method == 'POST':
         form = SearchPubForm(request.POST)
