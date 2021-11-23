@@ -63,7 +63,16 @@
                 </div>
                 <div class="form-group" style="margin-bottom: 2rem;">
                     <!-- /.content-header -->
-                    {%   if (user.group.description == "Gestor" or user.group.description == "Admin") and pub.status.description == "Por Aprovar" %}
+                    {%   if user.group.description == "Gestor" and pub.status.description == "Por Aprovar" %}
+                        <div class="m-2 float-right">
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="publication_aprov_id" value="{{ pub.id }}"/>
+                                <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-check"></i> Aceitar Publicação</button>
+                            </form>
+                        </div>
+                    {% endif %}
+                    {%   if user.group.description == "Admin" and pub.status.description == "Por Aprovar" %}
                         <div class="m-2 float-right">
                             <form action="" method="post">
                                 {% csrf_token %}
@@ -90,7 +99,7 @@
                                 </form>
                             </div>
                     {%   endif %}
-                    {%   if (user.group.description == "Gestor" or user.group.description == "Admin")  and pub.status.description == "Por Aprovar" %}
+                    {%   if user.group.description == "Gestor"  and pub.status.description == "Por Aprovar" %}
                             <div class="m-2 float-right">
                                 <form action="" method="post">
                                     {% csrf_token %}
@@ -99,7 +108,25 @@
                                 </form>
                             </div>
                     {%  endif %}
-                    {%   if (user.group.description == "Gestor" or user.group.description == "Admin")  and pub.status.description == "Aprovado" %}
+                    {%   if user.group.description == "Admin"  and pub.status.description == "Por Aprovar" %}
+                            <div class="m-2 float-right">
+                                <form action="" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="publication_arquivar" value="{{ pub.id }}" />
+                                    <button type="submit" class="btn btn-success btn-sm">Arquivar Publicação</button>
+                                </form>
+                            </div>
+                    {%  endif %}
+                    {%   if user.group.description == "Gestor" and pub.status.description == "Aprovado" %}
+                            <div class="m-2 float-right">
+                                <form action="" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="publication_arquivar" value="{{ pub.id }}" />
+                                    <button type="submit" class="btn btn-success btn-sm">Arquivar Publicação</button>
+                                </form>
+                            </div>
+                    {%  endif %}
+                    {%   if user.group.description == "Admin" and pub.status.description == "Aprovado" %}
                             <div class="m-2 float-right">
                                 <form action="" method="post">
                                     {% csrf_token %}
@@ -135,6 +162,32 @@
                                     </div>
                                 
                                     {%   if user.group.description == "Gestor" %}
+                                    <div class="timeline-footer" style="padding-bottom: 1.5rem;">
+                                        <div class="form-group">
+                                            <div class="float-right" style="width: 10%;">
+                                                <form action="" method="post">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="comment_id" value="{{ comment.id }}" />
+                                                    <input type="submit" value="Apagar Comentario" class="btn btn-danger btn-sm" />
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {%   endif %}
+                                    {%   if user.group.description == "Admin" %}
+                                    <div class="timeline-footer" style="padding-bottom: 1.5rem;">
+                                        <div class="form-group">
+                                            <div class="float-right" style="width: 10%;">
+                                                <form action="" method="post">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="comment_id" value="{{ comment.id }}" />
+                                                    <input type="submit" value="Apagar Comentario" class="btn btn-danger btn-sm" />
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {%   endif %}
+                                    {%   if comment.author.username == user.username %}
                                     <div class="timeline-footer" style="padding-bottom: 1.5rem;">
                                         <div class="form-group">
                                             <div class="float-right" style="width: 10%;">
