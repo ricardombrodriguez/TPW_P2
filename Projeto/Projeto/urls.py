@@ -30,6 +30,7 @@ urlpatterns = [
     path("pendent_publications/", views.pendent_publications, name="pendent_publications"),
     path("publicationsArquivadas/", views.publicationsArquivadas, name="publicationsArquivadas"),
     path("manage_users/", views.manage_users, name="manage_users"),
-    path("favoritos/",views.favoritos, name="favoritos")
+    path("favoritos/",views.favoritos, name="favoritos"),
+    path("topic/",views.topic,name="topic"),
 
 ]

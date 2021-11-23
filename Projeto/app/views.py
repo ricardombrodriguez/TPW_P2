@@ -570,3 +570,35 @@ def favoritos(request):
         return render(request, 'favoritos.html', {'user': user, 'pubs_aproved': ret_pubs, 'form': form})
     else:
         return render(request, 'favoritos.html', {'pubs_aproved': ret_pubs, 'form': form})
+
+def topic(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+    user = Users.objects.get(username__exact=request.user.username)
+    if user.group.description != "Gestor" and user.group.description != "Admin":
+        return redirect('/publications')
+    if  request.POST:
+        if "topic_des" in request.POST:
+            print("entrei")
+            id = request.POST["topic_id"]
+            des= request.POST["topic_des"]
+            if Publication_topics.objects.filter(description__exact=des).exists():
+                pass
+            else:
+                topics=Publication_topics.objects.get(id__exact=id)
+                topics.description=des
+                topics.save()
+
+        elif "new_topic" in request.POST:
+            new_topic= request.POST["new_topic"]
+            if Publication_topics.objects.filter(description__exact=new_topic).exists():
+                pass
+            else:
+                topics= Publication_topics.objects.create(description=new_topic)
+                topics.save()
+
+
+    topics = Publication_topics.objects.all()
+    print(topics)
+    return render(request,'topic.html',{'user':user,"topics":topics})
+

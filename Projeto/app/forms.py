@@ -50,11 +50,5 @@ class AddComment(forms.Form):
 
 
 
-
-#UTILIZAR PUBLICAÇÃO OU SEJA PASSAR o estado para aprovado
-class aceptPub(forms.Form):
-    id = forms.CharField(label="ID", max_length=200, required=False)
-
-#UTILIZAR PUBLICAÇÃO OU SEJA PASSAR o estado para arquivado
-class deletePub(forms.Form):
-    id = forms.CharField(label="ID", max_length=200, required=False)
+class changePub(forms.Form):
+    categoria = forms.CharField(label="Topic", max_length=200)
