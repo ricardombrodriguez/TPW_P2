@@ -61,7 +61,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="mb-8 form-group">
+                <div class="form-group" style="margin-bottom: 2rem;">
                     <!-- /.content-header -->
                     {%   if user.group.description == "Gestor" and pub.status.description == "Por Aprovar" %}
                         <div class="m-2 float-right">
@@ -116,9 +116,9 @@
             <div class="container-fluid">
                 <div class="card card-default mt-3">
                     <div class="card-body">
-                        <p>{{ pub.content}}</p>
-                        <div class="ml-auto">
-                            <p>{{ pub.author }}</p>
+                        <p>{{ pub.content|safe }}</p>
+                        <div class="float-right">
+                            <p>Autor: {{ pub.author }}</p>
                         </div>
                     </div>
                 </div>
@@ -133,15 +133,21 @@
                                     <div class='timeline-body'>
                                         {{ comment.comment }}
                                     </div>
-                                </div>
+                                
                                     {%   if user.group.description == "Gestor" %}
-                                    <form action="" method="post">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="comment_id" value="{{ comment.id }}">
-                                        <input  type="submit" value="Apagar Comentario" class="btn btn-danger"></input>
-
-                                    </form>
+                                    <div class="timeline-footer" style="padding-bottom: 1.5rem;">
+                                        <div class="form-group">
+                                            <div class="float-right" style="width: 10%;">
+                                                <form action="" method="post">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="comment_id" value="{{ comment.id }}" />
+                                                    <input type="submit" value="Apagar Comentario" class="btn btn-danger btn-sm" />
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                                     {%   endif %}
+                                </div>
                                 {% endfor %}
                             </div>
                             {% if error %}
@@ -153,13 +159,13 @@
                                 <div class="timeline-item">
                                     <form action="" method="post">
                                         {% csrf_token %}
-                                    <div class="timeline-body">
-                                        {{ form.content }}
-                                        <br>
-                                        <div class="ml-auto" style="right: 0">
-                                            <input type="submit" class="btn btn-primary btn-sm ml-auto" disabled="disabled" id="btn_submit" value="enviar" />
+                                        <div class="timeline-body">
+                                            {{ form.content }}
+                                            <br>
+                                            <div class="mt-1 float-right" style="width: 10%;">
+                                                <input type="submit" class="btn btn-primary btn-sm" disabled="disabled" id="btn_submit" value="Enviar" />
+                                            </div>
                                         </div>
-                                    </div>
                                     </form>
                                 </div>
                             </div>

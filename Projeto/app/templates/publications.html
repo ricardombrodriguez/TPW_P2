@@ -141,7 +141,9 @@
                             {% for pub in pubs_aproved %}
                             <tr class="publication_row">
                                 <td>
-                                    <div onclick="location.href='../publication/{{ pub.id }}'">
+                                    {% with "publication/"|add:pub.id as link %}
+                                    <div onclick="go_to({{ pub.id }})">
+                                   
                                         <div class="row">
                                             <div class="col-10">
                                                 <h3>{{ pub.title }}</h3>
@@ -159,6 +161,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    {% endwith %}
                                 </td>
                             </tr>
                             {% empty %}
@@ -213,6 +216,10 @@
         });
         $('#id_topic').addClass('form-control');
     });
+
+    function go_to(id) {
+        location.href="../publication/"+id
+    }
 </script>
 </body>
 </html>
