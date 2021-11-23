@@ -5,7 +5,7 @@
 Este projeto foi desenvolvido no âmbito da uc [Tecnologias e Programação Web]. O objetivo do projeto é desenvolver uma aplicação web em Django na qual aplicamos o que aprendemos ao longo das aulas.
 
 O nosso projeto consiste num blog em que um grupo de pessoas pode publicar os seus pensamentos sobre vários temas.
-O blog estará dividido em 3 tipos de utilizador:
+O blog estará dividido em 4 tipos de utilizadores:
 
 - Admin: tem a função de gerir toda a plataforma e rever o trabalho dos gestores
 - Gestor: aprova as publicações e pode gerir os outros utilizadores e o seu grupo e pode eliminar comentários impróprios
@@ -25,7 +25,32 @@ Os estados poderão ser alterados ou poderão ser adicionados mais, do lado do d
 
 O template do projeto foi pensado em grupo e fizemos um esboço à mão do qe pretendíamos que acontecesse. Este esboço pode ser consultado [aqui](./Template_TPW.pdf)
 
+
+
 ## Funcionalidades:
+
+#### 
+
+**Admin**:
+
+- Tem acesso a todas as páginas da plataforma.
+- Pode filtrar, visualizar e adicionar publicações. Além disso, este pode aprovar publicações 'Por Aprovar' e/ou arquivar publicações com estado 'Aprovado'. As publicações submetidas por Admins são automaticamente submetidas.
+- Pode adicionar/remover uma publicação dos favoritos, bem como visualizar a lista da mesma.
+- Tem acesso à página de publicações pendentes ('Por Aprovar'), podendo aprovar as publicações na página detalhada das mesmas.
+- Tem acesso à página de publicações arquivadas ('Arquivado'), podendo aprovar as publicações na página detalhada das mesmas.
+- Tem acesso à página de gestão de utilizadores. Uma vez que o 'Admin' é o grupo com maior nível de permissões, este pode alterar o grupo de outros utilizadores e guardar o novo estado.
+- Pode inserir um novo tópico de publicação ou alterar um tópico já existente. Não é permitido inserir ou alterar um tópico para uma designação já existente.
+
+
+
+**Gestor**:
+
+- Tem acesso a todas as páginas da plataforma.
+- A única diferença entre este e o administrador é que este não tem permissão para gerir utilizadores 'Admin', uma vez que este encontra-se abaixo deste na hierarquia de autorização.
+
+
+
+
 
 
 
