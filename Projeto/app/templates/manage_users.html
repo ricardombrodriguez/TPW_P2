@@ -145,7 +145,12 @@
                                                         <option value="{{  u.group.description }}" selected="selected">{{  u.group.description }}</option>
                                                         {% for group in groups %}
                                                             {% if group.description != u.group.description %}
-                                                            <option value="{{group.description}}">{{group.description}}</option>
+                                                                {% if group.description == "Admin" and user.group.description == "Admin" %}
+                                                                    <option value="{{group.description}}">{{group.description}}</option>
+                                                                {% endif %}
+                                                                {% if group.description != "Admin" %}
+                                                                    <option value="{{group.description}}">{{group.description}}</option>
+                                                                {% endif %}
                                                             {% endif %}
                                                         {% endfor %}
                                                     </select>

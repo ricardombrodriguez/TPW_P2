@@ -7,7 +7,8 @@ Este projeto foi desenvolvido no âmbito da uc [Tecnologias e Programação Web]
 O nosso projeto consiste num blog em que um grupo de pessoas pode publicar os seus pensamentos sobre vários temas.
 O blog estará dividido em 3 tipos de utilizador:
 
-- Gestor: funciona como um admin de todo o blog: aprova as publicações e pode gerir os outros utilizadores e o seu grupo
+- Admin: tem a função de gerir toda a plataforma e rever o trabalho dos gestores
+- Gestor: aprova as publicações e pode gerir os outros utilizadores e o seu grupo e pode eliminar comentários impróprios
 - Autor: escreve as publicações e espera pela aprovação do gestor para que estas fiquem online
 - Leitor: consegue apenas ler e comentar as publicações
 
@@ -23,6 +24,19 @@ Os estados das publicações são mais restritos:
 Os estados poderão ser alterados ou poderão ser adicionados mais, do lado do django os valores dos id's dos estados estão guardados em constantes, para podermos utilizar o id do estado diretamente.
 
 O template do projeto foi pensado em grupo e fizemos um esboço à mão do qe pretendíamos que acontecesse. Este esboço pode ser consultado [aqui](./Template_TPW.pdf)
+
+## Funcionalidades:
+
+
+
+Para aceder ao site: http://zer0sense.pythonanywhere.com/
+
+### Logins:
+
+- Admin: user: admin | pass: admin
+- Gestor: user: bernas | pass: marega123
+- Autor: user: reis | pass: ratisse123
+- Leitor: user: bulastro | pass: porto123
 
 
 ## Autores:
