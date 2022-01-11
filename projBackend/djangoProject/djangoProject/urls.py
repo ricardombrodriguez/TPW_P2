@@ -25,4 +25,9 @@ urlpatterns = [
     path('ws/authorcre', views.create_author),
     path('ws/authorupd', views.update_author),
     path('ws/authordel/<int:id>', views.del_author),
+    path('ws/groups', views.get_group),
+    path('ws/userupd', views.update_User),
+    path('ws/users', views.get_users),
+    path('ws/user', views.get_user),
+
 ]

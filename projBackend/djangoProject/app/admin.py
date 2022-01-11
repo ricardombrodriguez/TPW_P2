@@ -12,3 +12,5 @@ admin.site.register(Publication_topics)
 admin.site.register(Publications)
 admin.site.register(Comments)
 admin.site.register(Favorites)
+
+

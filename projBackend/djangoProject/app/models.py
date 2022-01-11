@@ -16,13 +16,29 @@ class Groups(models.Model):
     def __str__(self):
         return self.description
 
-
+if len(Groups.objects.all()) == 0:
+    group = Groups(description='Admin')
+    group.save()
+    group = Groups(description='Leitor')
+    group.save()
+    group = Groups(description='Gestor')
+    group.save()
+    group = Groups(description='Autor')
+    group.save()
 class Publication_status(models.Model):
     description = models.CharField(max_length=70)
 
 
     def __str__(self):
         return self.description
+
+if len(Publication_status.objects.all()) == 0:
+    group = Publication_status(description='Arquivado')
+    group.save()
+    group = Publication_status(description='Por Aprovar')
+    group.save()
+    group = Publication_status(description='Aprovado')
+    group.save()
 
 
 class Publication_topics(models.Model):
@@ -67,3 +83,4 @@ class Comments(models.Model):
 class Favorites(models.Model):
     author = models.ForeignKey(Users, on_delete=models.CASCADE)
     publication = models.ForeignKey(Publications, on_delete=models.CASCADE)
+
