@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
-import { MenuComponent } from './components/menu/menu.component';
 import { SearchComponent } from './components/search/search.component';
 import { PublicationComponent } from './components/publication/publication.component';
 import { TopicComponent } from './components/topic/topic.component';
@@ -21,11 +21,11 @@ import { ManageUsersComponent } from './pages/manage-users/manage-users.componen
 import { ManageTopicsComponent } from './pages/manage-topics/manage-topics.component';
 import { CreatePublicationComponent } from './pages/create-publication/create-publication.component';
 import { CommentComponent } from './components/comment/comment.component';
+import { MenuComponent } from './components/menu/menu.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MenuComponent,
     SearchComponent,
     PublicationComponent,
     TopicComponent,
@@ -42,11 +42,13 @@ import { CommentComponent } from './components/comment/comment.component';
     ManageUsersComponent,
     ManageTopicsComponent,
     CreatePublicationComponent,
-    CommentComponent
+    CommentComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,49 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Zer0Sense | Register</title>
-
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="/static/AdminLTE-3.1.0/plugins/fontawesome-free/css/all.min.css">
-    <!-- icheck bootstrap -->
-    <link rel="stylesheet" href="/static/AdminLTE-3.1.0/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="/static/AdminLTE-3.1.0/dist/css/adminlte.min.css">
-
-    <style>
-        input {
-            width: 90%;
-        }
-
-        .card {
-            width: 50%;
-            margin: auto;
-            text-align: left;
-            min-width: 600px;
-            word-wrap: break-word;
-            background-color: #fff;
-            background-clip: border-box;
-            border: 0 solid rgba(0, 0, 0, .125);
-            border-radius: 0.25rem;
-        }
-
-        .card-body {
-            -webkit-flex: 1 1 auto;
-            -ms-flex: 1 1 auto;
-            flex: 1 1 auto;
-            min-width: 600px;
-            padding: 1.25rem;
-        }
-    </style>
-
-</head>
-
 <body class="hold-transition register-page">
     <div>
         <div class="register-logo">
@@ -56,28 +10,28 @@
                 <form method="POST">
                     <div class="card-body login-card-body">
                         <div class="form-group mb-3">
-                            Username
+                            <b>Username:</b>
                             <div class="col-12 text-center">
-                                Username
+                                <input type="text" id="username" class="input">
                             </div>
                         </div>
                         <p>Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</p>
                         <div class="form-group mb-3">
-                            First Name
+                            <b>First Name:</b>
                             <div class="col-12 text-center">
-                                First name
+                                <input type="text" id="firstname" class="input">
                             </div>
                         </div>
                         <div class="form-group mb-3">
-                            Last Name
+                            <b>Last Name:</b>
                             <div class="col-12 text-center">
-                                Last name
+                                <input type="text" id="lastname" class="input">
                             </div>
                         </div>
                         <div class="form-group mb-3">
-                            Password
+                            <b>Password:</b>
                             <div class="col-12 text-center">
-                                Password
+                                <input type="password" id="password" class="input">
                             </div>
                         </div>
                         <ul>
@@ -88,9 +42,9 @@
                         </ul>
                         <p>Enter the same password as before, for verification.</p>
                         <div class="form-group mb-3">
-                            Password:
+                            <b>Password confirmation:</b>
                             <div class="col-12 text-center">
-                                password2
+                                <input type="password" id="password2" class="input">
                             </div>
                         </div>
                         <p class="validation-summary-errors">Please enter a correct user name and password.</p>
