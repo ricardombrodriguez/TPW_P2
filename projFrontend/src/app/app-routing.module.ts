@@ -1,12 +1,13 @@
 import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FavouriteComponent } from './components/favourite/favourite.component';
 import { PublicationComponent } from './components/publication/publication.component';
 import { TopicComponent } from './components/topic/topic.component';
 import { ActivePublicationsComponent } from './pages/active-publications/active-publications.component';
 import { ClosedPublicationsComponent } from './pages/closed-publications/closed-publications.component';
 import { CreatePublicationComponent } from './pages/create-publication/create-publication.component';
+import { FavouritesComponent } from './pages/favourites/favourites.component';
 import { LoginComponent } from './pages/login/login.component';
+import { ManageTopicsComponent } from './pages/manage-topics/manage-topics.component';
 import { ManageUsersComponent } from './pages/manage-users/manage-users.component';
 import { MyPublicationsComponent } from './pages/my-publications/my-publications.component';
 import { PendentPublicationsComponent } from './pages/pendent-publications/pendent-publications.component';
@@ -26,11 +27,11 @@ const routes: Routes = [
 
   { path: 'closed_publications', component: ClosedPublicationsComponent },
 
-  { path: 'favourites', component: FavouriteComponent },
+  { path: 'favourites', component: FavouritesComponent },
 
   { path: 'users', component: ManageUsersComponent },
 
-  { path: 'topics', component: TopicComponent },
+  { path: 'topics', component: ManageTopicsComponent },
 
   { path: 'publication/:id', component: PublicationComponent },
 

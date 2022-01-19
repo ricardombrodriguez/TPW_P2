@@ -1,1 +1,155 @@
-<p>closed-publications works!</p>
+<app-menu></app-menu>
+
+<div class="wrapper">
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <div class="content-wrapper" style="margin-left: 0px;">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="mb-2">
+                        <h1 class="m-0">Closed publications</h1>
+                    </div>
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+
+            <!-- Main content -->
+            <div class="content">
+                <div class="container-fluid">
+                    <form action="" method="post">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="row">
+                                    <div class="col-2 input-group mb-3">
+                                        <b>Title:</b>
+                                    </div>
+                                    <div class="col-10 float-right">
+                                        <input type="text" id="title" name="title">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-3">
+                                <div class="row">
+                                    <div class="input-group date col-2" data-target-input="nearest">
+                                        <b>Date:</b>
+                                    </div>
+                                    <div class="col-10">
+                                        <input type="date" id="date" name="date">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="row">
+                                    <div class="input-group mb-3 col-2">
+                                        <b>Author:</b>
+                                    </div>
+                                    <div class="col-10">
+                                        <input type="text" id="author" name="author">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-3">
+                                <div class="row">
+                                    <div class="input-group mb-3 col-2">
+                                        <b>Topic:</b>
+                                    </div>
+                                    <div class="col-10">
+                                        <select class="form-control" id="topic" name="topic">
+                                            <option [value]="1">Topico 1</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-1">
+                                <button type="submit" class="btn btn-primary btn-sm"><i
+                                        class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+
+                    </form>
+
+                    <div class="card card-default mt-3">
+                        <div class="card-body">
+
+
+                            <p>Found NNNNN publication(S).</p>
+
+                            <table class="table table-bordered">
+                                <!-- AQUI -->
+                                <!-- Listar as publicações -->
+
+                                <tr class="publication_row">
+                                    <td>
+                                        <!-- on click go to pub id -->
+                                        <div>
+                                            <div class="row">
+                                                <div class="col-10">
+                                                    <h3>titulo</h3>
+                                                </div>
+                                                <div class="ml-auto col-2">
+                                                    <h4>fname lname</h4>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-0">
+                                                <div class="col-10">
+                                                    <span class="badge badge-danger">topic description</span>
+                                                </div>
+                                                <div class="col-2 ml-autor">
+                                                    <p>created on</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- se n existir!!!!!!-->
+                                <p>No closed publications available.</p>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.container-fluid -->
+            </div>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+    </div>
+</div>
+
+
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="/static/AdminLTE-3.1.0/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="/static/AdminLTE-3.1.0/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE -->
+<script src="/static/AdminLTE-3.1.0/dist/js/adminlte.js"></script>
+
+<!-- OPTIONAL SCRIPTS -->
+<script src="/static/AdminLTE-3.1.0/plugins/chart.js/Chart.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="/static/AdminLTE-3.1.0/dist/js/demo.js"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="/static/AdminLTE-3.1.0/dist/js/pages/dashboard3.js"></script>
+<!-- date-range-picker -->
+<script src="/static/AdminLTE-3.1.0/plugins/daterangepicker/daterangepicker.js"></script>
+<script>
+    $(function () {
+        //Date picker
+        $('#reservationdate').datetimepicker({
+            format: 'L'
+        });
+        $('#id_topic').addClass('form-control');
+    });
+
+    function go_to(id) {
+        location.href = "../publication/" + id
+    }
+</script>

@@ -8,7 +8,7 @@
             <div class="content-header">
                 <div class="container-fluid">
                     <div class="mb-2">
-                        <h1 class="m-0">Publicações</h1>
+                        <h1 class="m-0">Publications</h1>
                     </div>
                 </div><!-- /.container-fluid -->
             </div>
@@ -22,44 +22,47 @@
                             <div class="col-8">
                                 <div class="row">
                                     <div class="col-2 input-group mb-3">
-                                        Title
+                                        <b>Title:</b>
                                     </div>
                                     <div class="col-10 float-right">
-                                        titulo
+                                        <input type="text" id="title" name="title">
                                     </div>
                                 </div>
                             </div>
 
                             <div class="col-3">
                                 <div class="row">
-                                    <div class="col-2 input-group date" data-target-input="nearest">
-                                        Data
+                                    <div class="input-group date col-2" data-target-input="nearest">
+                                        <b>Date:</b>
                                     </div>
-                                    <div class="col-8">
-                                        data
+                                    <div class="col-10">
+                                        <input type="date" id="date" name="date">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- outra row para as queries -->
+
                         <div class="row">
                             <div class="col-8">
                                 <div class="row">
                                     <div class="input-group mb-3 col-2">
-                                        Autor
+                                        <b>Author:</b>
                                     </div>
-                                    <div class="col-10 float-right">
-                                        autor
+                                    <div class="col-10">
+                                        <input type="text" id="author" name="author">
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-3">
                                 <div class="row">
-                                    <div class="col-2 input-group mb-3">
-                                        Topico
+                                    <div class="input-group mb-3 col-2">
+                                        <b>Topic:</b>
                                     </div>
-                                    <div class="col-8">
-                                        topico
+                                    <div class="col-10">
+                                        <select class="form-control" id="topic" name="topic">
+                                            <option [value]="1">Topico 1</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
