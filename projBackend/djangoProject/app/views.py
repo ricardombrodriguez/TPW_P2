@@ -367,6 +367,19 @@ def getPublicationsPendent(request):
     return Response(serializer.data)
 
 @api_view(['GET'])
+def getPublicationsApproved(request):
+    publications = Publications.objects.all()
+    ret = []
+    state = Publication_status.objects.get(description="Aprovado")
+    for publication in publications:
+        if publication.status == state:
+            ret.append(publication)
+
+    serializer = PublicationsSerializer(ret, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
 def getAuthorPublicationsArquivadas(request):
     id = int(request.GET['id'])
     try:
