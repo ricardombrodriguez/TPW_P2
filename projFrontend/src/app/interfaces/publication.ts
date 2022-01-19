@@ -1,13 +1,13 @@
 import { Publication_Status } from "./publication_status";
 import { Publication_Topics } from "./publication_topics";
-import { Users } from "./users";
+import { User } from "./user";
 
-export interface Publication{
-    id : number;
+export interface Publication {
+    id: number;
     title: string;
-    content:string;
-    author:Users;
-    created_on:string;
-    status:Publication_Status;
-    topic:Publication_Topics;
+    content: string;
+    author: User;
+    created_on: string;
+    status: Publication_Status;
+    topic: Publication_Topics;
 }

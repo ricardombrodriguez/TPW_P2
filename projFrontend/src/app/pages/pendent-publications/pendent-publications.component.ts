@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Publication } from 'src/app/interfaces/publication';
+import { PublicationService } from 'src/app/services/publication.service';
 
 @Component({
   selector: 'app-pendent-publications',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PendentPublicationsComponent implements OnInit {
 
-  constructor() { }
+  public publications!: Publication[];
+
+  constructor(private publicationsService: PublicationService) { }
 
   ngOnInit(): void {
+
+    this.getPendentPublications();
+
   }
+
+  getPendentPublications(): void {
+    this.publicationsService.getPendentPublications().subscribe((publications) => {
+      this.publications = publications;
+    });
+  }
+
 
 }

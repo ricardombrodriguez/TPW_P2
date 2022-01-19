@@ -1,1 +1,22 @@
-<p>publication works!</p>
+<tr class="publication_row" routerLink="./publication/{{ publication.id }}" style="width: auto;">
+    <td>
+        <div>
+            <div class=" row">
+                <div class="col-10">
+                    <h3>{{ publication.title }}</h3>
+                </div>
+                <div class="ml-auto col-2">
+                    <h4>{{ publication.author.first_name }} {{ publication.author.last_name }} </h4>
+                </div>
+            </div>
+            <div class="row mb-0">
+                <div class="col-10">
+                    <span class="badge badge-danger">{{ publication.topic.description }}</span>
+                </div>
+                <div class="col-2 ml-autor">
+                    <p>{{ publication.created_on }}</p>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>

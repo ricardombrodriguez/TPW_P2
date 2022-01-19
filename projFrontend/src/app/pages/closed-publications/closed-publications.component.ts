@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Publication } from 'src/app/interfaces/publication';
+import { PublicationService } from 'src/app/services/publication.service';
 
 @Component({
   selector: 'app-closed-publications',
@@ -7,9 +9,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ClosedPublicationsComponent implements OnInit {
 
-  constructor() { }
+  public publications!: Publication[];
+
+  constructor(private publicationsService: PublicationService) { }
 
   ngOnInit(): void {
+
+    this.getClosedPublications();
+
+  }
+
+  getClosedPublications(): void {
+    this.publicationsService.getClosedPublications().subscribe((publications) => {
+      this.publications = publications;
+    });
   }
 
 }

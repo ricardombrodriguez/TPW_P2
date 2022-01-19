@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Publication } from 'src/app/interfaces/publication';
 
 @Component({
   selector: 'app-publication',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PublicationComponent implements OnInit {
 
+  @Input() publication!: Publication;
+
   constructor() { }
 
   ngOnInit(): void {
+
+
+
+
   }
+
+
 
 }
