@@ -1,5 +1,7 @@
 from django.contrib import admin
-from app.models import Groups, Users, Publication_status, Publication_topics, Publications, Comments, Favorites
+from app.models import  Groups, Users, Publication_status, Publication_topics, Publications, Comments, Favorites
+# Register your models here.
+
 
 # Register your models here.
 admin.site.register(Groups)

@@ -43,4 +43,11 @@ class FavoritesSerializer(serializers.ModelSerializer):
         fields = ('id','author','publication')
 
 
+class FavoritesSerializerCreate(serializers.ModelSerializer):
+    class Meta:
+        model = Favorites
+        fields = ('author','publication')
+
+
+
 

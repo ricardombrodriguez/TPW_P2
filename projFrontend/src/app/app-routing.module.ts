@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FavouriteComponent } from './components/favourite/favourite.component';
 import { PublicationComponent } from './components/publication/publication.component';
