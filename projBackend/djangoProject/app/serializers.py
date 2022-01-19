@@ -1,5 +1,8 @@
 from app.models import Groups, Users, Publication_status, Publication_topics, Publications, Comments, Favorites
+from rest_framework.authtoken.models import Token
+from django.contrib.auth.models import User
 from rest_framework import serializers
+
 
 class GroupsSerializer(serializers.ModelSerializer):
     class Meta:
@@ -46,8 +49,27 @@ class FavoritesSerializer(serializers.ModelSerializer):
 class FavoritesSerializerCreate(serializers.ModelSerializer):
     class Meta:
         model = Favorites
-        fields = ('author','publication')
+        fields = ('author', 'publication')
 
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'
+
+    def create(self, validated_data):
+        user = User(username=validated_data['username'], first_name=validated_data['first_name'], last_name=validated_data['last_name'])
+        user.set_password(validated_data['password'])
+        user.is_active = True
+        user.save()
+        group = Groups.objects.get(description__exact="Leitor")
+        u = Users(first_name=validated_data['first_name'], last_name=validated_data['last_name'],
+                  username=validated_data['username'], group=group)
+        u.save()
+        return Token.objects.get(user=user)
 
 
+class TokenSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Token
+        fields = ('key',)

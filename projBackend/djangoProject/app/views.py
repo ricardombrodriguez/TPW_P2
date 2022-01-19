@@ -11,7 +11,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from app.models import Groups, Users, Publication_status, Publication_topics, Publications, Comments, Favorites
 from app.serializers import GroupsSerializer, UsersSerializer, PublicationStatusSerializer, \
-    PublicationTopicsSerializer, PublicationsSerializer, CommentsSerializer, FavoritesSerializer
+    PublicationTopicsSerializer, PublicationsSerializer, CommentsSerializer, FavoritesSerializer, UserSerializer, TokenSerializer
 
 
 # Create your views here.
@@ -35,8 +35,19 @@ def get_group(request):
 
 
 # Métodos do User
+@api_view(['POST'])
+def create_user(request):
+    print(request.data)
+    serializer = UserSerializer(data=request.data)
+    if serializer.is_valid():
+        ret = serializer.create(request.data)
+        token = TokenSerializer(data={'key': ret.key})
+        return Response(token.initial_data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 @api_view(['PUT'])
-def update_User(request):
+def update_user(request):
     id = request.data['id']
     try:
         user = Users.objects.get(id=id)
