@@ -15,16 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from rest_framework.authtoken import views as auth_views
 
 from app import views
 
 urlpatterns = [
+    path('ws/login_token', auth_views.ObtainAuthToken.as_view()),
     path('admin/', admin.site.urls),
-    path('ws/author', views.get_author),
-    path('ws/authors', views.get_authors),
-    path('ws/authorcre', views.create_author),
-    path('ws/authorupd', views.update_author),
-    path('ws/authordel/<int:id>', views.del_author),
     path('ws/groups', views.get_group),
     path('ws/userupd', views.update_User),
     path('ws/users', views.get_users),
@@ -38,7 +35,7 @@ urlpatterns = [
     path('ws/pubtopicsdel', views.get_pub_topics_delete),
     path('ws/pubs', views.pubs),
     path('ws/pub', views.pub),
-    path('ws/pubcrate', views.pubcreate),
+    path('ws/pubcreate', views.pubcreate),
     path('ws/pubdel', views.pubdel),
     path('ws/pubupd', views.pubupd),
     path('ws/comment', views.comment),
@@ -48,6 +45,4 @@ urlpatterns = [
     path('ws/fav', views.fav),
     path('ws/favs', views.favs),
     path('ws/favcre', views.favcre),
-    path('ws/favdel', views.favdel),
-
 ]

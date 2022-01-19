@@ -1,73 +1,30 @@
 from django.shortcuts import render
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
+from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
-from app.models import Author, Groups, Users, Publication_status, Publication_topics, Publications, Comments, Favorites
-from app.serializers import AuthorSerializer, GroupsSerializer, UsersSerializer, PublicationStatusSerializer, \
+from app.models import Groups, Users, Publication_status, Publication_topics, Publications, Comments, Favorites
+from app.serializers import GroupsSerializer, UsersSerializer, PublicationStatusSerializer, \
     PublicationTopicsSerializer, PublicationsSerializer, CommentsSerializer, FavoritesSerializer
 
 
 # Create your views here.
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
 
-@api_view(['GET'])
-def get_author(request):
-    id = int(request.GET['id'])
-    try:
-        author = Author.objects.get(id=id)
-    except Author.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-    serializer = AuthorSerializer(author)
-    return Response(serializer.data)
-
-
-@api_view(['GET'])
-def get_authors(request):
-    authors= Author.objects.all()
-    if 'num' in request.GET:
-        num=int(request.GET['num'])
-        authors=authors[:num]
-
-    serializer = AuthorSerializer(authors,many=True)
-    return Response(serializer.data)
-
-
-@api_view(['POST'])
-def create_author(request):
-    serializer = AuthorSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors,status.HTTP_400_BAD_REQUEST)
-
-
-@api_view(['PUT'])
-def update_author(request):
-    id = request.data['id']
-    try:
-        author=Author.objects.get(id=id)
-    except Author.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-    serializer=AuthorSerializer(author,data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-@api_view(['DELETE'])
-def del_author(request,id):
-    try:
-        author=Author.objects.get(id=id)
-    except Author.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-    author.delete()
-    return Response(status=status.HTTP_204_NO_CONTENT)
 
 # Métodos do Groups
-
-
 @api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def get_group(request):
     groups = Groups.objects.all()
 
@@ -210,7 +167,7 @@ def pubs(request):
 
 
 @api_view(['POST'])
-def pubcrate(request):
+def pubcreate(request):
     serializer = PublicationsSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
