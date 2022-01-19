@@ -27,29 +27,57 @@ class UsersSerializer(serializers.ModelSerializer):
         model = Users
         fields = ('id','username','first_name', 'last_name', 'group')
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['group'] = GroupsSerializer(Groups.objects.get(id=data['group'])).data
+        return data
 
 class PublicationsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Publications
         fields = ('id','title','content', 'created_on', 'author','status','topic')
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['topic'] = PublicationTopicsSerializer(Publication_topics.objects.get(id=data['topic'])).data
+        data['author'] = UsersSerializer(Users.objects.get(id=data['author'])).data
+        data['status'] = PublicationStatusSerializer(Publication_status.objects.get(id=data['status'])).data
+        return data
 
 class CommentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comments
         fields = ('id','comment','author', 'publication')
-
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['publication'] = PublicationsSerializer(Publications.objects.get(id=data['publication'])).data
+        data['author'] = UsersSerializer(Users.objects.get(id=data['author'])).data
+        return data
 
 class FavoritesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Favorites
         fields = ('id','author','publication')
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['publication'] = PublicationsSerializer(Publications.objects.get(id=data['publication'])).data
+        data['author'] = UsersSerializer(Users.objects.get(id=data['author'])).data
+        return data
+
 
 class FavoritesSerializerCreate(serializers.ModelSerializer):
     class Meta:
         model = Favorites
         fields = ('author', 'publication')
+
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['publication'] = PublicationsSerializer(Publications.objects.get(id=data['publication'])).data
+        data['author'] = UsersSerializer(Users.objects.get(id=data['author'])).data
+        return data
+
 
 
 class UserSerializer(serializers.ModelSerializer):
