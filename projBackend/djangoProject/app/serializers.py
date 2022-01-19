@@ -1,12 +1,5 @@
-from app.models import Author,Groups, Users, Publication_status, Publication_topics, Publications, Comments, Favorites
+from app.models import Groups, Users, Publication_status, Publication_topics, Publications, Comments, Favorites
 from rest_framework import serializers
-
-
-class AuthorSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Author
-        fields = ('id','name','email')
-
 
 class GroupsSerializer(serializers.ModelSerializer):
     class Meta:
@@ -48,6 +41,13 @@ class FavoritesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Favorites
         fields = ('id','author','publication')
+
+
+class FavoritesSerializerCreate(serializers.ModelSerializer):
+    class Meta:
+        model = Favorites
+        fields = ('author','publication')
+
 
 
 

@@ -1,14 +1,7 @@
 from django.db import models
+import hashlib
 
 # Create your models here.
-
-class  Author(models.Model):
-    name =models.CharField(max_length=100)
-    email= models.CharField(max_length=100)
-
-    def __str__(self):
-        return str(self.name)
-
 
 class Groups(models.Model):
     description = models.CharField(max_length=70)
@@ -16,30 +9,11 @@ class Groups(models.Model):
     def __str__(self):
         return self.description
 
-if len(Groups.objects.all()) == 0:
-    group = Groups(description='Admin')
-    group.save()
-    group = Groups(description='Leitor')
-    group.save()
-    group = Groups(description='Gestor')
-    group.save()
-    group = Groups(description='Autor')
-    group.save()
 class Publication_status(models.Model):
     description = models.CharField(max_length=70)
 
-
     def __str__(self):
         return self.description
-
-if len(Publication_status.objects.all()) == 0:
-    group = Publication_status(description='Arquivado')
-    group.save()
-    group = Publication_status(description='Por Aprovar')
-    group.save()
-    group = Publication_status(description='Aprovado')
-    group.save()
-
 
 class Publication_topics(models.Model):
     description = models.CharField(max_length=70)
@@ -55,7 +29,6 @@ class Users(models.Model):
     last_name = models.CharField(max_length=70)
     group = models.ForeignKey(Groups, on_delete=models.CASCADE)
 
-
     def __str__(self):
         return self.first_name + " " + self.last_name
 
@@ -70,8 +43,6 @@ class Publications(models.Model):
 
     def __str__(self):
         return self.title
-
-
 
 class Comments(models.Model):
     comment = models.CharField(max_length=300)
