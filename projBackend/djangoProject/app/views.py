@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.db.models.functions import Concat
 from rest_framework import status
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
@@ -6,6 +7,7 @@ from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
+from django.db.models import Value as V
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
@@ -378,6 +380,81 @@ def getPublicationsApproved(request):
     serializer = PublicationsSerializer(ret, many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def getSearchPublicationsApproved(request):
+    author = (request.GET['author'])
+    title = (request.GET['title'])
+    date = (request.GET['date'])
+    topic = (request.GET['topic'])
+    pubs = Publications.objects.all()
+    if title:
+        pubs = pubs.filter(title__contains=title)
+    if date:
+        pubs = pubs.filter(created_on__date=date)
+    if author:
+        pubs = pubs.annotate(full_name=Concat('author__first_name', V(' '), 'author__last_name')). \
+            filter(full_name__contains=author)
+    if topic:
+        pubs = pubs.filter(topic__description__exact=topic)
+    ret = []
+    state = Publication_status.objects.get(description="Aprovado")
+    for publication in pubs:
+        if publication.status == state:
+            ret.append(publication)
+
+    serializer = PublicationsSerializer(ret, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def getSearchPublicationsPendent(request):
+    author = (request.GET['author'])
+    title = (request.GET['title'])
+    date = (request.GET['date'])
+    topic = (request.GET['topic'])
+    pubs = Publications.objects.all()
+    if title:
+        pubs = pubs.filter(title__contains=title)
+    if date:
+        pubs = pubs.filter(created_on__date=date)
+    if author:
+        pubs = pubs.annotate(full_name=Concat('author__first_name', V(' '), 'author__last_name')). \
+            filter(full_name__contains=author)
+    if topic:
+        pubs = pubs.filter(topic__description__exact=topic)
+    ret = []
+    state = Publication_status.objects.get(description="Por Aprovar")
+    for publication in pubs:
+        if publication.status == state:
+            ret.append(publication)
+
+    serializer = PublicationsSerializer(ret, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getSearchPublicationsFilled(request):
+    author = (request.GET['author'])
+    title = (request.GET['title'])
+    date = (request.GET['date'])
+    topic = (request.GET['topic'])
+    pubs = Publications.objects.all()
+    if title:
+        pubs = pubs.filter(title__contains=title)
+    if date:
+        pubs = pubs.filter(created_on__date=date)
+    if author:
+        pubs = pubs.annotate(full_name=Concat('author__first_name', V(' '), 'author__last_name')). \
+            filter(full_name__contains=author)
+    if topic:
+        pubs = pubs.filter(topic__description__exact=topic)
+    ret = []
+    state = Publication_status.objects.get(description="Arquivado")
+    for publication in pubs:
+        if publication.status == state:
+            ret.append(publication)
+
+    serializer = PublicationsSerializer(ret, many=True)
+    return Response(serializer.data)
 
 @api_view(['GET'])
 def getAuthorPublicationsArquivadas(request):
