@@ -1,7 +1,7 @@
-import { Users } from "./users";
+import { User } from "./user";
 
 export interface Authentication{
 
     token:string;
-    user:Users ;
+    user:User ;
 }

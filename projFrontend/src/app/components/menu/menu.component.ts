@@ -7,6 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
+  token = localStorage.getItem('token');
+  loggedIn = true ? this.token != null : false 
+  username = localStorage.getItem('username');
+
   constructor() { }
 
   ngOnInit(): void {
