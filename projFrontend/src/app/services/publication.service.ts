@@ -41,7 +41,13 @@ export class PublicationService {
   }
 
   
-  getSearchPublications(author:string, date:string,topic:string,title:string ): Observable<Publication[]> {
-    return this.http.get<Publication[]>(this.baseUrl + 'getSearchPublications?author=' + author+'&&date='+date+'&&topic='+topic+'&&title='+title);
+  getSearchPublicationsApproved(author:string, date:string,topic:string,title:string ): Observable<Publication[]> {
+    return this.http.get<Publication[]>(this.baseUrl + 'getSearchPublicationsApproved?author=' + author+'&&date='+date+'&&topic='+topic+'&&title='+title);
+  }
+  getSearchPublicationsFilled(author:string, date:string,topic:string,title:string ): Observable<Publication[]> {
+    return this.http.get<Publication[]>(this.baseUrl + 'getSearchPublicationsFilled?author=' + author+'&&date='+date+'&&topic='+topic+'&&title='+title);
+  }
+  getSearchPublicationsPendent(author:string, date:string,topic:string,title:string ): Observable<Publication[]> {
+    return this.http.get<Publication[]>(this.baseUrl + 'getSearchPublicationsPendent?author=' + author+'&&date='+date+'&&topic='+topic+'&&title='+title);
   }
 }

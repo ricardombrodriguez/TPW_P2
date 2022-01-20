@@ -76,7 +76,7 @@ export class ActivePublicationsComponent implements OnInit {
       x=true;
     }
     if (x){
-      this.publicationsService.getSearchPublications(this.author,this.date,this.topic,this.title).subscribe((publications) => {
+      this.publicationsService.getSearchPublicationsApproved(this.author,this.date,this.topic,this.title).subscribe((publications) => {
         this.publications = publications;
       });
     }

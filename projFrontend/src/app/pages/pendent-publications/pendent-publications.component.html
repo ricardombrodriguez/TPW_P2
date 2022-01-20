@@ -17,7 +17,7 @@
             <!-- Main content -->
             <div class="content">
                 <div class="container-fluid">
-                    <app-search></app-search>
+                    <app-search (submit)="getFormData($event)"></app-search>
 
                     <div class="card card-default mt-3">
                         <div class="card-body">

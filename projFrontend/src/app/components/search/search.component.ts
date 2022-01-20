@@ -13,8 +13,6 @@ export class SearchComponent implements OnInit {
   public topics!: Publication_Topics[];
   contactForm !:FormGroup;
   @Output() submit=new EventEmitter<any>();
-  @Output() respostaFamilia = new EventEmitter();
-  @Input() recebeFamilia:any;
   constructor(private topicsService: TopicsService,private fb:FormBuilder) { }
   ngOnInit(): void {
     this.getTopics();
