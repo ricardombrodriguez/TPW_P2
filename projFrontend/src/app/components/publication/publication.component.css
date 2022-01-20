@@ -1,5 +1,9 @@
-tr {
+tr.publication_row {
     cursor: pointer;
+    width: auto;
+}
+
+div {
     width: auto;
 }
 

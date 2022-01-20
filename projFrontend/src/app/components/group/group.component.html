@@ -1,1 +1,19 @@
-<p>group works!</p>
+<div class="col-3">
+    <select id="group" name="group">
+        <option value="{{ user.group.description }}" selected="selected">
+            {{ user.group.description }}</option>
+        <option *ngFor="let group in groups" value="{{user.group.description}}">{{user.group.description}}
+            <!-- {% if group.description != u.group.description %}
+            {% if group.description == "Admin" and user.group.description ==
+            "Admin" %} -->
+            <!-- <option value="{{user.group.description}}">{{user.group.description}}
+        </option> -->
+            <!-- {% endif %}
+        {% if group.description != "Admin" %} -->
+            <!-- <option value="{{user.group.description}}">{{user.group.description}}
+        </option> -->
+            <!-- {% endif %}
+        {% endif %}
+        {% endfor %} -->
+    </select>
+</div>
