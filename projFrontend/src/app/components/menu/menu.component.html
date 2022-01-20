@@ -11,7 +11,7 @@
             <div class="info">
                 <!-- AQUI -->
                 <!-- pôr o nome do user -->
-                <p style="color: white;">Welcome, &nbsp;<strong> username! </strong></p>
+                <p style="color: white;">Welcome, &nbsp;<strong> {{ username }} </strong></p>
             </div>
         </div>
 
@@ -96,7 +96,8 @@
 
     <ul class="navbar-nav ml-auto">
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+            <a *ngIf="!loggedIn" routerLink="/login" class="nav-link">Login</a>
+            <a *ngIf="loggedIn" href="{% url 'logout' %}" class="nav-link">Logout</a>
         </li>
     </ul>
 
