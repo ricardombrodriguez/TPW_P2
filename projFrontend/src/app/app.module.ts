@@ -23,6 +23,9 @@ import { CreatePublicationComponent } from './pages/create-publication/create-pu
 import { CommentComponent } from './components/comment/comment.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PublicationPageComponent } from './pages/publication-page/publication-page.component';
+
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 @NgModule({
   declarations: [
@@ -44,9 +47,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ManageTopicsComponent,
     CreatePublicationComponent,
     CommentComponent,
-    MenuComponent
+    MenuComponent,
+    PublicationPageComponent
   ],
   imports: [
+    AngularEditorModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,

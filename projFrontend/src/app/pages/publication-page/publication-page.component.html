@@ -1,0 +1,190 @@
+<app-menu></app-menu>
+
+<div class="wrapper">
+
+    <div class="content-wrapper">
+
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="mb-2">
+                    <h1 class="m-0">{{ pub.title }}</h1>
+                </div>
+                <div class="mb-2">
+                    <div class="row">
+                        <div class="col-6">
+                            <span class="badge badge-warning">{{ pub.topic.description }}</span>
+                        </div>
+                        <div class="col-6 text-right">
+                            <p>{{ pub.created_on }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-bottom: 2rem;">
+                    <!-- /.content-header -->
+                    <!-- {% if user.group.description == "Gestor" and pub.status.description == "Por Aprovar" %} -->
+                    <div class="m-2 float-right">
+                        <form action="" method="post">
+                            <!-- {% csrf_token %} -->
+                            <input type="hidden" name="publication_aprov_id" value="{{ pub.id }}" />
+                            <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-check"></i>
+                                Aceitar Publicação</button>
+                        </form>
+                    </div>
+                    <!-- {% endif %}
+                    {% if user.group.description == "Admin" and pub.status.description == "Por Aprovar" %} -->
+                    <div class="m-2 float-right">
+                        <form action="" method="post">
+                            <!-- {% csrf_token %} -->
+                            <input type="hidden" name="publication_aprov_id" value="{{ pub.id }}" />
+                            <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-check"></i>
+                                Aceitar Publicação</button>
+                        </form>
+                    </div>
+                    <!-- {% endif %}
+                    {% if request.user.is_authenticated and not control and pub.status.description == "Aprovado"
+                    %} -->
+                    <div class="m-2 float-right">
+                        <form action="" method="post">
+                            <!-- {% csrf_token %} -->
+                            <input type="hidden" name="add_favorito" value="{{ pub.id }}" />
+                            <button type="submit" class="btn btn-warning btn-sm"><i class="fa fa-star"></i>
+                                Adicionar aos Favoritos</button>
+                        </form>
+                    </div>
+                    <!-- {% endif %}
+                    {% if request.user.is_authenticated and control and pub.status.description == "Aprovado" %} -->
+                    <div class="m-2 float-right">
+                        <form action="" method="post">
+                            <!-- {% csrf_token %} -->
+                            <input type="hidden" name="tirar_favorito" value="{{ pub.id }}" />
+                            <button type="submit" class="btn btn-warning btn-sm"><i class="fa fa-star"></i>
+                                Tirar favorito</button>
+                        </form>
+                    </div>
+                    <!-- {% endif %}
+                    {% if user.group.description == "Gestor" and pub.status.description == "Por Aprovar" %} -->
+                    <div class="m-2 float-right">
+                        <form action="" method="post">
+                            <!-- {% csrf_token %} -->
+                            <input type="hidden" name="publication_arquivar" value="{{ pub.id }}" />
+                            <button type="submit" class="btn btn-success btn-sm">Arquivar Publicação</button>
+                        </form>
+                    </div>
+                    <!-- {% endif %}
+                    {% if user.group.description == "Admin" and pub.status.description == "Por Aprovar" %} -->
+                    <div class="m-2 float-right">
+                        <form action="" method="post">
+                            <!-- {% csrf_token %} -->
+                            <input type="hidden" name="publication_arquivar" value="{{ pub.id }}" />
+                            <button type="submit" class="btn btn-success btn-sm">Arquivar Publicação</button>
+                        </form>
+                    </div>
+                    <!-- {% endif %} -->
+                    <!-- {% if user.group.description == "Gestor" and pub.status.description == "Aprovado" %} -->
+                    <div class="m-2 float-right">
+                        <form action="" method="post">
+                            <!-- {% csrf_token %} -->
+                            <input type="hidden" name="publication_arquivar" value="{{ pub.id }}" />
+                            <button type="submit" class="btn btn-success btn-sm">Arquivar Publicação</button>
+                        </form>
+                    </div>
+                    <!-- {% endif %}
+                    {% if user.group.description == "Admin" and pub.status.description == "Aprovado" %} -->
+                    <div class="m-2 float-right">
+                        <form action="" method="post">
+                            <!-- {% csrf_token %} -->
+                            <input type="hidden" name="publication_arquivar" value="{{ pub.id }}" />
+                            <button type="submit" class="btn btn-success btn-sm">Arquivar Publicação</button>
+                        </form>
+                    </div>
+                    <!-- {% endif %} -->
+                </div>
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="card card-default mt-3">
+                    <div class="card-body">
+                        <!-- o [innerHTML] permite apresentar HTML de forma segura -->
+                        <div [innerHTML]="pub.content"></div>
+                        <div class="float-right">
+                            <p>Autor: {{ pub.author.first_name }} {{ pub.author.last_name }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-default mt-3">
+                    <div class="card-body">
+                        <div class="timeline">
+                            <div>
+                                <!-- {% for comment in comments %} -->
+                                <!-- comment          ! -->
+                                <!-- {% endfor %} -->
+                            </div>
+                            <!-- {% if error %} -->
+                            <p style="color: red">O comentário já foi submetido</p>
+                            <!-- {% endif %}
+                            {% if request.user.is_authenticated %} -->
+                            <div>
+                                <i class="fas fa-comment bg-blue"></i>
+                                <div class="timeline-item">
+                                    <form action="" method="post">
+                                        <!-- {% csrf_token %} -->
+                                        <div class="timeline-body">
+                                            <!-- {{ form.content }} -->
+                                            <br>
+                                            <div class="mt-1 float-right" style="width: 10%;">
+                                                <input type="submit" class="btn btn-primary btn-sm" disabled="disabled"
+                                                    id="btn_submit" value="Enviar" />
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="../static/AdminLTE-3.1.0/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="../static/AdminLTE-3.1.0/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE -->
+<script src="../static/AdminLTE-3.1.0/dist/js/adminlte.js"></script>
+
+<!-- OPTIONAL SCRIPTS -->
+<script src="../static/AdminLTE-3.1.0/plugins/chart.js/Chart.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../static/AdminLTE-3.1.0/dist/js/demo.js"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="../static/AdminLTE-3.1.0/dist/js/pages/dashboard3.js"></script>
+<!-- date-range-picker -->
+<script src="../static/AdminLTE-3.1.0/plugins/daterangepicker/daterangepicker.js"></script>
+<script>
+    $(function () {
+        //Date picker
+        $('#reservationdate').datetimepicker({
+            format: 'L'
+        });
+    });
+
+    function required1() {
+        var comment = document.getElementById("comment").value;
+        if (comment == "") {
+            document.getElementById("btn_submit").disabled = true;
+        } else {
+            document.getElementById("btn_submit").disabled = false;
+        }
+    }
+</script>

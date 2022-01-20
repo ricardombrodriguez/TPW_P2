@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Publication_Topics } from 'src/app/interfaces/publication_topics';
+import { TopicsService } from 'src/app/services/topics.service';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { FormGroup } from '@angular/forms';
+import { PublicationService } from 'src/app/services/publication.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-create-publication',
@@ -7,9 +13,63 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreatePublicationComponent implements OnInit {
 
-  constructor() { }
+  public topics!: Publication_Topics[];
+  public postForm !: FormGroup;
+
+  editorConfig: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: 'auto',
+    minHeight: '0',
+    maxHeight: 'auto',
+    width: 'auto',
+    minWidth: '0',
+    translate: 'yes',
+    enableToolbar: true,
+    showToolbar: true,
+    placeholder: 'Write your publication here...',
+    defaultParagraphSeparator: '',
+    defaultFontName: '',
+    defaultFontSize: '',
+    fonts: [
+      { class: 'arial', name: 'Arial' },
+      { class: 'times-new-roman', name: 'Times New Roman' },
+      { class: 'calibri', name: 'Calibri' },
+      { class: 'comic-sans-ms', name: 'Comic Sans MS' }
+    ],
+    customClasses: [
+      {
+        name: 'quote',
+        class: 'quote',
+      },
+      {
+        name: 'redText',
+        class: 'redText'
+      },
+      {
+        name: 'titleText',
+        class: 'titleText',
+        tag: 'h1',
+      },
+    ]
+  };
+
+  constructor(private topicService: TopicsService, private publicationService: PublicationService) { }
 
   ngOnInit(): void {
+
+    this.getTopics();
+
+  }
+
+  getTopics(): void {
+    this.topicService.getTopics().subscribe((topics) => {
+      this.topics = topics;
+    });
+  }
+
+  submitPublication(): Observable<any> {
+    return this.publicationService.createPublication(this.postForm);
   }
 
 }

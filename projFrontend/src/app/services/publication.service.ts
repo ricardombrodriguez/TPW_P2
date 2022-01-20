@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from "rxjs/internal/Observable";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Publication } from '../interfaces/publication';
+import { FormGroup } from '@angular/forms';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -15,6 +16,18 @@ export class PublicationService {
   private baseUrl = 'http://127.0.0.1:7007/ws/';
 
   constructor(private http: HttpClient) { }
+
+  getPublication(id: number): Observable<Publication> {
+    return this.http.get<Publication>(this.baseUrl + 'pub?id=' + id);
+  }
+
+  createPublication(form: FormGroup) {
+    let params = new HttpParams();
+    params = params.append('title', form.value.title);
+    params = params.append('topic', form.value.topic);
+    params = params.append('content', form.value.content);
+    return this.http.post(this.baseUrl + 'pubcrate', {}, { params });
+  }
 
   getActivePublications(): Observable<Publication[]> {
     return this.http.get<Publication[]>(this.baseUrl + 'getPublicationsApproved');
