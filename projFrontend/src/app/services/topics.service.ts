@@ -1,4 +1,4 @@
-import { HttpClient , HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Publication_Topics } from '../interfaces/publication_topics';
@@ -18,4 +18,11 @@ export class TopicsService {
   getTopics(): Observable<Publication_Topics[]> {
     return this.http.get<Publication_Topics[]>(this.baseUrl + 'pubtopicsgetAll');
   }
+
+  createTopic(description: string) {
+    let params = new HttpParams();
+    params = params.append('description', description);
+    return this.http.post(this.baseUrl + 'pubtopicscreate', {}, { params });
+  }
+
 }
