@@ -21,60 +21,7 @@
         <!-- Main content -->
         <div class="content">
             <div class="container-fluid">
-                <form action="" method="post">
-                    <div class="row">
-                        <div class="col-8">
-                            <div class="row">
-                                <div class="input-group mb-3 col-2">
-                                    <b>Title:</b>
-                                </div>
-                                <div class="col-10">
-                                    <input type="text" id="title" name="title">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-3">
-                            <div class="row">
-                                <div class="input-group date col-2" data-target-input="nearest">
-                                    <b>Date:</b>
-                                </div>
-                                <div class="col-10">
-                                    <input type="date" id="date" name="date">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- outra row para as queries -->
-                    <div class="row">
-                        <div class="col-8">
-                            <div class="row">
-                                <div class="input-group mb-3 col-2">
-                                    <b>Author:</b>
-                                </div>
-                                <div class="col-10">
-                                    <input type="text" id="author" name="author">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="row">
-                                <div class="input-group mb-3 col-2">
-                                    <b>Topic:</b>
-                                </div>
-                                <div class="col-10">
-                                    <select class="form-control" id="topic" name="topic">
-                                        <option [value]="1">Topico 1</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-1">
-                            <button type="submit" class="btn btn-primary btn-sm" value><i
-                                    class="fas fa-search"></i></button>
-                        </div>
-                    </div>
-                </form>
+                <app-search></app-search>
 
                 <div class="card card-default mt-3">
                     <div class="card-body">
