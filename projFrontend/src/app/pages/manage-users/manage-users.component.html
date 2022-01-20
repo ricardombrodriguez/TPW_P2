@@ -68,51 +68,8 @@
                         <table class="table table-bordered">
                             <!-- AQUI -->
                             <!-- Listar os users -->
-
-                            <!-- {% for u in ret_users %} -->
-                            <form action="." method="post">
-                                <!-- {% csrf_token %}
-                                    {% if user.group.description != "Gestor" or u.group.description != "Admin" %} -->
-                                <!-- <tr class="publication_row">
-                                        <td>
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <h3>{{ u.username }}</h3>
-                                                </div>
-                                                <div class="col-3">
-                                                    <select id="group" name="group">
-                                                        <option value="{{  u.group.description }}" selected="selected">
-                                                            {{ u.group.description }}</option>
-                                                        {% for group in groups %}
-                                                        {% if group.description != u.group.description %}
-                                                        {% if group.description == "Admin" and user.group.description ==
-                                                        "Admin" %}
-                                                        <option value="{{group.description}}">{{group.description}}
-                                                        </option>
-                                                        {% endif %}
-                                                        {% if group.description != "Admin" %}
-                                                        <option value="{{group.description}}">{{group.description}}
-                                                        </option>
-                                                        {% endif %}
-                                                        {% endif %}
-                                                        {% endfor %}
-                                                    </select>
-                                                </div>
-                                                <div class="col-1">
-                                                    <input type="hidden" name="user" value="{{ u.username }}">
-                                                    <button type="submit" name="Guardar"
-                                                        class="btn btn-primary">Guardar</button>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-10">
-                                                    <h6> {{ u.first_name }} {{ u.last_name }}</h6>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    {% endif %} -->
-                            </form>
+                            <app-user *ngFor="let user of users" class="user_row" [user]="user">
+                            </app-user>
                             <p>No users</p>
                         </table>
                     </div>

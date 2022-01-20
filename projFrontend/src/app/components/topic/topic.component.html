@@ -1,1 +1,20 @@
-<p>topic works!</p>
+<form action="." method="post">
+    <!-- {% csrf_token %}
+    {% if user.group.description != "Gestor" or user.group.description != "Admin" %} -->
+    <tr class="publication_row">
+        <td>
+            <div class="row">
+                <div class="col-8">
+                    <input name="topic_des" value="{{ topic.description }}">
+                </div>
+
+                <div class="ml-auto col-1" style="padding-right: 10px;">
+                    <input type="hidden" name="topic_id" value="{{ topic.id }}">
+                    <button type="submit" class="btn btn-primary" name="Guardar" value="Guardar">Guardar</button>
+                </div>
+            </div>
+
+        </td>
+    </tr>
+    <!-- {% endif %} -->
+</form>

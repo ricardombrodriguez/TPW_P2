@@ -32,31 +32,11 @@
                                 </div>
                             </div><br><br><br>
                         </form>
-                        <table class="table table-bordered">
+                        <table class=" table table-bordered">
 
                             <h6>Manage topics:</h6>
-                            <!-- {% for topic in topics %}
-                            <form action="." method="post">
-                                {% csrf_token %}
-                                {% if user.group.description != "Gestor" or user.group.description != "Admin" %}
-                                <tr class="publication_row">
-                                    <td>
-                                        <div class="row">
-                                            <div class="col-8">
-                                                <input name="topic_des" value="{{ topic.description }}">
-                                            </div>
-
-                                            <div class="ml-auto col-1" style="padding-right: 10px;">
-                                                <input type="hidden" name="topic_id" value="{{ topic.id }}">
-                                                <button type="submit" class="btn btn-primary" name=Guardar"
-                                                    value="Guardar">Guardar</button>
-                                            </div>
-                                        </div>
-
-                                    </td>
-                                </tr>
-                                {% endif %}
-                            </form> -->
+                            <app-topic *ngFor="let topic of topics" class="topic_row" [topic]="topic">
+                            </app-topic>
 
                             <p>No topics available</p>
                         </table>
