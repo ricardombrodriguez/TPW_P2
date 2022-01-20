@@ -40,4 +40,8 @@ export class PublicationService {
     return this.http.get<Publication[]>(this.baseUrl + 'getAuthorPublicationsFiled?id=' + id);
   }
 
+  
+  getSearchPublications(author:string, date:string,topic:string,title:string ): Observable<Publication[]> {
+    return this.http.get<Publication[]>(this.baseUrl + 'getSearchPublications?author=' + author+'&&date='+date+'&&topic='+topic+'&&title='+title);
+  }
 }

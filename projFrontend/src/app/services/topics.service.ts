@@ -1,9 +1,21 @@
+import { HttpClient , HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Publication_Topics } from '../interfaces/publication_topics';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({
   providedIn: 'root'
 })
 export class TopicsService {
+  private baseUrl = 'http://127.0.0.1:7007/ws/';
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
+
+  getTopics(): Observable<Publication_Topics[]> {
+    return this.http.get<Publication_Topics[]>(this.baseUrl + 'pubtopicsgetAll');
+  }
 }

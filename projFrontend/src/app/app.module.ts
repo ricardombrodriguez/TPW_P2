@@ -22,6 +22,7 @@ import { ManageTopicsComponent } from './pages/manage-topics/manage-topics.compo
 import { CreatePublicationComponent } from './pages/create-publication/create-publication.component';
 import { CommentComponent } from './components/comment/comment.component';
 import { MenuComponent } from './components/menu/menu.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,9 @@ import { MenuComponent } from './components/menu/menu.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
