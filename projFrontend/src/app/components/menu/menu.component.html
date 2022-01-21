@@ -1,11 +1,13 @@
+
+
 <!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
+<aside *ngIf="loggedIn" class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="" class="brand-link">
         <span class="brand-text font-weight-bold"><b>Zer0Sense</b></span>
     </a>
     <!-- Sidebar -->
-    <div class="sidebar">
+    <div  class="sidebar">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel pt-3 d-flex">
             <div class="info">
@@ -90,14 +92,15 @@
 
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+            <a class="nav-link" data-widget="pushmenu" role="button"><i class="fas fa-bars"></i></a>
+        
         </li>
     </ul>
 
     <ul class="navbar-nav ml-auto">
         <li class="nav-item d-none d-sm-inline-block">
             <a *ngIf="!loggedIn" routerLink="/login" class="nav-link">Login</a>
-            <a *ngIf="loggedIn" href="{% url 'logout' %}" class="nav-link">Logout</a>
+            <a *ngIf="loggedIn" (click)="logout" class="nav-link">Logout</a>
         </li>
     </ul>
 
