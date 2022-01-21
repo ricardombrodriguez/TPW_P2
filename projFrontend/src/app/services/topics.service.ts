@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Publication_Topics } from '../interfaces/publication_topics';
 
@@ -19,9 +20,12 @@ export class TopicsService {
     return this.http.get<Publication_Topics[]>(this.baseUrl + 'pubtopicsgetAll');
   }
 
-  createTopic(description: string) {
+  createTopic(form: FormGroup) {
+
+    console.log("creating topic")
+
     let params = new HttpParams();
-    params = params.append('description', description);
+    params = params.append('description', form.value.description);
     return this.http.post(this.baseUrl + 'pubtopicscreate', {}, { params });
   }
 

@@ -21,16 +21,17 @@
                 <div class="card card-default mt-3">
                     <div class="card-body">
                         <h6> Add topic:</h6>
-                        <form action="" method="post">
+                        <form action="" method="post" [formGroup]="topicForm" (ngSubmit)="topicSubmit()">
                             <div class="row">
                                 <div class="ml-auto col-11" style="padding-right: 10px;">
-                                    <input type="" name="new_topic" value="">
+                                    <input type="" name="new_topic" value="" formControlName="description">
                                 </div>
                                 <div class="ml-auto col-1" style="padding-right: 10px;">
-                                    <button type="submit" name="Guardar2" class="btn btn-primary" value="Guardar2"
+                                    <button type="submit" name="save_topic" class="btn btn-primary" value="save_topic"
                                         routerLink="/topics">Save</button>
                                 </div>
-                            </div><br>
+                            </div>
+                            <br>
                         </form>
                         <table class=" table table-bordered">
 
