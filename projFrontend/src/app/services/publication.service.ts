@@ -76,5 +76,7 @@ export class PublicationService {
   getSearchPublicationsPendentByUser(id:number, date: string, topic: string, title: string): Observable<Publication[]> {
     return this.http.get<Publication[]>(this.baseUrl + 'getSearchPublicationsPendentByUser?id='+id+ '&&date=' + date + '&&topic=' + topic + '&&title=' + title);
   }
-
+  getSearchPublicationsApprovedFavorite(id:number,author: string, date: string, topic: string, title: string): Observable<Publication[]> {
+    return this.http.get<Publication[]>(this.baseUrl + 'getSearchPublicationsFavorites?id='+id+ '&&author=' + author + '&&date=' + date + '&&topic=' + topic + '&&title=' + title);
+  }
 }

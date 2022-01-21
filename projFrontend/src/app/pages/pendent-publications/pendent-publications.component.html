@@ -23,7 +23,11 @@
                         <div class="card-body">
 
 
-                            <p>Found NNNNN publication(S).</p>
+                            <p *ngIf="publications.length>1" >Found {{publications.length}} publications.</p>
+
+                            <p *ngIf="publications.length==1" >Found {{publications.length}} publication.</p>
+    
+
 
                             <table class="table table-bordered">
                                 <!-- AQUI -->
@@ -34,7 +38,7 @@
                                 </app-publication>
 
                                 <!-- se n existir!!!!!!-->
-                                <p>No pendent publications</p>
+                                <p *ngIf="publications.length==0">No pendent publications</p>
                             </table>
                         </div>
                     </div>

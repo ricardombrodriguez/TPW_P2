@@ -23,7 +23,11 @@
                         <div class="card-body">
 
 
-                            <p>Found NNNNN publication(S).</p>
+                            <p *ngIf="publications.length>1" >Found {{publications.length}} publications.</p>
+
+                            <p *ngIf="publications.length==1" >Found {{publications.length}} publication.</p>
+    
+
 
                             <table class="table table-bordered">
                                 <!-- AQUI -->
@@ -35,7 +39,7 @@
                                 </tr>
 
                                 <!-- se n existir!!!!!!-->
-                                <p>No closed publications available.</p>
+                                <p *ngIf="publications.length==0">No closed publications available.</p>
                             </table>
                         </div>
                     </div>
