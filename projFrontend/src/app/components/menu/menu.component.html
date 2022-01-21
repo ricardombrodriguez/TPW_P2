@@ -122,7 +122,7 @@
                 <!-- AQUI -->
                 <!-- Isto só aparece se o utilizador for gestor 
                 {% if user.group.description == 'Gestor' or user.group.description == 'Admin' %} -->
-                <li *ngIf="group == 'Gestor' or group == 'Admin' " class="nav-item">
+                <li *ngIf="group == 'Gestor' || group == 'Admin' " class="nav-item">
                     <a routerLink="/pendent_publications" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>
@@ -130,7 +130,7 @@
                         </p>
                     </a>
                 </li>
-                    <li class="nav-item" *ngIf="group == 'Gestor' or group == 'Admin' ">
+                    <li class="nav-item" *ngIf="group == 'Gestor' || group == 'Admin' ">
                     <a routerLink="/closed_publications" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>
@@ -138,7 +138,7 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item" *ngIf="group == 'Gestor' or group == 'Admin' ">
+                <li class="nav-item" *ngIf="group == 'Gestor' || group == 'Admin' ">
                     <a routerLink="/users" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>
@@ -146,7 +146,7 @@
                         </p>
                     </a>
                 </li>
-                    <li class="nav-item" *ngIf="group == 'Gestor' or group == 'Admin' ">
+                    <li class="nav-item" *ngIf="group == 'Gestor' || group == 'Admin' ">
                     <a routerLink="/topics" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>
