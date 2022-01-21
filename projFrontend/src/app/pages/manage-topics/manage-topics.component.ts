@@ -33,6 +33,19 @@ export class ManageTopicsComponent implements OnInit {
   }
 
   topicSubmit() {
+    var descricao=(this.topicForm.value.description)
+    var x:boolean=false
+    for (var a of this.topics){
+      if(a.description ==descricao){
+        x=true;
+        break
+      }
+    }
+    if (x){
+      this.topicForm.reset();
+      return false;
+      //Dar um sweet
+    }
     return this.topicsService.createTopic(this.topicForm).subscribe((topic) => {
       this.topicAdded = topic;
       this.getTopics();

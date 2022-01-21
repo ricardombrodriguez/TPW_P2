@@ -16,7 +16,6 @@ export class ActivePublicationsComponent implements OnInit {
   public date:string='';
   public title:string='';
 
-
   constructor(private publicationsService: PublicationService) { }
 
   ngOnInit(): void {

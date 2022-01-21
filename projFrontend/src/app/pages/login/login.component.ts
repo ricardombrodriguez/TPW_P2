@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('username', this.contactForm.value["username"]);
           //SERRAS
           localStorage.setItem('id', "3");
-          localStorage.setItem('group', "Admin");
+          localStorage.setItem('group', "Autor");
           //SERRAS
           this.location.back();
       },

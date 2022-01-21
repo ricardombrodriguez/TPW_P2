@@ -29,7 +29,6 @@ export class TopicComponent implements OnInit {
     return this.topicsService.updateTopic(this.topic, this.topicUpdateForm.value.description).subscribe((topic) => {
       this.topic = topic;
       this.submit.emit();
-      this.topicUpdateForm.reset()
     });
   }
 
