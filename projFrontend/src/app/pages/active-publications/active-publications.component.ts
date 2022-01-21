@@ -20,8 +20,9 @@ export class ActivePublicationsComponent implements OnInit {
   constructor(private publicationsService: PublicationService) { }
 
   ngOnInit(): void {
-
+   
     this.getActivePublications();
+
 
   }
 

@@ -21,7 +21,55 @@
         <!-- Main content -->
         <div class="content">
             <div class="container-fluid">
-                <app-search></app-search>
+                <form action="" method="post" [formGroup]="contactForm" >
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="row">
+                                <div class="col-2 input-group mb-3">
+                                    <b>Title:</b>
+                                </div>
+                                <div class="col-10 float-right">
+                                    <input formControlName="title" type="text" id="title" name="title">
+                                </div>
+                            </div>
+                        </div>
+                
+                        <div class="col-3">
+                            <div class="row">
+                                <div class="input-group date col-2" data-target-input="nearest">
+                                    <b>Date:</b>
+                                </div>
+                                <div class="col-10">
+                                    <input formControlName="date" type="date" id="date" name="date">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="row">
+                        
+                
+                        <div class="col-10">
+                            <div class="row">
+                                <div class="input-group mb-3 col-2">
+                                    <b>Topic:</b>
+                                </div>
+                                <div class="col-10">
+                                    <select formControlName="topic" class="form-control" id="topic" name="topic">
+                                        <option [ngValue]="null" >Select Topic</option>
+                                        <option *ngFor="let topic of topics" >{{topic.description}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <button (click)="getFormData()" type="submit" class="btn btn-primary btn-sm"><i
+                                    class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                
+                </form>
+                
 
                 <div class="card card-default mt-3">
                     <div class="card-body">
@@ -30,6 +78,8 @@
                         <table class="table table-bordered">
                             <!-- AQUI -->
                             <!-- Listar as publicações -->
+                            <app-publication  *ngFor="let publication of publications" [publication]="publication"></app-publication>
+                            <p *ngIf="publications.length==0">Não existem publicações arquivadas disponíveis</p>
 
                             <!-- {% for pub in pubs_aproved %}
                             <tr class="publication_row">
@@ -71,6 +121,11 @@
                         <table class="table table-bordered">
                             <!-- AQUI -->
                             <!-- Listar as publicações -->
+                            <div *ngFor="let publication of publications_pendent">
+                                <app-publication [publication]="publication">
+                                </app-publication>
+                            </div>
+                            <p *ngIf="publications_pendent.length==0">Não existem publicações arquivadas disponíveis</p>
 
                             <!-- {% for pub in pubs_aproval %}
                             <tr class="publication_row">
@@ -111,7 +166,11 @@
                         <table class="table table-bordered">
                             <!-- AQUI -->
                             <!-- Listar as publicações -->
-
+                            <div *ngFor="let publication of publications_filled">
+                                <app-publication [publication]="publication">
+                                </app-publication>
+                            </div>
+                            <p *ngIf="publications_filled.length==0">Não existem publicações arquivadas disponíveis</p>
                             <!-- {% for pub in pubs_arquivadas %}
                             <tr class="publication_row">
                                 <td>

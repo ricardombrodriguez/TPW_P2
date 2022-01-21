@@ -41,6 +41,10 @@ export class LoginComponent implements OnInit {
           console.log(this.token)
           localStorage.setItem('token', this.token);
           localStorage.setItem('username', this.contactForm.value["username"]);
+          //SERRAS
+          localStorage.setItem('id', "3");
+          localStorage.setItem('group', "Admin");
+          //SERRAS
           this.location.back();
       },
       error => {
