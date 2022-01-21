@@ -28,16 +28,17 @@ export class ManageTopicsComponent implements OnInit {
 
   getTopics() {
     return this.topicsService.getTopics().subscribe((topics) => {
-      console.log("topics")
-      console.log(topics)
       this.topics = topics;
     })
   }
 
-  topicSubmit(): Observable<any> {
-    console.log("submited")
-    console.log(this.topicForm);
-    return this.topicsService.createTopic(this.topicForm);
+  topicSubmit() {
+    return this.topicsService.createTopic(this.topicForm).subscribe((topic) => {
+      this.topicAdded = topic;
+      this.getTopics();
+      this.topicForm.reset();
+    });
   }
+
 
 }

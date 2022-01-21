@@ -1,4 +1,4 @@
-export interface Publication_Topics{
-    id : number;
-    description:string;
+export class Publication_Topics {
+    id!: number;
+    description!: string;
 }

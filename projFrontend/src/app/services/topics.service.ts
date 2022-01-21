@@ -20,13 +20,16 @@ export class TopicsService {
     return this.http.get<Publication_Topics[]>(this.baseUrl + 'pubtopicsgetAll');
   }
 
-  createTopic(form: FormGroup) {
+  createTopic(form: FormGroup): Observable<any> {
 
     console.log("creating topic")
+    console.log("description", form.value.description)
 
-    let params = new HttpParams();
-    params = params.append('description', form.value.description);
-    return this.http.post(this.baseUrl + 'pubtopicscreate', {}, { params });
+    let topic: Publication_Topics = new Publication_Topics;
+    topic.description = form.value.description;
+
+    console.log(topic)
+    return this.http.post(this.baseUrl + 'pubtopicscreate', topic, httpOptions);
   }
 
 }
