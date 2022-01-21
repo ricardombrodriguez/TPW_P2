@@ -431,6 +431,7 @@ def getSearchPublicationsPendent(request):
     serializer = PublicationsSerializer(ret, many=True)
     return Response(serializer.data)
 
+
 @api_view(['GET'])
 def getSearchPublicationsFilled(request):
     author = (request.GET['author'])
@@ -451,6 +452,86 @@ def getSearchPublicationsFilled(request):
     state = Publication_status.objects.get(description="Arquivado")
     for publication in pubs:
         if publication.status == state:
+            ret.append(publication)
+
+    serializer = PublicationsSerializer(ret, many=True)
+    return Response(serializer.data)
+@api_view(['GET'])
+def getSearchPublicationsPendentByUser(request):
+    id = int(request.GET['id'])
+    try:
+        autor = Users.objects.get(id=id)
+    except Users.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    title = (request.GET['title'])
+    date = (request.GET['date'])
+    topic = (request.GET['topic'])
+    pubs = Publications.objects.all()
+    if title:
+        pubs = pubs.filter(title__contains=title)
+    if date:
+        pubs = pubs.filter(created_on__date=date)
+
+    if topic:
+        pubs = pubs.filter(topic__description__exact=topic)
+    ret = []
+    state = Publication_status.objects.get(description="Por Aprovar")
+    for publication in pubs:
+        if publication.status == state and publication.author==autor:
+            ret.append(publication)
+
+    serializer = PublicationsSerializer(ret, many=True)
+    return Response(serializer.data)
+@api_view(['GET'])
+def getSearchPublicationsApprovedByUser(request):
+    id = int(request.GET['id'])
+    try:
+        autor = Users.objects.get(id=id)
+    except Users.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    title = (request.GET['title'])
+    date = (request.GET['date'])
+    topic = (request.GET['topic'])
+    pubs = Publications.objects.all()
+    if title:
+        pubs = pubs.filter(title__contains=title)
+    if date:
+        pubs = pubs.filter(created_on__date=date)
+
+    if topic:
+        pubs = pubs.filter(topic__description__exact=topic)
+    ret = []
+    state = Publication_status.objects.get(description="Aprovado")
+    for publication in pubs:
+        if publication.status == state and publication.author==autor:
+            ret.append(publication)
+
+    serializer = PublicationsSerializer(ret, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def getSearchPublicationsFilledByUser(request):
+    id = int(request.GET['id'])
+    try:
+        autor = Users.objects.get(id=id)
+    except Users.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    title = (request.GET['title'])
+    date = (request.GET['date'])
+    topic = (request.GET['topic'])
+    pubs = Publications.objects.all()
+    if title:
+        pubs = pubs.filter(title__contains=title)
+    if date:
+        pubs = pubs.filter(created_on__date=date)
+
+    if topic:
+        pubs = pubs.filter(topic__description__exact=topic)
+    ret = []
+    state = Publication_status.objects.get(description="Arquivado")
+    for publication in pubs:
+        if publication.status == state and publication.author==autor:
             ret.append(publication)
 
     serializer = PublicationsSerializer(ret, many=True)
