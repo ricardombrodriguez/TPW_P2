@@ -24,6 +24,9 @@ export class TopicsService {
 
     console.log("creating topic")
 
+
+
+    
     let params = new HttpParams();
     params = params.append('description', form.value.description);
     return this.http.post(this.baseUrl + 'pubtopicscreate', {}, { params });
