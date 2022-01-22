@@ -1,3 +1,4 @@
+import { ThrowStmt } from '@angular/compiler';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Publication_Topics } from 'src/app/interfaces/publication_topics';
@@ -12,7 +13,6 @@ export class TopicComponent implements OnInit {
 
   @Input() topic!: Publication_Topics;
   topicUpdateForm!: FormGroup;
-  @Output() submit = new EventEmitter<any>();
 
   constructor(private topicsService: TopicsService, private fb: FormBuilder) { }
 
@@ -27,10 +27,8 @@ export class TopicComponent implements OnInit {
 
   topicUpdate() {
     return this.topicsService.updateTopic(this.topic, this.topicUpdateForm.value.description).subscribe((topic) => {
-      this.topic = topic;
-      this.submit.emit();
+      this.topicUpdateForm.updateValueAndValidity();
     });
   }
-
 
 }

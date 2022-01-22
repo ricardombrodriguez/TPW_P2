@@ -36,11 +36,10 @@
                         <table class=" table table-bordered">
 
                             <h6>Manage topics:</h6>
-                            <app-topic *ngFor="let topic of topics" class="topic_row" [topic]="topic"
-                                (submit)="update()">
+                            <app-topic *ngFor="let topic of topics" class="topic_row" [topic]="topic">
                             </app-topic>
 
-                            <p>No topics available</p>
+                            <p *ngIf="topics.length == 0">No topics available</p>
                         </table>
                     </div>
                 </div>

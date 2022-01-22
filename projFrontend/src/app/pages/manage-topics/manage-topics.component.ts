@@ -53,9 +53,4 @@ export class ManageTopicsComponent implements OnInit {
     });
   }
 
-  update() {
-    this.getTopics();
-  }
-
-
 }
