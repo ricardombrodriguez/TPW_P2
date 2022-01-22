@@ -61,5 +61,7 @@ urlpatterns = [
     path('ws/getSearchPublicationsApprovedByUser', views.getSearchPublicationsApprovedByUser),
     path('ws/getSearchPublicationsPendentByUser', views.getSearchPublicationsPendentByUser),
     path('ws/getSearchPublicationsFilledByUser', views.getSearchPublicationsFilledByUser),
+    path('ws/getSearchPublicationsFavorites', views.getSearchPublicationsFavorites),
+    path('ws/checkIfFavorite', views.checkIfFavorite),
 
 ]

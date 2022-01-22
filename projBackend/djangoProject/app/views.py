@@ -130,6 +130,8 @@ def get_pub_topics(request):
 
 @api_view(['POST'])
 def get_pub_topics_create(request):
+    print(request.data)
+
     serializer = PublicationTopicsSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
@@ -276,6 +278,22 @@ def fav(request):
 def favs(request):
     ret = Favorites.objects.all()
     serializer = FavoritesSerializer(ret, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def checkIfFavorite(request):
+
+    id = int(request.GET['id'])
+    user_id = int(request.GET['user_id'])
+    pub = Publications.objects.get(id=id)
+    author = Users.objects.get(id=user_id)
+
+    try:
+        ret=Favorites.objects.get(author=author,publication=pub)
+    except Favorites.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    serializer = FavoritesSerializer(ret)
     return Response(serializer.data)
 
 
@@ -588,3 +606,32 @@ def getAuthorFavoritePublications(request):
 
 
 
+@api_view(['GET'])
+def getSearchPublicationsFavorites(request):
+    id = int(request.GET['id'])
+    author = (request.GET['author'])
+    title = (request.GET['title'])
+    date = (request.GET['date'])
+    topic = (request.GET['topic'])
+    pubs = Publications.objects.all()
+    if title:
+        pubs = pubs.filter(title__contains=title)
+    if date:
+        pubs = pubs.filter(created_on__date=date)
+    if author:
+        pubs = pubs.annotate(full_name=Concat('author__first_name', V(' '), 'author__last_name')). \
+            filter(full_name__contains=author)
+    if topic:
+        pubs = pubs.filter(topic__description__exact=topic)
+    try:
+        autor = Users.objects.get(id=id)
+    except Users.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    favoritos = Favorites.objects.all()
+    ret = []
+    for publication in favoritos:
+        if publication.author == autor  and publication.publication in pubs:
+            ret.append(publication.publication)
+
+    serializer = PublicationsSerializer(ret, many=True)
+    return Response(serializer.data)

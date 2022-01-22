@@ -79,4 +79,9 @@ export class PublicationService {
   getSearchPublicationsApprovedFavorite(id:number,author: string, date: string, topic: string, title: string): Observable<Publication[]> {
     return this.http.get<Publication[]>(this.baseUrl + 'getSearchPublicationsFavorites?id='+id+ '&&author=' + author + '&&date=' + date + '&&topic=' + topic + '&&title=' + title);
   }
+
+  updatePublication(publication:Publication) : Observable<any>{
+    const url= this.baseUrl+'pubupd'
+    return this.http.put(url,publication,httpOptions)
+  }
 }
