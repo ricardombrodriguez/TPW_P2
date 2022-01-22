@@ -46,7 +46,7 @@ urlpatterns = [
     path('ws/fav', views.fav),
     path('ws/favs', views.favs),
     path('ws/favcre', views.favcre),
-    path('ws/favdel', views.favdel),
+    path('ws/favdel/<int:id>', views.favdel),
     path('ws/getAuthorPublications', views.getAuthorPublications),
     path('ws/getAuthorPublicationsFiled', views.getAuthorPublicationsArquivadas),
     path('ws/getPublicationsFiled', views.getPublicationsArquivadas),

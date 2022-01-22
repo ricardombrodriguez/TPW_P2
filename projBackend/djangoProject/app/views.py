@@ -99,12 +99,12 @@ def pub_status_getALl(request):
 @api_view(['GET'])
 def pub_status_getOne(request):
     # Acho que é melhor fazer o get Pela descrição do que pelo id
-    id = int(request.GET['id'])
+    id = (request.GET['description'])
     try:
-        ret = Publication_status.objects.get(id=id)
+        ret = Publication_status.objects.get(description__exact=id)
     except Publication_status.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
-    serializer = PublicationStatusSerializer(status)
+    serializer = PublicationStatusSerializer(ret)
     return Response(serializer.data)
 
 
@@ -194,15 +194,26 @@ def pubcreate(request):
 
 @api_view(['PUT'])
 def pubupd(request):
-    id = request.data['id']
+    pid =request.data['id']
+
+    autor=request.data["author"]
+    topic=request.data["topic"]
+    status=request.data["status"]
     try:
-        ret = Publications.objects.get(id=id)
+        ret = Publications.objects.get(id=pid)
     except Publications.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+    request.data["author"]=(autor["id"])
+    request.data["topic"]=(topic["id"])
+    print(request.data["status"])
+    request.data["status"] = (status["id"])
     serializer = PublicationsSerializer(ret, data=request.data)
+
     if serializer.is_valid():
         serializer.save()
+        print("FIZ SAVE")
         return Response(serializer.data)
+    print(serializer.errors)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -299,6 +310,11 @@ def checkIfFavorite(request):
 
 @api_view(['POST'])
 def favcre(request):
+    print(request.data)
+    author=request.data["author"]
+    request.data["author"]= Users.objects.get(id=author["id"]).id
+    pub=request.data["publication"]
+    request.data["publication"]=Publications.objects.get(id=pub["id"]).id
     serializer = FavoritesSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
@@ -307,13 +323,11 @@ def favcre(request):
 
 
 @api_view(['DELETE'])
-def favdel(request):
-    id = int(request.GET['id'])
-    pubs = int(request.GET['pub'])
+def favdel(request,id):
+
     try:
-        author=Users.objects.get(id=id)
-        publication=Publications.objects.get(id=pubs)
-        ret = Favorites.objects.get(author=author,publication=publication)
+
+        ret = Favorites.objects.get(id=id)
     except Favorites.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     ret.delete()
@@ -594,7 +608,7 @@ def getAuthorFavoritePublications(request):
     favoritos = Favorites.objects.all()
     ret = []
     for publication in favoritos:
-        if publication.author == autor :
+        if publication.author == autor  and publication.publication.status.description=="Aprovado":
             ret.append(publication.publication)
     serializer = PublicationsSerializer(ret, many=True)
     return Response(serializer.data)
