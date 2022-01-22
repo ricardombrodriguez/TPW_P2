@@ -3,8 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Favorite } from 'src/app/interfaces/favorite';
 import { Publication } from 'src/app/interfaces/publication';
+import { Publication_Status } from 'src/app/interfaces/publication_status';
 import { User } from 'src/app/interfaces/user';
 import { FavoriteService } from 'src/app/services/favorite.service';
+import { PubStatusService } from 'src/app/services/pub-status.service';
 import { PublicationService } from 'src/app/services/publication.service';
 
 @Component({
@@ -16,14 +18,18 @@ export class PublicationPageComponent implements OnInit {
 
   public id!: number;
   public pub!: Publication;
+  
   public group = localStorage.getItem("group")
   token = localStorage.getItem('token');
   loggedIn = true ? this.token != null : false 
   username = localStorage.getItem('username');
   user_id:number=-1
+  fav_id:number=-1
+  fav !: Favorite;
   isFav : boolean =false
+  error : boolean=false
   public user = new User();
-  constructor(private publicationService: PublicationService, private router: Router,private favoriteService:FavoriteService) { }
+  constructor(private publicationService: PublicationService, private router: Router,private favoriteService:FavoriteService,private pubStatusService:PubStatusService) { }
 
   ngOnInit(): void {
     var str_id =localStorage.getItem(('id'))
@@ -34,8 +40,7 @@ export class PublicationPageComponent implements OnInit {
     const url_array = this.router.url.split("/");
     this.id = +url_array[url_array.length - 1];
     this.getPublicationDetails();
-    console.log("OLAAAAAAAA")
-    console.log("OLAAAAAAAA")
+   
 
   }
 
@@ -47,6 +52,8 @@ export class PublicationPageComponent implements OnInit {
       this.favoriteService.checkIfFavorite(this.user_id,this.pub.id).subscribe(
         data => {
           this.isFav=true
+          this.fav_id=data["id"]
+          this.fav=data
         },
         error =>{
             this.isFav=false
@@ -55,6 +62,61 @@ export class PublicationPageComponent implements OnInit {
     
     })
   }
-  
+  accept(){
+    console.log("accept")
+    //quero mudar o estado da publicação atual para Aprovado 
+    var tmp_pub = this.pub
+    const estados=this.pubStatusService.getOne("Aprovado").subscribe(
+      data => {
+        var status = data
+        tmp_pub.status=status
+        this.publicationService.updatePublication(tmp_pub).subscribe(
+          data => {
+            this.pub=tmp_pub
+            
+          },
+          error =>{
+             console.log("erro")
+        })
+      },
+      error =>{
+         console.log("erro")
+    })
+  }
+
+  addFav(){
+    console.log("addFav")
+    var fav = new Favorite()
+    fav.publication=this.pub
+    this.user.id=this.user_id
+    this.user.username!=this.username
+    fav.author=this.user
+    this.favoriteService.addFavorite(fav).subscribe();
+    window.location.reload();
+
+  }
+  rmFav(){
+    this.favoriteService.deleteFavorite(this.fav).subscribe();
+    window.location.reload();
+  }
+  arquivar(){
+    console.log("arquivar")
+    var tmp_pub = this.pub
+    const estados=this.pubStatusService.getOne("Arquivado").subscribe(
+      data => {
+        var status = data
+        tmp_pub.status=status
+        this.publicationService.updatePublication(tmp_pub).subscribe(
+          data => {
+            this.pub=tmp_pub
+            
+          },
+          error =>{
+             console.log("erro")
+        })
+      },
+      error =>{
+         console.log("erro")
+    })  }
 
 }
