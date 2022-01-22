@@ -1,4 +1,4 @@
-<!-- <i class='fas fa-comment bg-blue'></i>
+<i class='fas fa-comment bg-blue'></i>
 <div class='timeline-item'>
     <h3 class='timeline-header'><b>@{{ comment.author.username }}</b> comentou
     </h3>
@@ -6,43 +6,25 @@
         {{ comment.comment }}
     </div>
 
-    {% if user.group.description == "Gestor" %}
-<div class="timeline-footer" style="padding-bottom: 1.5rem;">
+<div *ngIf="group =='Gestor' || group == 'Admin'" class="timeline-footer" style="padding-bottom: 1.5rem;">
     <div class="form-group">
         <div class="float-right" style="width: 10%;">
             <form action="" method="post">
-                {% csrf_token %}
                 <input type="hidden" name="comment_id" value="{{ comment.id }}" />
-                <input type="submit" value="Apagar Comentario" class="btn btn-danger btn-sm" />
+                <input (click)="deleteComment()" type="submit" value="Apagar Comentario" class="btn btn-danger btn-sm" />
             </form>
         </div>
     </div>
 </div>
-{% endif %}
-{% if user.group.description == "Admin" %}
-<div class="timeline-footer" style="padding-bottom: 1.5rem;">
+
+<div *ngIf="(group =='Leitor' || group == 'Autor') && comment.author.username== username" class="timeline-footer" style="padding-bottom: 1.5rem;">
     <div class="form-group">
         <div class="float-right" style="width: 10%;">
             <form action="" method="post">
-                {% csrf_token %}
                 <input type="hidden" name="comment_id" value="{{ comment.id }}" />
-                <input type="submit" value="Apagar Comentario" class="btn btn-danger btn-sm" />
+                <input (click)="deleteComment()"  type="submit" value="Apagar Comentario" class="btn btn-danger btn-sm" />
             </form>
         </div>
     </div>
 </div>
-{% endif %}
-{% if comment.author.username == user.username %}
-<div class="timeline-footer" style="padding-bottom: 1.5rem;">
-    <div class="form-group">
-        <div class="float-right" style="width: 10%;">
-            <form action="" method="post">
-                {% csrf_token %}
-                <input type="hidden" name="comment_id" value="{{ comment.id }}" />
-                <input type="submit" value="Apagar Comentario" class="btn btn-danger btn-sm" />
-            </form>
-        </div>
-    </div>
-</div>
-{% endif %}
-</div> -->
+</div> 

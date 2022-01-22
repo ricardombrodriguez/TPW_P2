@@ -248,11 +248,13 @@ def commentsPublication(request):
     for x in ret:
         if x.publication.id == id:
             retorno.append(x)
-    serializer = CommentsSerializer(ret, many=True)
+    serializer = CommentsSerializer(retorno, many=True)
     return Response(serializer.data)
 
 @api_view(['POST'])
 def commentcre(request):
+    request.data["author"]=request.data["author"]["id"]
+    request.data["publication"]=request.data["publication"]["id"]
     serializer = CommentsSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
@@ -261,8 +263,7 @@ def commentcre(request):
 
 
 @api_view(['DELETE'])
-def commentdel(request):
-    id = int(request.GET['id'])
+def commentdel(request,id):
     try:
         ret = Comments.objects.get(id=id)
     except Comments.DoesNotExist:

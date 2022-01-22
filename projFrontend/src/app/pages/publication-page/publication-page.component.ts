@@ -1,10 +1,13 @@
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Comment } from 'src/app/interfaces/comment';
 import { Favorite } from 'src/app/interfaces/favorite';
 import { Publication } from 'src/app/interfaces/publication';
 import { Publication_Status } from 'src/app/interfaces/publication_status';
 import { User } from 'src/app/interfaces/user';
+import { CommentsService } from 'src/app/services/comments.service';
 import { FavoriteService } from 'src/app/services/favorite.service';
 import { PubStatusService } from 'src/app/services/pub-status.service';
 import { PublicationService } from 'src/app/services/publication.service';
@@ -18,7 +21,7 @@ export class PublicationPageComponent implements OnInit {
 
   public id!: number;
   public pub!: Publication;
-  
+  public comments!: Comment[]
   public group = localStorage.getItem("group")
   token = localStorage.getItem('token');
   loggedIn = true ? this.token != null : false 
@@ -28,10 +31,14 @@ export class PublicationPageComponent implements OnInit {
   fav !: Favorite;
   isFav : boolean =false
   error : boolean=false
+  contactForm !:FormGroup;
   public user = new User();
-  constructor(private publicationService: PublicationService, private router: Router,private favoriteService:FavoriteService,private pubStatusService:PubStatusService) { }
+  constructor(private fb:FormBuilder,private commentSerice: CommentsService,private publicationService: PublicationService, private router: Router,private favoriteService:FavoriteService,private pubStatusService:PubStatusService) { }
 
   ngOnInit(): void {
+    this.contactForm = this.fb.group({
+      date:[null],
+    })
     var str_id =localStorage.getItem(('id'))
     if (str_id==null){
       str_id='-1'
@@ -40,7 +47,7 @@ export class PublicationPageComponent implements OnInit {
     const url_array = this.router.url.split("/");
     this.id = +url_array[url_array.length - 1];
     this.getPublicationDetails();
-   
+    this.getPublicationComments()
 
   }
 
@@ -99,6 +106,17 @@ export class PublicationPageComponent implements OnInit {
     this.favoriteService.deleteFavorite(this.fav).subscribe();
     window.location.reload();
   }
+  getPublicationComments(){
+    console.log("OLA")
+    this.commentSerice.getComments(this.id).subscribe(
+      data => {
+        this.comments=data
+        
+      },
+      error =>{
+         console.log("erro")
+    })
+  }
   arquivar(){
     console.log("arquivar")
     var tmp_pub = this.pub
@@ -118,5 +136,15 @@ export class PublicationPageComponent implements OnInit {
       error =>{
          console.log("erro")
     })  }
-
+    sendComment(){
+      var comentario=(this.contactForm.value)["date"]
+      var com = new Comment()
+      com.publication=this.pub
+      this.user.id=this.user_id
+      this.user.username!=this.username
+      com.author=this.user
+      com.comment=comentario
+      this.commentSerice.createComment(com).subscribe()
+      window.location.reload();
+    }
 }

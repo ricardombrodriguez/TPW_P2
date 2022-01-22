@@ -42,7 +42,7 @@ urlpatterns = [
     path('ws/comments', views.comments),
     path('ws/commentsPublication', views.commentsPublication),
     path('ws/commentcre', views.commentcre),
-    path('ws/commentdel', views.commentdel),
+    path('ws/commentdel/<int:id>', views.commentdel),
     path('ws/fav', views.fav),
     path('ws/favs', views.favs),
     path('ws/favcre', views.favcre),

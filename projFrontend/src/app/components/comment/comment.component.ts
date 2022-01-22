@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Comment } from 'src/app/interfaces/comment';
+import { CommentsService } from 'src/app/services/comments.service';
 
 @Component({
   selector: 'app-comment',
@@ -6,10 +8,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./comment.component.css']
 })
 export class CommentComponent implements OnInit {
-
-  constructor() { }
+  @Input() comment !:Comment
+  public group = localStorage.getItem("group")
+  token = localStorage.getItem('token');
+  username = localStorage.getItem('username');
+  loggedIn = true ? this.token != null : false 
+  constructor(private commentSerice: CommentsService) { }
 
   ngOnInit(): void {
   }
 
+  deleteComment(){
+    console.log("DELETE")
+    this.commentSerice.deleteComment(this.comment).subscribe()
+    window.location.reload();
+  }
 }

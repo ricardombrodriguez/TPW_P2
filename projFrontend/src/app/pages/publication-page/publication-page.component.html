@@ -90,10 +90,12 @@
                 <div class="card card-default mt-3">
                     <div class="card-body">
                         <div class="timeline">
-                            <div>
                                 <!-- {% for comment in comments %} -->
                                 <!-- comment          ! -->
                                 <!-- {% endfor %} -->
+                            <div *ngFor="let comment of comments">
+                                <app-comment [comment]="comment">
+                                </app-comment>
                             </div>
                             <!-- {% if error %} -->
                             <p *ngIf="error" style="color: red">O comentário já foi submetido</p>
@@ -102,13 +104,14 @@
                             <div *ngIf="loggedIn">
                                 <i class="fas fa-comment bg-blue"></i>
                                 <div class="timeline-item">
-                                    <form action="" method="post">
+                                    <form action="" [formGroup]="contactForm" method="post">
                                         <!-- {% csrf_token %} -->
                                         <div class="timeline-body">
                                             <!-- {{ form.content }} -->
+                                            <input formControlName="date" type="text" id="date" name="date">
                                             <br>
                                             <div class="mt-1 float-right" style="width: 10%;">
-                                                <input type="submit" class="btn btn-primary btn-sm" disabled="disabled"
+                                                <input  (click)="sendComment()" type="submit" class="btn btn-primary btn-sm" 
                                                     id="btn_submit" value="Enviar" />
                                             </div>
                                         </div>
