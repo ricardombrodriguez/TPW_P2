@@ -24,4 +24,12 @@ export class FavoriteService {
     return this.http.get<Favorite>(this.baseUrl + 'checkIfFavorite?id=' + pub_id+'&&user_id='+user_id);
   }
 
+  addFavorite(fav:Favorite) : Observable<any> {
+    return this.http.post(this.baseUrl + 'favcre',fav,httpOptions);
+
+  }
+  deleteFavorite(fav:Favorite): Observable<any>{
+    return this.http.delete<Favorite>(this.baseUrl + 'favdel/'+fav.id,httpOptions);
+  }
+ 
 }
