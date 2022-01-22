@@ -23,7 +23,7 @@
                 <div class="form-group" style="margin-bottom: 2rem;">
                     <!-- /.content-header -->
                     <!-- {% if user.group.description == "Gestor" and pub.status.description == "Por Aprovar" %} -->
-                    <div class="m-2 float-right">
+                    <div *ngIf="(group=='Gestor' || group=='Admin') && pub.status.description=='Por Aprovar'" class="m-2 float-right">
                         <form action="" method="post">
                             <!-- {% csrf_token %} -->
                             <input type="hidden" name="publication_aprov_id" value="{{ pub.id }}" />
@@ -31,20 +31,11 @@
                                 Aceitar Publicação</button>
                         </form>
                     </div>
-                    <!-- {% endif %}
-                    {% if user.group.description == "Admin" and pub.status.description == "Por Aprovar" %} -->
-                    <div class="m-2 float-right">
-                        <form action="" method="post">
-                            <!-- {% csrf_token %} -->
-                            <input type="hidden" name="publication_aprov_id" value="{{ pub.id }}" />
-                            <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-check"></i>
-                                Aceitar Publicação</button>
-                        </form>
-                    </div>
+                   
                     <!-- {% endif %}
                     {% if request.user.is_authenticated and not control and pub.status.description == "Aprovado"
                     %} -->
-                    <div class="m-2 float-right">
+                    <div *ngIf="loggedIn && pub.status.description=='Aprovado' && !isFav"  class="m-2 float-right">
                         <form action="" method="post">
                             <!-- {% csrf_token %} -->
                             <input type="hidden" name="add_favorito" value="{{ pub.id }}" />
@@ -54,7 +45,7 @@
                     </div>
                     <!-- {% endif %}
                     {% if request.user.is_authenticated and control and pub.status.description == "Aprovado" %} -->
-                    <div class="m-2 float-right">
+                    <div *ngIf="loggedIn && pub.status.description=='Aprovado' && isFav" class="m-2 float-right">
                         <form action="" method="post">
                             <!-- {% csrf_token %} -->
                             <input type="hidden" name="tirar_favorito" value="{{ pub.id }}" />
@@ -64,7 +55,7 @@
                     </div>
                     <!-- {% endif %}
                     {% if user.group.description == "Gestor" and pub.status.description == "Por Aprovar" %} -->
-                    <div class="m-2 float-right">
+                    <div  *ngIf="loggedIn && (group=='Gestor' || group=='Admin') && pub.status.description=='Por Aprovar'" class="m-2 float-right">
                         <form action="" method="post">
                             <!-- {% csrf_token %} -->
                             <input type="hidden" name="publication_arquivar" value="{{ pub.id }}" />
@@ -72,32 +63,10 @@
                         </form>
                     </div>
                     <!-- {% endif %}
-                    {% if user.group.description == "Admin" and pub.status.description == "Por Aprovar" %} -->
-                    <div class="m-2 float-right">
-                        <form action="" method="post">
-                            <!-- {% csrf_token %} -->
-                            <input type="hidden" name="publication_arquivar" value="{{ pub.id }}" />
-                            <button type="submit" class="btn btn-success btn-sm">Arquivar Publicação</button>
-                        </form>
-                    </div>
-                    <!-- {% endif %} -->
-                    <!-- {% if user.group.description == "Gestor" and pub.status.description == "Aprovado" %} -->
-                    <div class="m-2 float-right">
-                        <form action="" method="post">
-                            <!-- {% csrf_token %} -->
-                            <input type="hidden" name="publication_arquivar" value="{{ pub.id }}" />
-                            <button type="submit" class="btn btn-success btn-sm">Arquivar Publicação</button>
-                        </form>
-                    </div>
+               
+ 
                     <!-- {% endif %}
-                    {% if user.group.description == "Admin" and pub.status.description == "Aprovado" %} -->
-                    <div class="m-2 float-right">
-                        <form action="" method="post">
-                            <!-- {% csrf_token %} -->
-                            <input type="hidden" name="publication_arquivar" value="{{ pub.id }}" />
-                            <button type="submit" class="btn btn-success btn-sm">Arquivar Publicação</button>
-                        </form>
-                    </div>
+                    
                     <!-- {% endif %} -->
                 </div>
             </div><!-- /.container-fluid -->

@@ -1,8 +1,8 @@
 import { Publication } from "./publication";
 import { User } from "./user";
 
-export interface Favorite {
-    id: number;
-    author: User;
-    publication: Publication;
+export class Favorite {
+    id!: number;
+    author!: User;
+    publication!: Publication;
 }
