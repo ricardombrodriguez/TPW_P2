@@ -11,7 +11,7 @@ import { TopicsService } from 'src/app/services/topics.service';
   styleUrls: ['./my-publications.component.css']
 })
 export class MyPublicationsComponent implements OnInit {
-  public topics!: Publication_Topics[];
+  public topics: Publication_Topics[] = [];
   contactForm !:FormGroup;
   public publications: Publication[] = [];
   public publications_pendent!: Publication[];
