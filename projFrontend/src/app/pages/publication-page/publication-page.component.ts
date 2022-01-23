@@ -48,7 +48,6 @@ export class PublicationPageComponent implements OnInit {
     this.id = +url_array[url_array.length - 1];
     this.getPublicationDetails();
     this.getPublicationComments()
-
   }
 
   getPublicationDetails() {

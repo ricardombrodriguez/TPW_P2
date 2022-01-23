@@ -27,6 +27,7 @@ urlpatterns = [
     path('ws/userupd', views.update_user),
     path('ws/users', views.get_users),
     path('ws/user', views.get_user),
+    path('ws/get_user', views.get_user_by_username),
     path('ws/pubstatusgetOne', views.pub_status_getOne),
     path('ws/pubstatusgetALl', views.pub_status_getALl),
     path('ws/pubtopicsgetOne', views.get_pub_topic),

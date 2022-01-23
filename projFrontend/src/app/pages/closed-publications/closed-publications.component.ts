@@ -9,7 +9,7 @@ import { PublicationService } from 'src/app/services/publication.service';
 })
 export class ClosedPublicationsComponent implements OnInit {
 
-  public publications!: Publication[];
+  public publications: Publication[] = [];
   public topic:string='';
   public author:string ='';
   public date:string='';

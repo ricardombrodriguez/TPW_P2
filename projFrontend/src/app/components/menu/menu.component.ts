@@ -8,12 +8,14 @@ import { Component, OnInit } from '@angular/core';
 export class MenuComponent implements OnInit {
 
   token = localStorage.getItem('token');
-  loggedIn = true ? this.token != null : false 
+  loggedIn = this.token != null ? true : false 
   username = localStorage.getItem('username');
   group=localStorage.getItem('group');
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.token)
+    console.log(this.loggedIn)
   }
 
   logout(){

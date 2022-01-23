@@ -2,51 +2,49 @@
 
 <div class="wrapper">
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <div class="content-wrapper" style="margin-left: 0px;">
-            <!-- Content Header (Page header) -->
-            <div class="content-header">
-                <div class="container-fluid">
-                    <div class="mb-2">
-                        <h1 class="m-0">Publications</h1>
-                    </div>
-                </div><!-- /.container-fluid -->
-            </div>
-            <!-- /.content-header -->
+    <div class="content-wrapper" [ngStyle]="{'margin-left': (!loggedIn) ? '0px' : ''}">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="mb-2">
+                    <h1 class="m-0">Publications</h1>
+                </div>
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
 
-            <!-- Main content -->
-            <div class="content">
-                <div class="container-fluid">
-                    <app-search (submit)="getFormData($event)"></app-search>
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+                <app-search (submit)="getFormData($event)"></app-search>
 
-                    <div class="card card-default mt-3">
-                        <div class="card-body">
-
-
-                            <p *ngIf="publications.length>1">Found {{publications.length}} publications.</p>
-
-                            <p *ngIf="publications.length==1">Found {{publications.length}} publication.</p>
+                <div class="card card-default mt-3">
+                    <div class="card-body">
 
 
-                            <table class="table table-bordered">
-                                <!-- AQUI -->
-                                <!-- Listar as publicações -->
+                        <p *ngIf="publications.length>1">Found {{publications.length}} publications.</p>
 
-                                <div *ngFor="let publication of publications">
-                                    <app-publication [publication]="publication">
-                                    </app-publication>
-                                </div>
-                            </table>
-                            <p *ngIf="publications.length==0">Não existem publicações disponíveis</p>
-                        </div>
+                        <p *ngIf="publications.length==1">Found {{publications.length}} publication.</p>
+
+
+                        <table class="table table-bordered">
+                            <!-- AQUI -->
+                            <!-- Listar as publicações -->
+
+                            <div *ngFor="let publication of publications">
+                                <app-publication [publication]="publication">
+                                </app-publication>
+                            </div>
+                        </table>
+                        <p *ngIf="publications.length==0">Não existem publicações disponíveis</p>
                     </div>
                 </div>
-                <!-- /.container-fluid -->
             </div>
-            <!-- /.content -->
+            <!-- /.container-fluid -->
         </div>
-        <!-- /.content-wrapper -->
+        <!-- /.content -->
     </div>
+    <!-- /.content-wrapper -->
 </div>
 
 

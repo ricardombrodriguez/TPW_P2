@@ -7,33 +7,36 @@
         <div class="card">
             <p class="login-box-msg" style="padding-top: 1.25rem;">Register to start your session</p>
             <div>
-                <form method="POST">
+                <form method="POST" [formGroup]="registerForm">
                     <div class="card-body login-card-body">
                         <div class="form-group mb-3">
                             <b>Username:</b>
                             <div class="col-12 text-center">
-                                <input type="text" id="username" class="input">
+                                <input type="text" formControlName="username" id="username" class="input">
                             </div>
                         </div>
+                        <p *ngIf="showUsernameError" class="text-danger">Username is a required field</p>
                         <p>Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</p>
                         <div class="form-group mb-3">
                             <b>First Name:</b>
                             <div class="col-12 text-center">
-                                <input type="text" id="firstname" class="input">
+                                <input type="text" formControlName="first_name" id="firstname" class="input">
                             </div>
                         </div>
+                        <p *ngIf="showFirstNameError" class="text-danger">First Name is a required field</p>
                         <div class="form-group mb-3">
                             <b>Last Name:</b>
                             <div class="col-12 text-center">
-                                <input type="text" id="lastname" class="input">
+                                <input type="text" formControlName="last_name" id="lastname" class="input">
                             </div>
                         </div>
                         <div class="form-group mb-3">
                             <b>Password:</b>
                             <div class="col-12 text-center">
-                                <input type="password" id="password" class="input">
+                                <input type="password" formControlName="password" id="password" class="input">
                             </div>
                         </div>
+                        <p *ngIf="showPasswordError" class="text-danger">Password is a required field</p>
                         <ul>
                             <li>Your password can’t be too similar to your other personal information.</li>
                             <li>Your password must contain at least 8 characters.</li>
@@ -44,12 +47,12 @@
                         <div class="form-group mb-3">
                             <b>Password confirmation:</b>
                             <div class="col-12 text-center">
-                                <input type="password" id="password2" class="input">
+                                <input type="password" formControlName="confirm_password" id="password2" class="input">
                             </div>
                         </div>
-                        <p class="validation-summary-errors">Please enter a correct user name and password.</p>
+                        <p *ngIf="showConfirmPasswordError" class="text-danger">Passwords are not equal</p>
                         <div style="text-align: center;">
-                            <button style="position: center; width: 150px;" class="btn btn-primary"
+                            <button style="position: center; width: 150px;" class="btn btn-primary" (click)="submit()"
                                 type="submit">Register</button>
                         </div>
                     </div>
