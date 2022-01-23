@@ -1,7 +1,7 @@
 <body class="hold-transition register-page">
     <div>
         <div class="register-logo">
-            <a href="publications"><b>Zer0Sense</b></a>
+            <a routerLink="/"><b>Zer0Sense</b></a>
         </div>
         <!-- /.login-logo -->
         <div class="card">
@@ -62,5 +62,7 @@
             </div>
             <p class="text-center">If you already have an account, <a href="login">login</a> instead.</p>
         </div>
+
+        <h3 *ngIf="showError" class="text-danger text-center">An error occurred while creating your account</h3>
     </div>
 </body>

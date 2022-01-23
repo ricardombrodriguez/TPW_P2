@@ -11,7 +11,7 @@ import { TopicsService } from 'src/app/services/topics.service';
 })
 export class ManageTopicsComponent implements OnInit {
 
-  public topics!: Publication_Topics[];
+  public topics: Publication_Topics[] = [];
   public topicAdded!: string;           // description of the topic to be added
   topicForm !: FormGroup;
 
