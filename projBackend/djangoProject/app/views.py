@@ -33,6 +33,24 @@ def get_group(request):
     # PROVAVELMENTE VAI SER PRECISO DIZER QUEM PEDIU PARA SABER QUE GRUPOS LHE MANDAR
 
     serializer = GroupsSerializer(groups, many=True)
+    print(serializer)
+    return Response(serializer.data)
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def get_groupDescription(request):
+    groups = Groups.objects.all()
+    group = (request.GET['description'])
+
+    ret = []
+    for pub in groups:
+        if pub.description == group or (pub.description == "Admin" and group == "Gestor"):
+            continue
+        else:
+            ret.append(pub)
+    print(ret)
+    serializer = GroupsSerializer(ret, many=True)
+
     return Response(serializer.data)
 
 
@@ -55,7 +73,9 @@ def update_user(request):
         user = Users.objects.get(id=id)
     except Users.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+    request.data["group"]=    request.data["group"]["id"]
     serializer = UsersSerializer(user, data=request.data)
+    print(serializer)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)
@@ -298,6 +318,44 @@ def fav(request):
     serializer = FavoritesSerializer(ret)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def getSearchUsers(request):
+    group = (request.GET['group'])
+    topic = (request.GET['topic'])
+    name = (request.GET['name'])
+    username = (request.GET['username'])
+    pubs = Users.objects.all()
+    if topic != 'null':
+        pubs = pubs.filter(group__description__exact=topic)
+    if username!= 'null' :
+        pubs = pubs.filter(username__contains=username)
+    if name != 'null':
+        pubs = pubs.annotate(full_name=Concat('first_name', V(' '), 'last_name')). \
+            filter(full_name__contains=name)
+    ret=[]
+    for pub in pubs:
+        if pub.group.description==group or (pub.group.description=="Admin" and group=="Gestor"):
+            continue
+        else:
+            ret.append(pub)
+    serializer = UsersSerializer(ret, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def getSearchUsersPossible(request):
+    group = (request.GET['group'])
+
+    pubs = Users.objects.all()
+
+    ret=[]
+    for pub in pubs:
+        if pub.group.description==group or (pub.group.description=="Admin" and group=="Gestor"):
+            continue
+        else:
+            ret.append(pub)
+    serializer = UsersSerializer(ret, many=True)
+    return Response(serializer.data)
 
 @api_view(['GET'])
 def favs(request):
@@ -433,6 +491,7 @@ def getSearchPublicationsApproved(request):
     date = (request.GET['date'])
     topic = (request.GET['topic'])
     pubs = Publications.objects.all()
+
     if title:
         pubs = pubs.filter(title__contains=title)
     if date:
@@ -513,6 +572,7 @@ def getSearchPublicationsPendentByUser(request):
     date = (request.GET['date'])
     topic = (request.GET['topic'])
     pubs = Publications.objects.all()
+
     if title:
         pubs = pubs.filter(title__contains=title)
     if date:

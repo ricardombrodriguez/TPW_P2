@@ -64,5 +64,7 @@ urlpatterns = [
     path('ws/getSearchPublicationsFilledByUser', views.getSearchPublicationsFilledByUser),
     path('ws/getSearchPublicationsFavorites', views.getSearchPublicationsFavorites),
     path('ws/checkIfFavorite', views.checkIfFavorite),
-
+    path('ws/getSearchUsers', views.getSearchUsers),
+    path('ws/getSearchUsersPossible', views.getSearchUsersPossible),
+    path('ws/get_groupDescription', views.get_groupDescription),
 ]
