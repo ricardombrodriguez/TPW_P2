@@ -18,37 +18,47 @@ export class UsersService {
 
   constructor(private http: HttpClient) { }
 
+  getUser(username: string | null, token: string | null): Observable<User> {
+    return this.http.get<User>(this.baseUrl + 'get_user?username=' + username,
+      {
+        headers: new HttpHeaders({
+          'Authorization': 'Token ' + token,
+          'Content-Type': 'application/json',
+        }),
+      });
+  }
+
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.baseUrl + 'users');
   }
 
-  updateUser(au: User) : Observable<any>{
-    return this.http.put(this.baseUrl+'userupd',au,httpOptions)
+  updateUser(au: User): Observable<any> {
+    return this.http.put(this.baseUrl + 'userupd', au, httpOptions)
   }
 
-  getGroups(token:string): Observable<Group[]> {
+  getGroups(token: string): Observable<Group[]> {
     return this.http.get<Group[]>(this.baseUrl + 'groups',
-    { 
-      headers: new HttpHeaders({
-        'Authorization': 'Token ' + token,
-        'Content-Type': 'application/json',
-      }),
-    });
+      {
+        headers: new HttpHeaders({
+          'Authorization': 'Token ' + token,
+          'Content-Type': 'application/json',
+        }),
+      });
   }
-  get_groupDescription(token:string, description:string): Observable<Group[]> {
-    return this.http.get<Group[]>(this.baseUrl + 'get_groupDescription?description='+description,
-    { 
-      headers: new HttpHeaders({
-        'Authorization': 'Token ' + token,
-        'Content-Type': 'application/json',
-      }),
-    });
+  get_groupDescription(token: string, description: string): Observable<Group[]> {
+    return this.http.get<Group[]>(this.baseUrl + 'get_groupDescription?description=' + description,
+      {
+        headers: new HttpHeaders({
+          'Authorization': 'Token ' + token,
+          'Content-Type': 'application/json',
+        }),
+      });
   }
-  getUsersPossible(group:string): Observable<User[]> {
-    return this.http.get<User[]>(this.baseUrl + 'getSearchUsersPossible?group='+group);
+  getUsersPossible(group: string): Observable<User[]> {
+    return this.http.get<User[]>(this.baseUrl + 'getSearchUsersPossible?group=' + group);
   }
 
-  getUsersSearch(topic:string,group:string,name:string,username:string):Observable<User[]> {
-    return this.http.get<User[]>(this.baseUrl + 'getSearchUsers?group='+group+'&&topic='+topic+'&&name='+name+'&&username='+username)
+  getUsersSearch(topic: string, group: string, name: string, username: string): Observable<User[]> {
+    return this.http.get<User[]>(this.baseUrl + 'getSearchUsers?group=' + group + '&&topic=' + topic + '&&name=' + name + '&&username=' + username)
   }
 }

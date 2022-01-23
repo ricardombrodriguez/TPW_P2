@@ -151,6 +151,17 @@ def get_pub_topic(request):
     serializer = PublicationTopicsSerializer(ret)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def get_pub_topic_by_description(request):
+    description = int(request.GET['description'])
+    try:
+        ret = Publication_topics.objects.get(description=description)
+    except Publication_topics.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    serializer = PublicationTopicsSerializer(ret)
+    return Response(serializer.data)
+
+
 
 @api_view(['GET'])
 def get_pub_topics(request):
@@ -245,6 +256,11 @@ def pubs(request):
 
 @api_view(['POST'])
 def pubcreate(request):
+    print("create post")
+    print(request.data)
+    request.data['topic'] = request.data['topic']['id']
+    request.data['author'] = request.data['author']['id']
+    request.data['status'] = request.data['status']['id']
     serializer = PublicationsSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()

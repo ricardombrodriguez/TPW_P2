@@ -16,6 +16,10 @@ export class TopicsService {
 
   constructor(private http: HttpClient) { }
 
+  getTopic(description: string): Observable<Publication_Topics> {
+    return this.http.get<Publication_Topics>(this.baseUrl + 'pubtopicsgetByDescription?description=' + description);
+  }
+
   getTopics(): Observable<Publication_Topics[]> {
     return this.http.get<Publication_Topics[]>(this.baseUrl + 'pubtopicsgetAll');
   }

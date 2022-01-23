@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Publication_Topics } from 'src/app/interfaces/publication_topics';
 import { TopicsService } from 'src/app/services/topics.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { PublicationService } from 'src/app/services/publication.service';
 import { Observable } from 'rxjs';
 
@@ -54,7 +54,15 @@ export class CreatePublicationComponent implements OnInit {
     ]
   };
 
-  constructor(private topicService: TopicsService, private publicationService: PublicationService) { }
+  constructor(private topicService: TopicsService, private publicationService: PublicationService, private fb: FormBuilder) {
+
+    this.postForm = this.fb.group({
+      title: [null],
+      content: [null],
+      topic: [null]
+    });
+
+  }
 
   ngOnInit(): void {
 
@@ -68,8 +76,10 @@ export class CreatePublicationComponent implements OnInit {
     });
   }
 
-  submitPublication(): Observable<any> {
-    return this.publicationService.createPublication(this.postForm);
+  submitPublication() {
+    console.log("submit pub")
+    console.log(this.postForm)
+    return this.publicationService.createPublication(this.postForm, this.topics).subscribe();
   }
 
 }
