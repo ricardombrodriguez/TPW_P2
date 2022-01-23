@@ -10,7 +10,10 @@ import { PublicationService } from 'src/app/services/publication.service';
 })
 export class ActivePublicationsComponent implements OnInit {
 
-  public publications!: Publication[];
+  token = localStorage.getItem('token');
+  loggedIn = this.token != null ? true : false
+  
+  public publications: Publication[] = [];
   public topic:string='';
   public author:string ='';
   public date:string='';
@@ -21,7 +24,7 @@ export class ActivePublicationsComponent implements OnInit {
   ngOnInit(): void {
    
     this.getActivePublications();
-
+    console.log("aqui")
 
   }
 

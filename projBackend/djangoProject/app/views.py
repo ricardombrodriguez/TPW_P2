@@ -83,6 +83,18 @@ def get_user(request):
     return Response(serializer.data)
 
 
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def get_user_by_username(request):
+    username = request.GET['username']
+    try:
+        user = Users.objects.get(username=username)
+    except Users.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    serializer = UsersSerializer(user)
+    return Response(serializer.data)
+
 # Apagar users'?????
 
 ##Publication Status

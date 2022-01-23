@@ -18,8 +18,6 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
 
-    console.log("oi")
-
     this.contactForm = this.fb.group({
       username: [null],
       password:[null],
@@ -42,10 +40,25 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('token', this.token);
           localStorage.setItem('username', this.contactForm.value["username"]);
           //SERRAS
-          localStorage.setItem('id', "3");
-          localStorage.setItem('group', "Admin");
-          //SERRAS
-          this.location.back();
+
+          this.loginService.getUserInfo(this.contactForm.value["username"], this.token).
+          subscribe(
+            data_user => {
+              let data_user_json = JSON.parse(JSON.stringify(data_user))
+
+              localStorage.setItem('id', data_user_json.id);
+              localStorage.setItem('group', data_user_json.group.description);
+              this.location.back();
+            },
+            error => {
+              console.log('Error: ', error);
+              this.contactForm = this.fb.group({
+                username: [null],
+                password:[null],
+              });
+              this.showError = true
+            }
+          );
       },
       error => {
           console.log('Error: ', error);

@@ -13,7 +13,7 @@ import { TopicsService } from 'src/app/services/topics.service';
 export class MyPublicationsComponent implements OnInit {
   public topics!: Publication_Topics[];
   contactForm !:FormGroup;
-  public publications!: Publication[];
+  public publications: Publication[] = [];
   public publications_pendent!: Publication[];
   public publications_filled!: Publication[];
   public id:number=-1;
