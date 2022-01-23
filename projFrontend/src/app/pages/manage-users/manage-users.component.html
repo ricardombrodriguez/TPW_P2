@@ -69,7 +69,7 @@
                         <table class="table table-bordered">
                             <!-- AQUI -->
                             <!-- Listar os users -->
-                            <app-user *ngFor="let user of users" class="user_row" [user]="user">
+                            <app-user *ngFor="let user of users" class="user_row" [groups]="topics" [user]="user">
                             </app-user>
                             <p *ngIf="users.length ==0">No users</p>
                         </table>

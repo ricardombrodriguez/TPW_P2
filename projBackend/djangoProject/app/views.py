@@ -73,7 +73,9 @@ def update_user(request):
         user = Users.objects.get(id=id)
     except Users.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+    request.data["group"]=    request.data["group"]["id"]
     serializer = UsersSerializer(user, data=request.data)
+    print(serializer)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)

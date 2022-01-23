@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Group } from 'src/app/interfaces/group';
 import { User } from 'src/app/interfaces/user';
 import { UsersService } from 'src/app/services/users.service';
@@ -11,19 +12,30 @@ import { UsersService } from 'src/app/services/users.service';
 export class GroupComponent implements OnInit {
 
   @Input() user!: User;
-  public groups!: Group[];
+  @Input() groups!: Group[];
   token=''+localStorage.getItem("token")
-  constructor(private userSService: UsersService) { }
+  group=''+localStorage.getItem('group');
+  formUser !:FormGroup
+  constructor(private userSService: UsersService,private fb:FormBuilder) { }
 
   ngOnInit(): void {
-
-    this.getGroups();
-
+    console.log("GRUPOS",this.groups)
+    this.getGroupsPossible();
+    console.log("GRUPOS",this.groups)
+    this.formUser = this.fb.group({
+      description: [null],
+    })
   }
 
   getGroups() {
     return this.userSService.getGroups(this.token).subscribe((groups) => {
-      console.log(groups)
+      this.groups = groups;
+    })
+    
+  }
+
+  getGroupsPossible(){
+    return this.userSService.get_groupDescription(this.token,this.group).subscribe((groups) => {
       this.groups = groups;
     })
   }

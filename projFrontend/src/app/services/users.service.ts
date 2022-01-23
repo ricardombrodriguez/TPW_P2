@@ -4,6 +4,11 @@ import { Observable } from 'rxjs';
 import { Group } from '../interfaces/group';
 import { User } from '../interfaces/user';
 
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -15,6 +20,10 @@ export class UsersService {
 
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.baseUrl + 'users');
+  }
+
+  updateUser(au: User) : Observable<any>{
+    return this.http.put(this.baseUrl+'userupd',au,httpOptions)
   }
 
   getGroups(token:string): Observable<Group[]> {
