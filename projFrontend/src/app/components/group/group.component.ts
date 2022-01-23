@@ -12,7 +12,7 @@ export class GroupComponent implements OnInit {
 
   @Input() user!: User;
   public groups!: Group[];
-
+  token=''+localStorage.getItem("token")
   constructor(private userSService: UsersService) { }
 
   ngOnInit(): void {
@@ -22,7 +22,7 @@ export class GroupComponent implements OnInit {
   }
 
   getGroups() {
-    return this.userSService.getGroups().subscribe((groups) => {
+    return this.userSService.getGroups(this.token).subscribe((groups) => {
       console.log(groups)
       this.groups = groups;
     })

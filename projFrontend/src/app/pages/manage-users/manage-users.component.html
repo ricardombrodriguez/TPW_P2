@@ -16,7 +16,7 @@
         <!-- Main content -->
         <div class="content">
             <div class="container-fluid">
-                <form action="" method="post">
+                <form action="" method="post" [formGroup]="topicForm">
 
                     <div class="row">
                         <div class="col-7">
@@ -25,7 +25,7 @@
                                     <b>Username:</b>
                                 </div>
                                 <div class="col-10">
-                                    <input type="text" id="username" name="username">
+                                    <input  formControlName="username" type="text" id="username" name="username">
                                 </div>
                             </div>
                         </div>
@@ -36,7 +36,7 @@
                                     <b>Full Name:</b>
                                 </div>
                                 <div class="col-10">
-                                    <input type="text" id="fullname" name="fullname">
+                                    <input formControlName="name" type="text" id="fullname" name="fullname">
                                 </div>
                             </div>
                         </div>
@@ -49,14 +49,15 @@
                                     <b>Group:</b>
                                 </div>
                                 <div class="col-10">
-                                    <select class="form-control" id="topic" name="topic">
-                                        <option [value]="1">Topico 1</option>
+                                    <select formControlName="topic" class="form-control" id="topic" name="topic">
+                                        <option [ngValue]="null" >Select Topic</option>
+                                        <option *ngFor="let topic of topics" >{{topic.description}}</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
                         <div class="col-1">
-                            <button type="submit" class="btn btn-primary btn-sm" value><i
+                            <button (click)="submit()" type="submit" class="btn btn-primary btn-sm" value><i
                                     class="fas fa-search"></i></button>
                         </div>
                     </div>
@@ -70,7 +71,7 @@
                             <!-- Listar os users -->
                             <app-user *ngFor="let user of users" class="user_row" [user]="user">
                             </app-user>
-                            <p>No users</p>
+                            <p *ngIf="users.length ==0">No users</p>
                         </table>
                     </div>
                 </div>
