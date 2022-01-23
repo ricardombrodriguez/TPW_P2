@@ -154,13 +154,14 @@ def get_pub_topics_update(request):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['DELETE'])
-def get_pub_topics_delete(request, id):
+@api_view(['POST'])
+def pub_topic_disable(request, id):
     try:
         ret = Publication_topics.objects.get(id=id)
     except Publication_topics.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
-    ret.delete()
+    ret.active = False;
+    ret.save()
     return Response(status=status.HTTP_204_NO_CONTENT)
 
 
