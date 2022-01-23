@@ -11,6 +11,7 @@
                 <div class="ml-auto col-1" style="padding-right: 10px;">
                     <input type="hidden" name="topic_id" value="{{ topic.id }}" formControlName="description">
                     <button type="submit" class="btn btn-primary" name="save" value="save">Save</button>
+                    <button type="button" (click)="disableTopic()">Disable</button>
                 </div>
             </div>
 

@@ -127,7 +127,6 @@ def pub_status_getALl(request):
     serializer = PublicationStatusSerializer(ret, many=True)
     return Response(serializer.data)
 
-
 @api_view(['GET'])
 def pub_status_getOne(request):
     # Acho que é melhor fazer o get Pela descrição do que pelo id
@@ -160,6 +159,29 @@ def get_pub_topics(request):
     return Response(serializer.data)
 
 
+    publications = Publications.objects.all()
+    ret = []
+    state = Publication_status.objects.get(description="Por Aprovar")
+    for publication in publications:
+        if publication.status == state:
+            ret.append(publication)
+
+    serializer = PublicationsSerializer(ret, many=True)
+
+
+
+@api_view(['GET'])
+def get_pub_topics_enabled(request):
+    ret = Publication_topics.objects.all()
+    enabled_topics = []
+    for topic in ret:
+        if topic.enabled:
+            print(topic)
+            enabled_topics.append(topic)
+    serializer = PublicationTopicsSerializer(enabled_topics, many=True)
+    return Response(serializer.data)
+
+
 @api_view(['POST'])
 def get_pub_topics_create(request):
     print(request.data)
@@ -186,14 +208,19 @@ def get_pub_topics_update(request):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['POST'])
-def pub_topic_disable(request, id):
+
+@api_view(['PUT'])
+def pub_topic_disable(request):
+    id = request.data['id']
     try:
         ret = Publication_topics.objects.get(id=id)
     except Publication_topics.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
-    ret.active = False;
-    ret.save()
+    request.data['enabled'] = False
+    serializer = PublicationTopicsSerializer(ret, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
     return Response(status=status.HTTP_204_NO_CONTENT)
 
 

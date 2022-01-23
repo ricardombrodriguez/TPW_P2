@@ -21,7 +21,8 @@ export class ManageTopicsComponent implements OnInit {
 
     this.getTopics();
     this.topicForm = this.fb.group({
-      description: [null]
+      description: [null],
+      enabled: [true]
     });
 
   }
@@ -33,15 +34,15 @@ export class ManageTopicsComponent implements OnInit {
   }
 
   topicSubmit() {
-    var descricao=(this.topicForm.value.description)
-    var x:boolean=false
-    for (var a of this.topics){
-      if(a.description ==descricao){
-        x=true;
+    var descricao = (this.topicForm.value.description)
+    var x: boolean = false
+    for (var a of this.topics) {
+      if (a.description == descricao) {
+        x = true;
         break
       }
     }
-    if (x){
+    if (x) {
       this.topicForm.reset();
       return false;
       //Dar um sweet

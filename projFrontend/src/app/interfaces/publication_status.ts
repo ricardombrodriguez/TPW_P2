@@ -1,4 +1,4 @@
-export interface Publication_Status{
-    id : number;
+export interface Publication_Status {
+    id: number;
     description: string;
 }

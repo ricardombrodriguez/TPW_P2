@@ -63,7 +63,7 @@ export class CreatePublicationComponent implements OnInit {
   }
 
   getTopics(): void {
-    this.topicService.getTopics().subscribe((topics) => {
+    this.topicService.getEnabledTopics().subscribe((topics) => {
       this.topics = topics;
     });
   }

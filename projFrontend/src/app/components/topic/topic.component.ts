@@ -31,4 +31,8 @@ export class TopicComponent implements OnInit {
     });
   }
 
+  disableTopic() {
+    return this.topicsService.disableTopic(this.topic).subscribe(() => { });
+  }
+
 }

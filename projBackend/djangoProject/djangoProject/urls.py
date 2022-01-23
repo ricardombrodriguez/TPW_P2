@@ -32,6 +32,7 @@ urlpatterns = [
     path('ws/pubstatusgetALl', views.pub_status_getALl),
     path('ws/pubtopicsgetOne', views.get_pub_topic),
     path('ws/pubtopicsgetAll', views.get_pub_topics),
+    path('ws/pubtopicsenabledgetAll', views.get_pub_topics_enabled),
     path('ws/pubtopicscreate', views.get_pub_topics_create),
     path('ws/pubtopicsupdate', views.get_pub_topics_update),
     path('ws/pubtopicsdisable', views.pub_topic_disable),

@@ -11,14 +11,13 @@ class Groups(models.Model):
 
 class Publication_status(models.Model):
     description = models.CharField(max_length=70)
-    active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.description
 
 class Publication_topics(models.Model):
     description = models.CharField(max_length=70)
-
+    enabled = models.BooleanField(default=True)
 
     def __str__(self):
         return self.description

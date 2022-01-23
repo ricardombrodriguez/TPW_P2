@@ -19,7 +19,7 @@ class PublicationStatusSerializer(serializers.ModelSerializer):
 class PublicationTopicsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Publication_topics
-        fields = ('id','description','active')
+        fields = ('id','description','enabled')
 
 
 class UsersSerializer(serializers.ModelSerializer):
