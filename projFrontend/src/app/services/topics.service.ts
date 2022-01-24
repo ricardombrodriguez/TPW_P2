@@ -32,7 +32,7 @@ export class TopicsService {
 
     let topic: Publication_Topics = new Publication_Topics;
     topic.description = form.value.description;
-    topic.enabled = form.value.enabled;
+    topic.enabled = true;
     return this.http.post(this.baseUrl + 'pubtopicscreate', topic, httpOptions);
   }
 
@@ -47,6 +47,10 @@ export class TopicsService {
     return this.http.put(this.baseUrl + 'pubtopicsdisable', topic, httpOptions);
   }
 
+  enableTopic(topic: Publication_Topics): Observable<any> {
+
+    return this.http.put(this.baseUrl + 'pubtopicsenable', topic, httpOptions);
+  }
 
 
 }

@@ -32,7 +32,15 @@ export class TopicComponent implements OnInit {
   }
 
   disableTopic() {
-    return this.topicsService.disableTopic(this.topic).subscribe(() => { });
+    return this.topicsService.disableTopic(this.topic).subscribe(() => {
+      window.location.reload();
+    });
+  }
+
+  enableTopic() {
+    return this.topicsService.enableTopic(this.topic).subscribe(() => {
+      window.location.reload();
+    });
   }
 
 }

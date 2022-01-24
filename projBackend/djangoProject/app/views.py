@@ -234,6 +234,21 @@ def pub_topic_disable(request):
         return Response(serializer.data)
     return Response(status=status.HTTP_204_NO_CONTENT)
 
+@api_view(['PUT'])
+def pub_topic_enable(request):
+    id = request.data['id']
+    try:
+        ret = Publication_topics.objects.get(id=id)
+    except Publication_topics.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    request.data['enabled'] = True
+    serializer = PublicationTopicsSerializer(ret, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(status=status.HTTP_204_NO_CONTENT)
+
+
 
 ##PUBLICATION
 @api_view(['GET'])
