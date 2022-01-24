@@ -1,21 +1,17 @@
 <form action="." method="post" [formGroup]="topicUpdateForm" (ngSubmit)="topicUpdate()">
     <!-- {% csrf_token %}
     {% if user.group.description != " Gestor" or user.group.description !="Admin" %} -->
-    <tr class="publication_row">
-        <td>
             <div class="row">
                 <div class="col-8">
-                    <input name="topic_des" value="{{ topic.description }}" formControlName="description">
+                    <input class="form-control" name="topic_des" value="{{ topic.description }}" formControlName="description">
                 </div>
 
-                <div class="ml-auto col-1" style="padding-right: 10px;">
+                <div class="ml-auto col-4 text-right" style="padding-right: 10px;">
                     <input type="hidden" name="topic_id" value="{{ topic.id }}" formControlName="description">
-                    <button type="submit" class="btn btn-primary" name="save" value="save">Save</button>
-                    <button type="button" (click)="disableTopic()">Disable</button>
+                    <button type="submit" class="btn btn-primary mr-3" name="save" value="save">Save</button>
+                    <button type="button" class="btn btn-primary btn-danger" (click)="disableTopic()">Disable</button>
                 </div>
             </div>
-
-        </td>
-    </tr>
+            <hr>
     <!-- {% endif %} -->
 </form>

@@ -8,7 +8,7 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="mb-2">
-                    <h1 class="m-0">Favoritos</h1>
+                    <h1 class="m-0">Favourites</h1>
                 </div>
             </div><!-- /.container-fluid -->
         </div>
@@ -25,13 +25,12 @@
 
                         <p *ngIf="favourites.length==1" >Found {{favourites.length}} publication.</p>
 
-                        <table class="table table-bordered">
+                            <hr>
                             <div *ngFor="let favourite of favourites">
                                 <app-publication [publication]="favourite">
                                 </app-publication>
                             </div>
-                            <p *ngIf="favourites.length==0" >Não existem publicações disponíveis</p>
-                        </table>
+                            <p *ngIf="favourites.length==0" >No publications available.</p>
                     </div>
                 </div>
             </div>

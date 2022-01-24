@@ -21,7 +21,7 @@ export class PublicationPageComponent implements OnInit {
 
   public id!: number;
   public pub!: Publication;
-  public comments!: Comment[]
+  public comments: Comment[] = [];
   public group = localStorage.getItem("group")
   token = localStorage.getItem('token');
   loggedIn = true ? this.token != null : false 
@@ -143,7 +143,13 @@ export class PublicationPageComponent implements OnInit {
       this.user.username!=this.username
       com.author=this.user
       com.comment=comentario
-      this.commentSerice.createComment(com).subscribe()
-      window.location.reload();
+      this.commentSerice.createComment(com).subscribe(
+        data => {
+          window.location.reload();
+        },
+        error => {
+          alert(error)
+        }
+      )
     }
 }

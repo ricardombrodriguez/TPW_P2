@@ -14,8 +14,8 @@ export class MyPublicationsComponent implements OnInit {
   public topics: Publication_Topics[] = [];
   contactForm !:FormGroup;
   public publications: Publication[] = [];
-  public publications_pendent!: Publication[];
-  public publications_filled!: Publication[];
+  public publications_pendent: Publication[] = [];
+  public publications_filled: Publication[] = [];
   public id:number=-1;
   public topic:string='';
   public author:string ='';

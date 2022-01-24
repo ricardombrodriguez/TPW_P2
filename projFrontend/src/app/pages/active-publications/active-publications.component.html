@@ -26,16 +26,13 @@
 
                         <p *ngIf="publications.length==1">Found {{publications.length}} publication.</p>
 
-
-                        <table class="table table-bordered">
                             <!-- AQUI -->
                             <!-- Listar as publicações -->
-
+                            <hr>
                             <div *ngFor="let publication of publications">
                                 <app-publication [publication]="publication">
                                 </app-publication>
                             </div>
-                        </table>
                         <p *ngIf="publications.length==0">Não existem publicações disponíveis</p>
                     </div>
                 </div>

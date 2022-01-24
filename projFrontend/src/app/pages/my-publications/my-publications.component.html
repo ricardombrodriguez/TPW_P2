@@ -75,10 +75,13 @@
                     <div class="card-body">
 
                         <h3>Approved publications</h3><br>
-                        <table class="table table-bordered">
                             <!-- AQUI -->
                             <!-- Listar as publicações -->
-                            <app-publication  *ngFor="let publication of publications" [publication]="publication"></app-publication>
+                            <hr>
+                            <div *ngFor="let publication of publications">
+                                <app-publication [publication]="publication">
+                                </app-publication>
+                            </div>
                             <p *ngIf="publications.length==0">Não existem publicações arquivadas disponíveis</p>
 
                             <!-- {% for pub in pubs_aproved %}
@@ -108,7 +111,6 @@
                             {% empty %}
                             <p>Não existem publicações aprovadas disponíveis</p>
                             {% endfor %} -->
-                        </table>
                     </div>
                 </div>
                 <div class="card card-default mt-3">
@@ -118,7 +120,7 @@
                         <br>
                         <h3>Pendent publications</h3>
                         <br>
-                        <table class="table table-bordered">
+                            <hr>
                             <!-- AQUI -->
                             <!-- Listar as publicações -->
                             <div *ngFor="let publication of publications_pendent">
@@ -154,7 +156,6 @@
                             {% empty %}
                             <p>Não existem publicações por aprovar disponíveis</p>
                             {% endfor %} -->
-                        </table>
                     </div>
                 </div>
                 <div class="card card-default mt-3">
@@ -163,7 +164,7 @@
                         <br>
                         <h3>Closed publications</h3>
                         <br>
-                        <table class="table table-bordered">
+                            <hr>
                             <!-- AQUI -->
                             <!-- Listar as publicações -->
                             <div *ngFor="let publication of publications_filled">
@@ -198,7 +199,6 @@
                             {% empty %}
                             <p>Não existem publicações arquivadas disponíveis</p>
                             {% endfor %} -->
-                        </table>
 
                     </div>
                 </div>

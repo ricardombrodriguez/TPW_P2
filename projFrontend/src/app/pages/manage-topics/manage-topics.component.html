@@ -16,11 +16,11 @@
 
                 <div class="card card-default mt-3">
                     <div class="card-body">
-                        <h6> Add topic:</h6>
+                        <h6><b> Add topic:</b></h6>
                         <form action="" method="post" [formGroup]="topicForm" (ngSubmit)="topicSubmit()">
                             <div class="row">
                                 <div class="ml-auto col-11" style="padding-right: 10px;">
-                                    <input type="" name="new_topic" value="" formControlName="description">
+                                    <input class="form-control" type="" name="new_topic" value="" formControlName="description">
                                 </div>
                                 <div class="ml-auto col-1" style="padding-right: 10px;">
                                     <button type="submit" name="save_topic" class="btn btn-primary" value="save_topic"
@@ -29,14 +29,13 @@
                             </div>
                             <br>
                         </form>
-                        <table class=" table table-bordered">
 
-                            <h6>Manage topics:</h6>
+                            <h6><b>Manage topics:</b></h6>
+                            <hr>
                             <app-topic *ngFor="let topic of topics" class="topic_row" [topic]="topic">
                             </app-topic>
 
                             <p *ngIf="topics.length == 0">No topics available</p>
-                        </table>
                     </div>
                 </div>
             </div>

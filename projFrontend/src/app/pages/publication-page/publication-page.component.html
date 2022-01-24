@@ -89,18 +89,16 @@
                 </div>
                 <div class="card card-default mt-3">
                     <div class="card-body">
+                        <div class="timeline-item" *ngFor="let comment of comments">
+                            <app-comment [comment]="comment">
+                            </app-comment>
+                        </div>
+                        <!-- {% if error %} -->
+                        <p *ngIf="error" style="color: red">O comentário já foi submetido</p>
+                        <!-- {% endif %}
+                        {% if request.user.is_authenticated %} -->
+
                         <div class="timeline">
-                                <!-- {% for comment in comments %} -->
-                                <!-- comment          ! -->
-                                <!-- {% endfor %} -->
-                            <div *ngFor="let comment of comments">
-                                <app-comment [comment]="comment">
-                                </app-comment>
-                            </div>
-                            <!-- {% if error %} -->
-                            <p *ngIf="error" style="color: red">O comentário já foi submetido</p>
-                            <!-- {% endif %}
-                            {% if request.user.is_authenticated %} -->
                             <div *ngIf="loggedIn">
                                 <i class="fas fa-comment bg-blue"></i>
                                 <div class="timeline-item">
@@ -108,10 +106,10 @@
                                         <!-- {% csrf_token %} -->
                                         <div class="timeline-body">
                                             <!-- {{ form.content }} -->
-                                            <input formControlName="date" type="text" id="date" name="date">
-                                            <br>
-                                            <div class="mt-1 float-right" style="width: 10%;">
-                                                <input  (click)="sendComment()" type="submit" class="btn btn-primary btn-sm" 
+                                            <input class="form-control" formControlName="date" type="text" id="date" name="date" style="width: 100%">
+ 
+                                            <div class="mt-3 float-right text-right" style="width: 10%;">
+                                                <input (click)="sendComment()" type="submit" class="btn btn-primary btn-sm" 
                                                     id="btn_submit" value="Enviar" />
                                             </div>
                                         </div>

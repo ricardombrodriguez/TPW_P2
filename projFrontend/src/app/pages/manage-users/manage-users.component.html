@@ -25,7 +25,7 @@
                                     <b>Username:</b>
                                 </div>
                                 <div class="col-10">
-                                    <input  formControlName="username" type="text" id="username" name="username">
+                                    <input class="form-control" formControlName="username" type="text" id="username" name="username">
                                 </div>
                             </div>
                         </div>
@@ -36,7 +36,7 @@
                                     <b>Full Name:</b>
                                 </div>
                                 <div class="col-10">
-                                    <input formControlName="name" type="text" id="fullname" name="fullname">
+                                    <input class="form-control" formControlName="name" type="text" id="fullname" name="fullname">
                                 </div>
                             </div>
                         </div>
@@ -66,13 +66,12 @@
 
                 <div class="card card-default mt-3">
                     <div class="card-body">
-                        <table class="table table-bordered">
-                            <!-- AQUI -->
-                            <!-- Listar os users -->
-                            <app-user *ngFor="let user of users" class="user_row" [groups]="topics" [user]="user">
-                            </app-user>
+                            <hr>
+                            <div *ngFor="let user of users">
+                                <app-user [groups]="topics" [user]="user">
+                                </app-user>
+                            </div>
                             <p *ngIf="users.length ==0">No users</p>
-                        </table>
                     </div>
                 </div>
             </div>

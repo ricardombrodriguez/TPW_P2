@@ -20,7 +20,7 @@ export class CreatePublicationComponent implements OnInit {
     editable: true,
     spellcheck: true,
     height: 'auto',
-    minHeight: '0',
+    minHeight: '100px',
     maxHeight: 'auto',
     width: 'auto',
     minWidth: '0',

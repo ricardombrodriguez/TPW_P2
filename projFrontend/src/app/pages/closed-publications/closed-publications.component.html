@@ -29,18 +29,17 @@
     
 
 
-                            <table class="table table-bordered">
                                 <!-- AQUI -->
                                 <!-- Listar as publicações -->
 
-                                <tr *ngFor="let publication of publications" class="publication_row">
+                                <hr>
+                                <div *ngFor="let publication of publications">
                                     <app-publication [publication]="publication">
                                     </app-publication>
-                                </tr>
+                                </div>
 
                                 <!-- se n existir!!!!!!-->
                                 <p *ngIf="publications.length==0">No closed publications available.</p>
-                            </table>
                         </div>
                     </div>
                 </div>
