@@ -87,7 +87,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card card-default mt-3">
+                <div *ngIf="pub.status.description=='Aprovado'" class="card card-default mt-3">
                     <div class="card-body">
                         <div class="timeline-item" *ngFor="let comment of comments">
                             <app-comment [comment]="comment">
