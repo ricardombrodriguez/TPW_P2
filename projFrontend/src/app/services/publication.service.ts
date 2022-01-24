@@ -35,7 +35,7 @@ export class PublicationService {
     return this.http.get<Publication>(this.baseUrl + 'pub?id=' + id);
   }
 
-  createPublication(form: FormGroup, topics: Publication_Topics[]): Observable<any> {
+  createPublication(form: FormGroup, topics: Publication_Topics[]): Observable<Publication> {
 
     let publication: Publication = new Publication;
 
@@ -50,9 +50,7 @@ export class PublicationService {
     publication.title = form.value.title;
     publication.content = form.value.content;
     publication.author = this.user;
-    console.log("submit")
-    console.log(publication)
-    return this.http.post(this.baseUrl + 'pubcrate', publication, httpOptions);
+    return this.http.post<Publication>(this.baseUrl + 'pubcrate', publication, httpOptions);
 
   }
 

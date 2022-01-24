@@ -5,6 +5,7 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { PublicationService } from 'src/app/services/publication.service';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-publication',
@@ -54,7 +55,7 @@ export class CreatePublicationComponent implements OnInit {
     ]
   };
 
-  constructor(private topicService: TopicsService, private publicationService: PublicationService, private fb: FormBuilder) {
+  constructor(private topicService: TopicsService, private publicationService: PublicationService, private fb: FormBuilder, private router: Router) {
 
     this.postForm = this.fb.group({
       title: [null],
@@ -79,7 +80,9 @@ export class CreatePublicationComponent implements OnInit {
   submitPublication() {
     console.log("submit pub")
     console.log(this.postForm)
-    return this.publicationService.createPublication(this.postForm, this.topics).subscribe();
+    return this.publicationService.createPublication(this.postForm, this.topics).subscribe((pub) =>
+      this.router.navigate(['/publication/' + pub.id])
+    );
   }
 
 }
