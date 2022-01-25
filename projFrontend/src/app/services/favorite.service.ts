@@ -24,12 +24,22 @@ export class FavoriteService {
     return this.http.get<Favorite>(this.baseUrl + 'checkIfFavorite?id=' + pub_id+'&&user_id='+user_id);
   }
 
-  addFavorite(fav:Favorite) : Observable<any> {
-    return this.http.post(this.baseUrl + 'favcre',fav,httpOptions);
+  addFavorite(fav:Favorite,token:string) : Observable<any> {
+    return this.http.post(this.baseUrl + 'favcre',fav,{ 
+      headers: new HttpHeaders({
+        'Authorization': 'Token ' + token,
+        'Content-Type': 'application/json',
+      }),
+    });
 
   }
-  deleteFavorite(fav:Favorite): Observable<any>{
-    return this.http.delete<Favorite>(this.baseUrl + 'favdel/'+fav.id,httpOptions);
+  deleteFavorite(fav:Favorite,token:string): Observable<any>{
+    return this.http.delete<Favorite>(this.baseUrl + 'favdel/'+fav.id,{ 
+      headers: new HttpHeaders({
+        'Authorization': 'Token ' + token,
+        'Content-Type': 'application/json',
+      }),
+    });
   }
  
 }

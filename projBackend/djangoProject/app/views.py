@@ -67,6 +67,8 @@ def create_user(request):
 
 
 @api_view(['PUT'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def update_user(request):
     id = request.data['id']
     try:
@@ -194,6 +196,8 @@ def get_pub_topics_enabled(request):
 
 
 @api_view(['POST'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def get_pub_topics_create(request):
     print(request.data)
 
@@ -205,6 +209,8 @@ def get_pub_topics_create(request):
 
 
 @api_view(['PUT'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def get_pub_topics_update(request):
     # Não sei se vai ser pelo id se pela descrição, vou deixar pelo id e mais tarde troca-se se for preciso
     id = request.data['id']
@@ -221,6 +227,8 @@ def get_pub_topics_update(request):
 
 
 @api_view(['PUT'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def pub_topic_disable(request):
     id = request.data['id']
     try:
@@ -235,6 +243,8 @@ def pub_topic_disable(request):
     return Response(status=status.HTTP_204_NO_CONTENT)
 
 @api_view(['PUT'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def pub_topic_enable(request):
     id = request.data['id']
     try:
@@ -270,15 +280,18 @@ def pubs(request):
 
 
 @api_view(['POST'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def pubcreate(request):
-    
+    print(request.data)
     description = request.data['status']['description']
-    stat = Publication_status.objects.get(description=description)
+    stat = Publication_status.objects.get(description__exact=description)
     request.data['topic'] = request.data['topic']['id']
     request.data['author'] = request.data['author']['id']
     request.data['status'] = stat.id
-
+    print(request.data)
     serializer = PublicationsSerializer(data=request.data)
+    print(serializer)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -286,6 +299,8 @@ def pubcreate(request):
 
 
 @api_view(['PUT'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def pubupd(request):
     pid =request.data['id']
 
@@ -345,6 +360,8 @@ def commentsPublication(request):
     return Response(serializer.data)
 
 @api_view(['POST'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def commentcre(request):
     request.data["author"]=request.data["author"]["id"]
     request.data["publication"]=request.data["publication"]["id"]
@@ -356,6 +373,8 @@ def commentcre(request):
 
 
 @api_view(['DELETE'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def commentdel(request,id):
     try:
         ret = Comments.objects.get(id=id)
@@ -441,6 +460,8 @@ def checkIfFavorite(request):
 
 
 @api_view(['POST'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def favcre(request):
     print(request.data)
     author=request.data["author"]
@@ -455,6 +476,8 @@ def favcre(request):
 
 
 @api_view(['DELETE'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def favdel(request,id):
 
     try:
@@ -467,6 +490,8 @@ def favdel(request,id):
 
 
 @api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def getAuthorPublications(request):
     id = int(request.GET['id'])
     try:
@@ -485,6 +510,8 @@ def getAuthorPublications(request):
 
 
 @api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def getAuthorPublicationsApproved(request):
     id = int(request.GET['id'])
     try:
@@ -503,6 +530,8 @@ def getAuthorPublicationsApproved(request):
 
 
 @api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def getAuthorPublicationsPendent(request):
     id = int(request.GET['id'])
     try:
@@ -622,6 +651,8 @@ def getSearchPublicationsFilled(request):
     serializer = PublicationsSerializer(ret, many=True)
     return Response(serializer.data)
 @api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def getSearchPublicationsPendentByUser(request):
     id = int(request.GET['id'])
     try:
@@ -649,6 +680,8 @@ def getSearchPublicationsPendentByUser(request):
     serializer = PublicationsSerializer(ret, many=True)
     return Response(serializer.data)
 @api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def getSearchPublicationsApprovedByUser(request):
     id = int(request.GET['id'])
     try:
@@ -677,6 +710,8 @@ def getSearchPublicationsApprovedByUser(request):
 
 
 @api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def getSearchPublicationsFilledByUser(request):
     id = int(request.GET['id'])
     try:
@@ -704,6 +739,8 @@ def getSearchPublicationsFilledByUser(request):
     return Response(serializer.data)
 
 @api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def getAuthorPublicationsArquivadas(request):
     id = int(request.GET['id'])
     try:
@@ -733,6 +770,8 @@ def getPublicationsArquivadas(request):
 
 
 @api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def getAuthorFavoritePublications(request):
     id = int(request.GET['id'])
     try:

@@ -23,12 +23,22 @@ export class CommentsService {
     return this.http.get<Comment[]>(this.baseUrl + 'commentsPublication?id=' + pub_id);
   }
 
-  deleteComment(comment:Comment) : Observable<any> {
-    return this.http.delete<Comment>(this.baseUrl+'commentdel/'+comment.id,httpOptions)
+  deleteComment(comment:Comment,token:string) : Observable<any> {
+    return this.http.delete<Comment>(this.baseUrl+'commentdel/'+comment.id,{ 
+      headers: new HttpHeaders({
+        'Authorization': 'Token ' + token,
+        'Content-Type': 'application/json',
+      }),
+    })
   }
 
-  createComment(comment:Comment): Observable<any>{
-    return this.http.post(this.baseUrl+'commentcre',comment,httpOptions)
+  createComment(comment:Comment,token:string): Observable<any>{
+    return this.http.post(this.baseUrl+'commentcre',comment,{ 
+      headers: new HttpHeaders({
+        'Authorization': 'Token ' + token,
+        'Content-Type': 'application/json',
+      }),
+    })
 
   }
 }

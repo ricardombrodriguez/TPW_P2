@@ -16,6 +16,7 @@ export class CreatePublicationComponent implements OnInit {
 
   public topics!: Publication_Topics[];
   public postForm !: FormGroup;
+  token = ''+localStorage.getItem('token');
 
   editorConfig: AngularEditorConfig = {
     editable: true,
@@ -80,7 +81,7 @@ export class CreatePublicationComponent implements OnInit {
   submitPublication() {
     console.log("submit pub")
     console.log(this.postForm)
-    return this.publicationService.createPublication(this.postForm, this.topics).subscribe((pub) =>
+    return this.publicationService.createPublication(this.postForm, this.topics,this.token).subscribe((pub) =>
       this.router.navigate(['/publication/' + pub.id])
     );
   }

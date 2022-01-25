@@ -10,7 +10,7 @@ import { CommentsService } from 'src/app/services/comments.service';
 export class CommentComponent implements OnInit {
   @Input() comment !:Comment
   public group = localStorage.getItem("group")
-  token = localStorage.getItem('token');
+  token = ''+localStorage.getItem('token');
   username = localStorage.getItem('username');
   loggedIn = true ? this.token != null : false 
   constructor(private commentSerice: CommentsService) { }
@@ -20,7 +20,7 @@ export class CommentComponent implements OnInit {
 
   deleteComment(){
     console.log("DELETE")
-    this.commentSerice.deleteComment(this.comment).subscribe()
+    this.commentSerice.deleteComment(this.comment,this.token).subscribe()
     window.location.reload();
   }
 }

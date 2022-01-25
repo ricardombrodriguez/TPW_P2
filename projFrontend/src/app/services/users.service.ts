@@ -32,8 +32,13 @@ export class UsersService {
     return this.http.get<User[]>(this.baseUrl + 'users');
   }
 
-  updateUser(au: User): Observable<any> {
-    return this.http.put(this.baseUrl + 'userupd', au, httpOptions)
+  updateUser(au: User,token:string): Observable<any> {
+    return this.http.put(this.baseUrl + 'userupd', au, { 
+      headers: new HttpHeaders({
+        'Authorization': 'Token ' + token,
+        'Content-Type': 'application/json',
+      }),
+    })
   }
 
   getGroups(token: string): Observable<Group[]> {

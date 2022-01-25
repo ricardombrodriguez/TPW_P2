@@ -14,6 +14,8 @@ export class UserComponent implements OnInit {
   @Input() user!: User;
   @Input() groups!: Group[];
   contactForm !:FormGroup;
+  token = ''+localStorage.getItem('token');
+
   constructor(private fb:FormBuilder, private userService: UsersService) { }
 
   ngOnInit(): void {
@@ -34,7 +36,7 @@ export class UserComponent implements OnInit {
     }
     let tmp_user=this.user
     tmp_user.group=grupo
-    this.userService.updateUser(tmp_user).subscribe( data_user => {
+    this.userService.updateUser(tmp_user,this.token).subscribe( data_user => {
       this.user=tmp_user
     },
     error => {

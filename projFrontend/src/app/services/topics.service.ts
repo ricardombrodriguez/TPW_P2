@@ -28,28 +28,48 @@ export class TopicsService {
     return this.http.get<Publication_Topics[]>(this.baseUrl + 'pubtopicsenabledgetAll');
   }
 
-  createTopic(form: FormGroup): Observable<any> {
+  createTopic(form: FormGroup,token:string): Observable<any> {
 
     let topic: Publication_Topics = new Publication_Topics;
     topic.description = form.value.description;
     topic.enabled = true;
-    return this.http.post(this.baseUrl + 'pubtopicscreate', topic, httpOptions);
+    return this.http.post(this.baseUrl + 'pubtopicscreate', topic, { 
+      headers: new HttpHeaders({
+        'Authorization': 'Token ' + token,
+        'Content-Type': 'application/json',
+      }),
+    });
   }
 
-  updateTopic(topic: Publication_Topics, description: string): Observable<any> {
+  updateTopic(topic: Publication_Topics, description: string,token:string): Observable<any> {
 
     topic.description = description;
-    return this.http.put(this.baseUrl + 'pubtopicsupdate', topic, httpOptions);
+    return this.http.put(this.baseUrl + 'pubtopicsupdate', topic, { 
+      headers: new HttpHeaders({
+        'Authorization': 'Token ' + token,
+        'Content-Type': 'application/json',
+      }),
+    });
   }
 
-  disableTopic(topic: Publication_Topics): Observable<any> {
+  disableTopic(topic: Publication_Topics,token:string): Observable<any> {
 
-    return this.http.put(this.baseUrl + 'pubtopicsdisable', topic, httpOptions);
+    return this.http.put(this.baseUrl + 'pubtopicsdisable', topic, { 
+      headers: new HttpHeaders({
+        'Authorization': 'Token ' + token,
+        'Content-Type': 'application/json',
+      }),
+    });
   }
 
-  enableTopic(topic: Publication_Topics): Observable<any> {
+  enableTopic(topic: Publication_Topics,token:string): Observable<any> {
 
-    return this.http.put(this.baseUrl + 'pubtopicsenable', topic, httpOptions);
+    return this.http.put(this.baseUrl + 'pubtopicsenable', topic, { 
+      headers: new HttpHeaders({
+        'Authorization': 'Token ' + token,
+        'Content-Type': 'application/json',
+      }),
+    });
   }
 
 

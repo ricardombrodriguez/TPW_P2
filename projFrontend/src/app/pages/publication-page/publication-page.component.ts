@@ -23,7 +23,7 @@ export class PublicationPageComponent implements OnInit {
   public pub!: Publication;
   public comments: Comment[] = [];
   public group = localStorage.getItem("group")
-  token = localStorage.getItem('token');
+  token =''+ localStorage.getItem('token');
   loggedIn = true ? this.token != null : false 
   username = localStorage.getItem('username');
   user_id:number=-1
@@ -76,7 +76,7 @@ export class PublicationPageComponent implements OnInit {
       data => {
         var status = data
         tmp_pub.status=status
-        this.publicationService.updatePublication(tmp_pub).subscribe(
+        this.publicationService.updatePublication(tmp_pub,this.token).subscribe(
           data => {
             this.pub=tmp_pub
             
@@ -97,11 +97,11 @@ export class PublicationPageComponent implements OnInit {
     this.user.id=this.user_id
     this.user.username!=this.username
     fav.author=this.user
-    this.favoriteService.addFavorite(fav).subscribe( (data) => window.location.reload());
+    this.favoriteService.addFavorite(fav,this.token).subscribe( (data) => window.location.reload());
 
   }
   rmFav(){
-    this.favoriteService.deleteFavorite(this.fav).subscribe((data) => window.location.reload());
+    this.favoriteService.deleteFavorite(this.fav,this.token).subscribe((data) => window.location.reload());
   }
   getPublicationComments(){
     console.log("OLA")
@@ -121,7 +121,7 @@ export class PublicationPageComponent implements OnInit {
       data => {
         var status = data
         tmp_pub.status=status
-        this.publicationService.updatePublication(tmp_pub).subscribe(
+        this.publicationService.updatePublication(tmp_pub,this.token).subscribe(
           data => {
             this.pub=tmp_pub
             
@@ -141,7 +141,7 @@ export class PublicationPageComponent implements OnInit {
       this.user.username!=this.username
       com.author=this.user
       com.comment=comentario
-      this.commentSerice.createComment(com).subscribe(
+      this.commentSerice.createComment(com,this.token).subscribe(
         data => {
           window.location.reload();
         },

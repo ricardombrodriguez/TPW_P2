@@ -15,6 +15,7 @@ export class ManageTopicsComponent implements OnInit {
   public topicAdded!: string;           // description of the topic to be added
   public repeated: boolean = false;
   topicForm !: FormGroup;
+  token = ''+localStorage.getItem('token');
 
   constructor(private topicsService: TopicsService, private fb: FormBuilder) { }
 
@@ -49,7 +50,7 @@ export class ManageTopicsComponent implements OnInit {
       this.repeated = true;
       return false;
     }
-    return this.topicsService.createTopic(this.topicForm).subscribe((topic) => {
+    return this.topicsService.createTopic(this.topicForm,this.token).subscribe((topic) => {
       this.topicAdded = topic;
       this.getTopics();
       this.topicForm.reset();

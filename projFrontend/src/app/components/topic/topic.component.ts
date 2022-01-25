@@ -13,6 +13,7 @@ export class TopicComponent implements OnInit {
 
   @Input() topic!: Publication_Topics;
   topicUpdateForm!: FormGroup;
+  token = ''+localStorage.getItem('token');
 
   constructor(private topicsService: TopicsService, private fb: FormBuilder) { }
 
@@ -26,19 +27,19 @@ export class TopicComponent implements OnInit {
   }
 
   topicUpdate() {
-    return this.topicsService.updateTopic(this.topic, this.topicUpdateForm.value.description).subscribe((topic) => {
+    return this.topicsService.updateTopic(this.topic, this.topicUpdateForm.value.description,this.token).subscribe((topic) => {
       this.topicUpdateForm.updateValueAndValidity();
     });
   }
 
   disableTopic() {
-    return this.topicsService.disableTopic(this.topic).subscribe(() => {
+    return this.topicsService.disableTopic(this.topic,this.token).subscribe(() => {
       window.location.reload();
     });
   }
 
   enableTopic() {
-    return this.topicsService.enableTopic(this.topic).subscribe(() => {
+    return this.topicsService.enableTopic(this.topic,this.token).subscribe(() => {
       window.location.reload();
     });
   }

@@ -16,6 +16,7 @@ export class FavouritesComponent implements OnInit {
   public date:string='';
   public title:string='';
   public id:number=-1;
+  token = ''+localStorage.getItem('token');
 
 
 
@@ -34,7 +35,7 @@ export class FavouritesComponent implements OnInit {
   }
 
   getFavouritePublications(id: number) {
-    return this.publicationService.getFavouritePublicationsByUser(id).subscribe((favourites) => {
+    return this.publicationService.getFavouritePublicationsByUser(id,this.token).subscribe((favourites) => {
       this.favourites = favourites;
     })
   }
@@ -85,7 +86,7 @@ export class FavouritesComponent implements OnInit {
       x=true;
     }
     if (x){
-      this.publicationService.getSearchPublicationsApprovedFavorite(this.id,this.author,this.date,this.topic,this.title).subscribe((publications) => {
+      this.publicationService.getSearchPublicationsApprovedFavorite(this.id,this.author,this.date,this.topic,this.title,this.token).subscribe((publications) => {
         this.favourites = publications;
       });
     }

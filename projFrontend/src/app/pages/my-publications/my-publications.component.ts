@@ -21,6 +21,8 @@ export class MyPublicationsComponent implements OnInit {
   public author:string ='';
   public date:string='';
   public title:string='';
+  token = ''+localStorage.getItem('token');
+
   constructor(private topicsService: TopicsService,private publicationsService: PublicationService,private fb:FormBuilder) { }
 
   ngOnInit(): void {
@@ -45,17 +47,17 @@ export class MyPublicationsComponent implements OnInit {
     });
   }
   getActivePublications(id:number): void {
-    this.publicationsService.getActivePublicationsByUser(id).subscribe((publications) => {
+    this.publicationsService.getActivePublicationsByUser(id,this.token).subscribe((publications) => {
       this.publications = publications;
     });
   }
   getPendentPublications(id:number): void {
-    this.publicationsService.getPendentPublicationsByUser(id).subscribe((publications) => {
+    this.publicationsService.getPendentPublicationsByUser(id,this.token).subscribe((publications) => {
       this.publications_pendent = publications;
     });
   }
   getFilledPublications(id:number): void {
-    this.publicationsService.getClosedPublicationsByUser(id).subscribe((publications) => {
+    this.publicationsService.getClosedPublicationsByUser(id,this.token).subscribe((publications) => {
       this.publications_filled = publications;
     });
   }
@@ -109,13 +111,13 @@ export class MyPublicationsComponent implements OnInit {
     }
     if (x){
       //FAZER O SEARCH POR CADA USER OU SEJA PRECISO DE 3 FUNÇÕES +
-      this.publicationsService.getSearchPublicationsApprovedByUser(this.id,this.date,this.topic,this.title).subscribe((publications) => {
+      this.publicationsService.getSearchPublicationsApprovedByUser(this.id,this.date,this.topic,this.title,this.token).subscribe((publications) => {
         this.publications = publications;
       });
-      this.publicationsService.getSearchPublicationsFilledByUser(this.id,this.date,this.topic,this.title).subscribe((publications) => {
+      this.publicationsService.getSearchPublicationsFilledByUser(this.id,this.date,this.topic,this.title,this.token).subscribe((publications) => {
         this.publications_filled = publications;
       });
-      this.publicationsService.getSearchPublicationsPendentByUser(this.id,this.date,this.topic,this.title).subscribe((publications) => {
+      this.publicationsService.getSearchPublicationsPendentByUser(this.id,this.date,this.topic,this.title,this.token).subscribe((publications) => {
         this.publications_pendent = publications;
       });
     }
