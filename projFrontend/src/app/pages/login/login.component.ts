@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
 
               localStorage.setItem('id', data_user_json.id);
               localStorage.setItem('group', data_user_json.group.description);
-              this.location.back();
+              document.location.href = "/";
             },
             error => {
               console.log('Error: ', error);

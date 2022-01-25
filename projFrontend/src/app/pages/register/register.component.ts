@@ -78,7 +78,7 @@ export class RegisterComponent implements OnInit {
               localStorage.setItem('username', this.registerForm.value["username"]);
               localStorage.setItem('id', data_user_json.id);
               localStorage.setItem('group', data_user_json.group.description);
-              this.location.back();
+              document.location.href = "/";
             },
             error => {
               console.log('Error: ', error);

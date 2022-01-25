@@ -38,7 +38,6 @@ export class PublicationService {
   createPublication(form: FormGroup, topics: Publication_Topics[]): Observable<Publication> {
 
     let publication: Publication = new Publication;
-
     topics.forEach(element => {
       if (element.description == form.value.topic) {
         publication.topic = element;
@@ -48,12 +47,11 @@ export class PublicationService {
     const id: number = +localStorage.getItem("id")!;
     this.user.id = id;
     this.status.description = 'Por Aprovar';
-
     publication.status = this.status;
     publication.title = form.value.title;
     publication.content = form.value.content;
     publication.author = this.user;
-
+    console.log("publicação",publication)
     return this.http.post<Publication>(this.baseUrl + 'pubcrate', publication, httpOptions);
 
   }
