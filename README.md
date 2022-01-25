@@ -55,6 +55,7 @@ O template do projeto foi pensado em grupo e fizemos um esboço à mão do qe pr
 
 
 Para aceder ao site: http://zer0sense.pythonanywhere.com/
+Para aceder à api: http://zer0sense2.pythonanywhere.com
 
 ### Logins:
 
