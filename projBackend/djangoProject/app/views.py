@@ -271,11 +271,13 @@ def pubs(request):
 
 @api_view(['POST'])
 def pubcreate(request):
-    print("create post")
-    print(request.data)
+    
+    description = request.data['status']['description']
+    stat = Publication_status.objects.get(description=description)
     request.data['topic'] = request.data['topic']['id']
     request.data['author'] = request.data['author']['id']
-    request.data['status'] = request.data['status']['id']
+    request.data['status'] = stat.id
+
     serializer = PublicationsSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()

@@ -21,7 +21,7 @@
         <!-- Main content -->
         <div class="content">
             <div class="container-fluid">
-                <form action="" method="post" [formGroup]="contactForm" >
+                <form action="" method="post" [formGroup]="contactForm">
                     <div class="row">
                         <div class="col-8">
                             <div class="row">
@@ -33,7 +33,7 @@
                                 </div>
                             </div>
                         </div>
-                
+
                         <div class="col-3">
                             <div class="row">
                                 <div class="input-group date col-2" data-target-input="nearest">
@@ -45,10 +45,10 @@
                             </div>
                         </div>
                     </div>
-                
+
                     <div class="row">
-                        
-                
+
+
                         <div class="col-10">
                             <div class="row">
                                 <div class="input-group mb-3 col-2">
@@ -56,8 +56,8 @@
                                 </div>
                                 <div class="col-10">
                                     <select formControlName="topic" class="form-control" id="topic" name="topic">
-                                        <option [ngValue]="null" >Select Topic</option>
-                                        <option *ngFor="let topic of topics" >{{topic.description}}</option>
+                                        <option [ngValue]="null">Select Topic</option>
+                                        <option *ngFor="let topic of topics">{{topic.description}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -67,24 +67,24 @@
                                     class="fas fa-search"></i></button>
                         </div>
                     </div>
-                
+
                 </form>
-                
+
 
                 <div class="card card-default mt-3">
                     <div class="card-body">
 
                         <h3>Approved publications</h3><br>
-                            <!-- AQUI -->
-                            <!-- Listar as publicações -->
-                            <hr>
-                            <div *ngFor="let publication of publications">
-                                <app-publication [publication]="publication">
-                                </app-publication>
-                            </div>
-                            <p *ngIf="publications.length==0">Não existem publicações arquivadas disponíveis</p>
+                        <!-- AQUI -->
+                        <!-- Listar as publicações -->
+                        <hr>
+                        <div *ngFor="let publication of publications">
+                            <app-publication [publication]="publication">
+                            </app-publication>
+                        </div>
+                        <p *ngIf="publications.length==0">No approved publications.</p>
 
-                            <!-- {% for pub in pubs_aproved %}
+                        <!-- {% for pub in pubs_aproved %}
                             <tr class="publication_row">
                                 <td>
                                     <div onclick="location.href='../publication/{{ pub.id }}'">
@@ -120,16 +120,16 @@
                         <br>
                         <h3>Pendent publications</h3>
                         <br>
-                            <hr>
-                            <!-- AQUI -->
-                            <!-- Listar as publicações -->
-                            <div *ngFor="let publication of publications_pendent">
-                                <app-publication [publication]="publication">
-                                </app-publication>
-                            </div>
-                            <p *ngIf="publications_pendent.length==0">Não existem publicações arquivadas disponíveis</p>
+                        <hr>
+                        <!-- AQUI -->
+                        <!-- Listar as publicações -->
+                        <div *ngFor="let publication of publications_pendent">
+                            <app-publication [publication]="publication">
+                            </app-publication>
+                        </div>
+                        <p *ngIf="publications_pendent.length==0">No pendent publications.</p>
 
-                            <!-- {% for pub in pubs_aproval %}
+                        <!-- {% for pub in pubs_aproval %}
                             <tr class="publication_row">
                                 <td>
                                     <div>
@@ -164,15 +164,15 @@
                         <br>
                         <h3>Closed publications</h3>
                         <br>
-                            <hr>
-                            <!-- AQUI -->
-                            <!-- Listar as publicações -->
-                            <div *ngFor="let publication of publications_filled">
-                                <app-publication [publication]="publication">
-                                </app-publication>
-                            </div>
-                            <p *ngIf="publications_filled.length==0">Não existem publicações arquivadas disponíveis</p>
-                            <!-- {% for pub in pubs_arquivadas %}
+                        <hr>
+                        <!-- AQUI -->
+                        <!-- Listar as publicações -->
+                        <div *ngFor="let publication of publications_filled">
+                            <app-publication [publication]="publication">
+                            </app-publication>
+                        </div>
+                        <p *ngIf="publications_filled.length==0">No closed publications.</p>
+                        <!-- {% for pub in pubs_arquivadas %}
                             <tr class="publication_row">
                                 <td>
                                     <div>

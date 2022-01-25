@@ -21,14 +21,14 @@ const httpOptions = {
 export class PublicationService {
 
   private baseUrl = 'http://127.0.0.1:7007/ws/';
-  private user!: User;
-  private status!: Publication_Status;
+  private user: User = new User;
+  private status: Publication_Status = new Publication_Status;
 
   constructor(private http: HttpClient, private userService: UsersService, private pubStatusService: PubStatusService) {
     let username: string | null = localStorage.getItem('username');
     let token: string | null = localStorage.getItem('token')
-    this.userService.getUser(username, token).subscribe((user) => this.user = user);
-    this.pubStatusService.getOne('Por Aprovar').subscribe((status) => this.status = status)
+    //this.userService.getUser(username, token).subscribe((user) => this.user = user);
+    //this.pubStatusService.getOne('Por Aprovar').subscribe((status) => this.status = status)
   }
 
   getPublication(id: number): Observable<Publication> {
@@ -45,11 +45,15 @@ export class PublicationService {
       }
 
     });
+    const id: number = +localStorage.getItem("id")!;
+    this.user.id = id;
+    this.status.description = 'Por Aprovar';
 
     publication.status = this.status;
     publication.title = form.value.title;
     publication.content = form.value.content;
     publication.author = this.user;
+
     return this.http.post<Publication>(this.baseUrl + 'pubcrate', publication, httpOptions);
 
   }
