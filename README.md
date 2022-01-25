@@ -54,9 +54,9 @@ O template do projeto foi pensado em grupo e fizemos um esboço à mão do qe pr
 
 
 
-Para aceder ao site: http://zer0sense.pythonanywhere.com/
+Para aceder ao site: https://pedantic-tereshkova-7a6fb9.netlify.app/
 
-Para aceder à api: http://zer0sense2.pythonanywhere.com
+Para aceder à api: https://zer0sense2.pythonanywhere.com (obrigatório ser https para funcionar no netlify)
 
 ### Logins:
 
